@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Messaging;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
@@ -30,18 +29,9 @@ namespace ConsoleApp1
         public extern static unsafe int  GetFeatureFromJpeg(byte[] f1, int len1, byte[] f2, int len2);
         [DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static unsafe float         CalcFeatureSimilarity(byte[]featData1,int featLen1, byte[] featData2,int featLen2);
-
-      
         static int Main(string[] args)
         {
-            try
-            {
-                ClassLibrary1.Class1. CreateNewQueue();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("【消息队列】{0}",  ex.Message);
-            }
+      
 
             unsafe
             {

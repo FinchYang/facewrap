@@ -1,17 +1,24 @@
-﻿using System;
+﻿using GrainInterfaces;
+using log4net;
+using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
+using Orleans;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Web;
 using System.Web.Http;
 
 namespace FaceServer.Controllers
 {
-    public class FacesController : ApiController
+    public partial class FacesController : ApiController
     {
-   
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         const double WARNING_VALUE = 73.0f;
         // GET api/<controller>
         public IEnumerable<string> Get()
@@ -75,70 +82,93 @@ namespace FaceServer.Controllers
             }
             return code;
         }
+
         // POST api/<controller>
         public ReturnCode Post([FromBody]CompareFaceInput input)
         {
             try
             {
-                var f1 = Path.GetTempFileName();
-                File.WriteAllBytes(f1, Convert.FromBase64String(input.picture1));
-                var f2 = Path.GetTempFileName();
-                File.WriteAllBytes(f2, Convert.FromBase64String(input.picture2));
+                var faces = new FaceSource();
+                 faces.FaceFile1 = Path.GetTempFileName();
+                File.WriteAllBytes(faces.FaceFile1, Convert.FromBase64String(input.picture1));
+                 faces.FaceFile2 = Path.GetTempFileName();
+                File.WriteAllBytes(faces.FaceFile2, Convert.FromBase64String(input.picture2));
 
-                FaceFile fcontent1, fcontent2;
-                fcontent1 = freadAll(f1);
-                fcontent2 = freadAll(f2);
+                //var url = HttpContext.Current.Request.Url.Host+":"+ HttpContext.Current.Request.Url.Port;
+                //PushNewProject(faces, url);
 
-                int featLen1 = 0;
-                int featLen2 = 0;
-                byte[] featData1 = new byte[4096];
-                byte[] featData2 = new byte[4096];
+                var config = Orleans.Runtime.Configuration.ClientConfiguration.LocalhostSilo(30000);
+                GrainClient.Initialize(config);
 
-                var ret = 0;
+                var friend = GrainClient.GrainFactory.GetGrain<IFaceCompare>("face haha");
+                var result = friend.SayHello(faces.FaceFile1, faces.FaceFile2).Result;
+              //  Console.WriteLine(result);
 
-                //featLen1 = GetFeatureFromJpeg(fcontent1.fcontent, fcontent1.flen, featData1, 4096 * 8);
-                //ret = ShowReturnCode(featLen1);
-                //if (ret <= 0)
-                //{
-                //    return new ReturnCode { code = ret, explanation = "other error" };
-                //}
-                //featLen2 = GetFeatureFromJpeg(fcontent2.fcontent, fcontent2.flen, featData2, 4096 * 8);
-                //ret = ShowReturnCode(featLen2);
-                //if (ret <= 0)
-                //{
-                //    return new ReturnCode { code = ret, explanation = "other error" };
-                //}
-
-                //float score = CalcFeatureSimilarity(featData1, featLen1, featData2, featLen2);
-
-                //if (score <= 57.0f)
-                //{
-                //    return new ReturnCode { code = 1, explanation = "not one person" };
-                //}
-                //else if (score > WARNING_VALUE)
-                //{
-                //    return new ReturnCode { code = 0, explanation = "same person" };
-                //}
-                //else
-                //{
-                //    return new ReturnCode { code = 99, explanation = "uncerntainty" };
-                //}
-                return new ReturnCode { code = 0, explanation = "same person" };
+               // var id = Guid.NewGuid().ToString("N");
+               // var content = JsonConvert.SerializeObject(faces);
+               //var sendret= MsmqOps.SendComplexMsg(MsmqOps.sourceQueueName, content, id);
+               // if (sendret != string.Empty)
+               // {
+               //     return new ReturnCode { code = -101, explanation =string.Format("msmq except={0},qname={1},content={2},id={3}",
+               //         sendret ,MsmqOps.sourceQueueName, content,id)
+               //     };
+               // }
+               // var recvret = MsmqOps.ReceiveById(MsmqOps.resultQueueName, id);
+               // if (recvret.status != 0)
+               // {
+               //     return new ReturnCode { code = recvret.status, explanation = recvret.content };
+               // }
+               // var code = 0;
+               // if (int.TryParse(recvret.content,out code))
+               // {
+               //     return new ReturnCode { code = code, explanation = recvret.content };
+               // }
+                return new ReturnCode { code = result, explanation = "" };
             }
             catch (Exception ex)
             {
                 return new ReturnCode { code = -100, explanation = ex.Message };
             }
         }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+  
+        private static IHubProxy HubProxy { get; set; }
+        private static HubConnection Connection { get; set; }
+        private static async void PushNewProject(FaceSource mcc, string homeurl)
         {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            try
+            {
+                Connection = new HubConnection(homeurl);
+                HubProxy = Connection.CreateHubProxy("FaceHub");
+                try
+                {
+                    await Connection.Start();
+                }
+                catch (HttpRequestException hex)
+                {
+                    Log.Info(
+                        "Unable to connect to server: Start server before connecting clients.HttpRequestException" +
+                        hex.Message);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Log.Info("Unable to connect to server: Start server before connecting clients." + ex.Message);
+                    return;
+                }
+                await HubProxy.Invoke("PushOneTask", mcc);
+            }
+            catch (Exception ex)
+            {
+                Log.Info("PushNewProject." + ex.Message);
+            }
+            finally
+            {
+                if (Connection != null)
+                {
+                    Connection.Stop();
+                    Connection.Dispose();
+                }
+            }
         }
     }
 }
