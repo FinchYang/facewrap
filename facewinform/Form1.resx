@@ -141,7 +141,7 @@
     <value>splitContainer3.Panel1</value>
   </data>
   <data name="&gt;&gt;textBoxpicturesource.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -168,7 +168,7 @@
     <value>splitContainer3.Panel1</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -195,7 +195,7 @@
     <value>splitContainer3.Panel1</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="textBoxcurrentimage.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 51</value>
@@ -219,7 +219,7 @@
     <value>splitContainer3.Panel1</value>
   </data>
   <data name="&gt;&gt;textBoxcurrentimage.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="buttoncompare.Location" type="System.Drawing.Point, System.Drawing">
     <value>425, 54</value>
@@ -231,7 +231,7 @@
     <value>4</value>
   </data>
   <data name="buttoncompare.Text" xml:space="preserve">
-    <value>check</value>
+    <value>本地比对</value>
   </data>
   <data name="&gt;&gt;buttoncompare.Name" xml:space="preserve">
     <value>buttoncompare</value>
@@ -243,7 +243,7 @@
     <value>splitContainer3.Panel1</value>
   </data>
   <data name="&gt;&gt;buttoncompare.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="richTextBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -253,7 +253,7 @@
     <value>0, 0</value>
   </data>
   <data name="richTextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1061, 208</value>
+    <value>1061, 150</value>
   </data>
   <data name="richTextBox1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -280,7 +280,7 @@
     <value>0, 0</value>
   </data>
   <data name="pictureBoxsource.Size" type="System.Drawing.Size, System.Drawing">
-    <value>540, 477</value>
+    <value>312, 318</value>
   </data>
   <data name="pictureBoxsource.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -304,7 +304,7 @@
     <value>0, 0</value>
   </data>
   <data name="pictureBoxcurrentimage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>517, 477</value>
+    <value>365, 318</value>
   </data>
   <data name="pictureBoxcurrentimage.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -316,7 +316,7 @@
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;pictureBoxcurrentimage.Parent" xml:space="preserve">
-    <value>splitContainer4.Panel1</value>
+    <value>splitContainer5.Panel2</value>
   </data>
   <data name="&gt;&gt;pictureBoxcurrentimage.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -364,7 +364,7 @@
     <value>34</value>
   </data>
   <data name="buttonstopcapture.Text" xml:space="preserve">
-    <value>stop capture</value>
+    <value>暂停扫描拍摄</value>
   </data>
   <data name="&gt;&gt;buttonstopcapture.Name" xml:space="preserve">
     <value>buttonstopcapture</value>
@@ -376,7 +376,7 @@
     <value>splitContainer3.Panel1</value>
   </data>
   <data name="&gt;&gt;buttonstopcapture.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="splitContainer1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -414,6 +414,33 @@
   <data name="splitContainer3.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
     <value>Horizontal</value>
   </data>
+  <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>410, 22</value>
+  </data>
+  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 23</value>
+  </data>
+  <data name="button1.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="button1.Text" xml:space="preserve">
+    <value>无身份证云端对比</value>
+  </data>
+  <data name="&gt;&gt;button1.Name" xml:space="preserve">
+    <value>button1</value>
+  </data>
+  <data name="&gt;&gt;button1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;button1.Parent" xml:space="preserve">
+    <value>splitContainer3.Panel1</value>
+  </data>
+  <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="buttonrestart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -427,7 +454,7 @@
     <value>35</value>
   </data>
   <data name="buttonrestart.Text" xml:space="preserve">
-    <value>restart</value>
+    <value>重新开始扫描拍摄</value>
   </data>
   <data name="&gt;&gt;buttonrestart.Name" xml:space="preserve">
     <value>buttonrestart</value>
@@ -439,7 +466,7 @@
     <value>splitContainer3.Panel1</value>
   </data>
   <data name="&gt;&gt;buttonrestart.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;splitContainer3.Panel1.Name" xml:space="preserve">
     <value>splitContainer3.Panel1</value>
@@ -458,6 +485,84 @@
   </data>
   <data name="splitContainer4.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
+  </data>
+  <data name="splitContainer5.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="splitContainer5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="picturecapture.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="picturecapture.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="picturecapture.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="picturecapture.Size" type="System.Drawing.Size, System.Drawing">
+    <value>376, 318</value>
+  </data>
+  <data name="picturecapture.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;picturecapture.Name" xml:space="preserve">
+    <value>picturecapture</value>
+  </data>
+  <data name="&gt;&gt;picturecapture.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;picturecapture.Parent" xml:space="preserve">
+    <value>splitContainer5.Panel1</value>
+  </data>
+  <data name="&gt;&gt;picturecapture.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel1.Name" xml:space="preserve">
+    <value>splitContainer5.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel1.Parent" xml:space="preserve">
+    <value>splitContainer5</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel2.Name" xml:space="preserve">
+    <value>splitContainer5.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel2.Parent" xml:space="preserve">
+    <value>splitContainer5</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="splitContainer5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>745, 318</value>
+  </data>
+  <data name="splitContainer5.SplitterDistance" type="System.Int32, mscorlib">
+    <value>376</value>
+  </data>
+  <data name="splitContainer5.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Name" xml:space="preserve">
+    <value>splitContainer5</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Parent" xml:space="preserve">
+    <value>splitContainer4.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;splitContainer4.Panel1.Name" xml:space="preserve">
     <value>splitContainer4.Panel1</value>
@@ -484,10 +589,10 @@
     <value>1</value>
   </data>
   <data name="splitContainer4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1061, 477</value>
+    <value>1061, 318</value>
   </data>
   <data name="splitContainer4.SplitterDistance" type="System.Int32, mscorlib">
-    <value>517</value>
+    <value>745</value>
   </data>
   <data name="splitContainer4.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -517,10 +622,10 @@
     <value>1</value>
   </data>
   <data name="splitContainer3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1061, 579</value>
+    <value>1061, 417</value>
   </data>
   <data name="splitContainer3.SplitterDistance" type="System.Int32, mscorlib">
-    <value>98</value>
+    <value>95</value>
   </data>
   <data name="splitContainer3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -562,10 +667,10 @@
     <value>1</value>
   </data>
   <data name="splitContainer2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1061, 791</value>
+    <value>1061, 571</value>
   </data>
   <data name="splitContainer2.SplitterDistance" type="System.Int32, mscorlib">
-    <value>579</value>
+    <value>417</value>
   </data>
   <data name="splitContainer2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -595,7 +700,7 @@
     <value>1</value>
   </data>
   <data name="splitContainer1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1183, 791</value>
+    <value>1183, 571</value>
   </data>
   <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
     <value>118</value>
@@ -619,7 +724,7 @@
     <value>True</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>143</value>
+    <value>58</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
@@ -628,7 +733,7 @@
     <value>True</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1183, 816</value>
+    <value>1183, 596</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

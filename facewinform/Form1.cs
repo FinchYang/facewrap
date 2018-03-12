@@ -212,5 +212,10 @@ namespace face
         {
 
         }
+
+        private void pictureBoxcurrentimage_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

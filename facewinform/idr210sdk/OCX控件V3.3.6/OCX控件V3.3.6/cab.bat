@@ -1,0 +1,1 @@
+cabarc n idr.cab *.inf *.ocx *.dll

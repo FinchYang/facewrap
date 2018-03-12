@@ -45,6 +45,9 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.buttonrestart = new System.Windows.Forms.Button();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.button1 = new System.Windows.Forms.Button();
+            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.picturecapture = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxsource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -63,6 +66,11 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
+            this.splitContainer5.Panel1.SuspendLayout();
+            this.splitContainer5.Panel2.SuspendLayout();
+            this.splitContainer5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picturecapture)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxpicturesource
@@ -84,7 +92,6 @@
             // 
             resources.ApplyResources(this.textBoxcurrentimage, "textBoxcurrentimage");
             this.textBoxcurrentimage.Name = "textBoxcurrentimage";
-          //  this.textBoxcurrentimage.TextChanged += new System.EventHandler(this.textBoxcurrentimage_TextChanged);
             // 
             // buttoncompare
             // 
@@ -110,6 +117,7 @@
             resources.ApplyResources(this.pictureBoxcurrentimage, "pictureBoxcurrentimage");
             this.pictureBoxcurrentimage.Name = "pictureBoxcurrentimage";
             this.pictureBoxcurrentimage.TabStop = false;
+            this.pictureBoxcurrentimage.Click += new System.EventHandler(this.pictureBoxcurrentimage_Click);
             // 
             // menuStrip1
             // 
@@ -165,6 +173,7 @@
             // 
             // splitContainer3.Panel1
             // 
+            this.splitContainer3.Panel1.Controls.Add(this.button1);
             this.splitContainer3.Panel1.Controls.Add(this.buttonrestart);
             this.splitContainer3.Panel1.Controls.Add(this.textBoxpicturesource);
             this.splitContainer3.Panel1.Controls.Add(this.label1);
@@ -191,11 +200,36 @@
             // 
             // splitContainer4.Panel1
             // 
-            this.splitContainer4.Panel1.Controls.Add(this.pictureBoxcurrentimage);
+            this.splitContainer4.Panel1.Controls.Add(this.splitContainer5);
             // 
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.pictureBoxsource);
+            // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer5
+            // 
+            resources.ApplyResources(this.splitContainer5, "splitContainer5");
+            this.splitContainer5.Name = "splitContainer5";
+            // 
+            // splitContainer5.Panel1
+            // 
+            this.splitContainer5.Panel1.Controls.Add(this.picturecapture);
+            // 
+            // splitContainer5.Panel2
+            // 
+            this.splitContainer5.Panel2.Controls.Add(this.pictureBoxcurrentimage);
+            // 
+            // picturecapture
+            // 
+            resources.ApplyResources(this.picturecapture, "picturecapture");
+            this.picturecapture.Name = "picturecapture";
+            this.picturecapture.TabStop = false;
             // 
             // Form1
             // 
@@ -233,6 +267,11 @@
             this.splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
+            this.splitContainer5.Panel1.ResumeLayout(false);
+            this.splitContainer5.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
+            this.splitContainer5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picturecapture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,6 +295,9 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.Button buttonrestart;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.SplitContainer splitContainer5;
+        private System.Windows.Forms.PictureBox picturecapture;
     }
 }
 
