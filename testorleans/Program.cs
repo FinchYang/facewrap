@@ -22,8 +22,8 @@ namespace testorleans
             var config = Orleans.Runtime.Configuration.ClientConfiguration.LocalhostSilo(30000);
             GrainClient.Initialize(config);
 
-            var friend = GrainClient.GrainFactory.GetGrain<IFaceCompare>(0);
-            var result = friend.SayHello("Goodbye").Result;
+            var friend = GrainClient.GrainFactory.GetGrain<IFaceCompare>("");
+            var result = friend.SayHello("Goodbye","ha").Result;
             Console.WriteLine(result);
 
         }
