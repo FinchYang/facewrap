@@ -29,33 +29,6 @@ namespace ConsoleApp1
         public extern static int ReadNewAppMsg(byte[] pMsg, out int len);
         static void Main(string[] args)
         {
-            //int ret;
-            ////	int dev;
-
-            //ret = InitComm(1001);//USB接口的iDR210
-            //if (ret!=0)
-            //{
-            //    var csn = new StringBuilder(1024) ;
-            //    if (Routon_IC_HL_ReadCardSN(csn)!=0)//读A卡卡号
-            //    {
-            //        //
-            //    }
-            //    else
-            //    {
-            //        //  MessageBox( NULL, "Routon_IC_HL_ReadCardSN error。",
-            //        //        "错误", MB_OK | MB_ICONERROR );
-            //        Console.WriteLine("Routon_IC_HL_ReadCardSN error\n");
-            //        return ;
-
-            //    }
-            //    int sid = 0, bid = 0;
-            //    var da =new byte[64];
-            //   var pw = new byte[6] { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
-            //    ret = Routon_IC_HL_ReadCard(sid, bid, 0x60, pw, da);//读0扇区0块的内容
-
-            //}
-            //CloseComm();
-
             int ret;
             int iPort = 1;
 
@@ -89,16 +62,15 @@ namespace ConsoleApp1
                             
                         }
                        
-                        // char Msg1[200];
-                        var Msg1 = new byte[200];
-                        //int num;
-                        ret = ReadNewAppMsg(Msg1, out int num);
-                        if (ret > 0)
-                        {
-                            //显示追加地址信息
-                            Console.WriteLine("{0},{1}", Msg, num);
-                        }
-
+                        //// char Msg1[200];
+                        //var Msg1 = new byte[200];
+                        ////int num;
+                        //ret = ReadNewAppMsg(Msg1, out int num);
+                        //if (ret > 0)
+                        //{
+                        //    //显示追加地址信息
+                        //    Console.WriteLine("{0},{1}", Msg, num);
+                        //}
                     }
                     else
                     {
@@ -110,7 +82,6 @@ namespace ConsoleApp1
             }
 
             ret = CloseComm();
-            //  return ret;
             Console.ReadLine();
         }
     }

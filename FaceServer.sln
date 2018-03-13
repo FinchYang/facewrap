@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceServer", "FaceServer\FaceServer.csproj", "{DB23DDD8-F7E5-47E8-992B-074F07F801A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{E3EF8256-FA83-4E26-82A6-87126930821A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceCompareCon", "ConsoleApp1\FaceCompareCon.csproj", "{E3EF8256-FA83-4E26-82A6-87126930821A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testorleans", "testorleans\testorleans.csproj", "{49D3F89C-D0C8-4B35-9EA7-37DE6DB7DF18}"
 EndProject
