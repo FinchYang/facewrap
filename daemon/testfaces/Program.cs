@@ -22,7 +22,8 @@ namespace testfaces
             var param = new CompareFaceInput();
             param.picture1 = Convert.ToBase64String(File.ReadAllBytes(args[0]));
             param.picture2 = Convert.ToBase64String(File.ReadAllBytes(args[1]));
-            var url = string.Format("http://{0}/{1}", "localhost:58070", "api/faces");
+          //  var url = string.Format("http://{0}/{1}", "localhost:58070", "api/faces");
+            var url = string.Format("http://{0}/{1}", "localhost:801", "api/faces");
             try
             {
                 Console.WriteLine("hah 111");

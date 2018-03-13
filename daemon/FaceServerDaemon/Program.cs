@@ -219,47 +219,7 @@ namespace FaceServerDaemon
             public string FaceFile1 { get; set; }
             public string FaceFile2 { get; set; }
         }
-        private static void CompareTwoPic(object param)
-        {
-            var faces = JsonConvert.DeserializeObject<mqreturn>(param.ToString());
-            var twoface = JsonConvert.DeserializeObject<FaceSource>(faces.content);
-            FaceFile fcontent1, fcontent2;
-            fcontent1 = freadAll(twoface.FaceFile1);
-            fcontent2 = freadAll(twoface.FaceFile2);
-
-            int featLen1 = 0;
-            int featLen2 = 0;
-            byte[] featData1 = new byte[4096];
-            byte[] featData2 = new byte[4096];
-
-            var ret = -1;
-            featLen1 = GetFeatureFromJpeg(fcontent1.fcontent, fcontent1.flen, featData1, 4096 * 8);
-            ret = ShowReturnCode(featLen1);
-            if (ret <= 0)
-            {
-                MsmqOps.SendComplexMsg(MsmqOps.resultQueueName, ret.ToString(), faces.id);
-            }
-            featLen2 = GetFeatureFromJpeg(fcontent2.fcontent, fcontent2.flen, featData2, 4096 * 8);
-            ret = ShowReturnCode(featLen2);
-            if (ret <= 0)
-            {
-                MsmqOps.SendComplexMsg(MsmqOps.resultQueueName, ret.ToString(), faces.id);
-            }
-
-            float score = CalcFeatureSimilarity(featData1, featLen1, featData2, featLen2);
-            if (score <= 57.0f)
-            {
-                MsmqOps.SendComplexMsg(MsmqOps.resultQueueName, "2", faces.id);
-            }
-            else if (score > WARNING_VALUE)
-            {
-                MsmqOps.SendComplexMsg(MsmqOps.resultQueueName, "1", faces.id);
-            }
-            else
-            {
-                MsmqOps.SendComplexMsg(MsmqOps.resultQueueName, "99", faces.id);
-            }
-        }
+   
 
         static FaceFile freadAll(string fname)
         {

@@ -8,6 +8,6 @@ namespace GrainInterfaces
 {
     public interface IFaceCompare : Orleans.IGrainWithStringKey
     {
-        Task<int> SayHello(string file1, string file2);
+        Task<int> SayHello(string files);
     }
 }

@@ -23,8 +23,6 @@ namespace FaceServer
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Log.Info(MsmqOps.CreateNewQueue(MsmqOps.resultQueueName));
-            Log.Info(MsmqOps.CreateNewQueue(MsmqOps.sourceQueueName));
         }
     }
 }

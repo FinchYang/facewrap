@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -84,22 +85,25 @@ namespace FaceServer.Controllers
         }
 
         // POST api/<controller>
-        public ReturnCode Post([FromBody]CompareFaceInput input)
+        public async Task< ReturnCode> Post([FromBody]CompareFaceInput input)
         {
             try
             {
                 var faces = new FaceSource();
-                 faces.FaceFile1 = Path.Combine(Path.GetTempFileName(),".jpg");
+                 faces.FaceFile1 = Path.GetTempFileName()+".jpg";
                 File.WriteAllBytes(faces.FaceFile1, Convert.FromBase64String(input.picture1));
-                 faces.FaceFile2 = Path.Combine(Path.GetTempFileName(),".jpg");
+                 faces.FaceFile2 = Path.GetTempFileName()+".jpg";
                 File.WriteAllBytes(faces.FaceFile2, Convert.FromBase64String(input.picture2));
-
+                Log.InfoFormat(" post {0}", 111);
                 var config = Orleans.Runtime.Configuration.ClientConfiguration.LocalhostSilo(30000);
+                Log.InfoFormat(" post {0}", 222);
                 GrainClient.Initialize(config);
-
-                var friend = GrainClient.GrainFactory.GetGrain<IFaceCompare>("face haha");
+                Log.InfoFormat(" post {0}", 333);
+                var friend = GrainClient.GrainFactory.GetGrain<IFaceCompare>("extentedkey");
                 Log.InfoFormat("file1={0},file2={1}", faces.FaceFile1, faces.FaceFile2);
-                var result = friend.SayHello(faces.FaceFile1, faces.FaceFile2).Result;
+                var result = await friend.SayHello(JsonConvert.SerializeObject(faces));
+
+                Log.InfoFormat(" post {0}", 444);
                 return new ReturnCode { code = result, explanation = "" };
             }
             catch (Exception ex)

@@ -61,7 +61,7 @@ namespace GrainInterfaces
                 case -983520779:
                     switch (@methodId)
                     {
-                        case 2086934610:
+                        case -510773597:
                             return "SayHello";
                         default:
                             throw new global::System.NotImplementedException("interfaceId=" + -983520779 + ",methodId=" + @methodId);
@@ -79,9 +79,9 @@ namespace GrainInterfaces
             }
         }
 
-        public global::System.Threading.Tasks.Task<global::System.Int32> @SayHello(global::System.String @file1, global::System.String @file2)
+        public global::System.Threading.Tasks.Task<global::System.Int32> @SayHello(global::System.String @files)
         {
-            return base.@InvokeMethodAsync<global::System.Int32>(2086934610, new global::System.Object[]{@file1, @file2});
+            return base.@InvokeMethodAsync<global::System.Int32>(-510773597, new global::System.Object[]{@files});
         }
     }
 
@@ -100,8 +100,8 @@ namespace GrainInterfaces
                 case -983520779:
                     switch (methodId)
                     {
-                        case 2086934610:
-                            return ((global::GrainInterfaces.IFaceCompare)@grain).@SayHello((global::System.String)arguments[0], (global::System.String)arguments[1]).@Box();
+                        case -510773597:
+                            return ((global::GrainInterfaces.IFaceCompare)@grain).@SayHello((global::System.String)arguments[0]).@Box();
                         default:
                             throw new global::System.NotImplementedException("interfaceId=" + -983520779 + ",methodId=" + methodId);
                     }
