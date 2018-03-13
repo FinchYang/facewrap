@@ -135,9 +135,9 @@ namespace face
                     return;
                 }
                 var a = new System.Diagnostics.Process();
-                a.StartInfo.UseShellExecute = true;
+                a.StartInfo.UseShellExecute = false;
                 a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
-                //  a.StartInfo.WorkingDirectory = @"C:\dev\ocx\TestOCX\ConsoleApplication1";
+                a.StartInfo.CreateNoWindow = true ;
                 a.StartInfo.Arguments = string.Format(" {0} {1}", FileNameCapture, FileNameId);
                 a.StartInfo.FileName = Path.Combine(homepath, "compare", "FaceCompareCon.exe");
                 //  a.StartInfo.FileName = @"C:\dev\ocx\TestOCX\ConsoleApplication1\aaa.exe";
@@ -273,7 +273,7 @@ namespace face
                             FileNameCapture = Path.GetTempFileName() + "haveface.jpg";
                             currentFrame.Save(FileNameCapture);
                             pictureBoxcurrentimage.Image = currentFrame.Bitmap;
-                            UpdateStatus(string.Format("high quality face photo captured,{0}", ++facenum));
+                            UpdateStatus(string.Format("照片抓取成功,{0}", ++facenum));
                             Application.Idle -= new EventHandler(FrameGrabber);
                             grabber.Dispose();
                         }
@@ -381,20 +381,21 @@ namespace face
                             UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(31).Take(3).ToArray())));
                             UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(34).Take(10).ToArray())));
                             UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(44).Take(9).ToArray())));
-                            UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(53).Take(71).ToArray())));
+                            UpdateStatus(string.Format(Encoding.Default.GetString(Msg.Skip(53).Take(71).ToArray())));
                             UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(124).Take(19).ToArray())));
                             UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(143).Take(31).ToArray())));
                             UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(174).Take(9).ToArray())));
-                            UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(183).Take(9).ToArray())));
+                            UpdateStatus(string.Format(Encoding.Default.GetString(Msg.Skip(183).Take(9).ToArray())));
                             var FileNameIdtmp = Path.Combine(homepath, dllpath, "photo.bmp");
                             FileNameId = Path.Combine(homepath, dllpath, "photo.jpg");
                             Image.FromFile(FileNameIdtmp).Save(FileNameId, ImageFormat.Jpeg);
                             pictureid.Image = Image.FromFile(FileNameId);
+                            UpdateStatus(string.Format("身份证信息读取成功"));
                         }
                     }
                     else
                     {
-                        UpdateStatus(string.Format("maybe no camera:{0}", "please put your id card"));
+                        UpdateStatus(string.Format("请将身份证放在读卡器上:{0}", "please put your id card"));
                         System.Threading.Thread.Sleep(100);
                         continue;
                     }

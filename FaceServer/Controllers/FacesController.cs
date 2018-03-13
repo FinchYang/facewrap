@@ -89,40 +89,17 @@ namespace FaceServer.Controllers
             try
             {
                 var faces = new FaceSource();
-                 faces.FaceFile1 = Path.GetTempFileName();
+                 faces.FaceFile1 = Path.Combine(Path.GetTempFileName(),".jpg");
                 File.WriteAllBytes(faces.FaceFile1, Convert.FromBase64String(input.picture1));
-                 faces.FaceFile2 = Path.GetTempFileName();
+                 faces.FaceFile2 = Path.Combine(Path.GetTempFileName(),".jpg");
                 File.WriteAllBytes(faces.FaceFile2, Convert.FromBase64String(input.picture2));
-
-                //var url = HttpContext.Current.Request.Url.Host+":"+ HttpContext.Current.Request.Url.Port;
-                //PushNewProject(faces, url);
 
                 var config = Orleans.Runtime.Configuration.ClientConfiguration.LocalhostSilo(30000);
                 GrainClient.Initialize(config);
 
                 var friend = GrainClient.GrainFactory.GetGrain<IFaceCompare>("face haha");
+                Log.InfoFormat("file1={0},file2={1}", faces.FaceFile1, faces.FaceFile2);
                 var result = friend.SayHello(faces.FaceFile1, faces.FaceFile2).Result;
-              //  Console.WriteLine(result);
-
-               // var id = Guid.NewGuid().ToString("N");
-               // var content = JsonConvert.SerializeObject(faces);
-               //var sendret= MsmqOps.SendComplexMsg(MsmqOps.sourceQueueName, content, id);
-               // if (sendret != string.Empty)
-               // {
-               //     return new ReturnCode { code = -101, explanation =string.Format("msmq except={0},qname={1},content={2},id={3}",
-               //         sendret ,MsmqOps.sourceQueueName, content,id)
-               //     };
-               // }
-               // var recvret = MsmqOps.ReceiveById(MsmqOps.resultQueueName, id);
-               // if (recvret.status != 0)
-               // {
-               //     return new ReturnCode { code = recvret.status, explanation = recvret.content };
-               // }
-               // var code = 0;
-               // if (int.TryParse(recvret.content,out code))
-               // {
-               //     return new ReturnCode { code = code, explanation = recvret.content };
-               // }
                 return new ReturnCode { code = result, explanation = "" };
             }
             catch (Exception ex)

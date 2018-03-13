@@ -71,7 +71,7 @@ namespace ConsoleApp1
             {
                 Engine* engine = null;
 
-                mgv_set_log(1);
+                mgv_set_log(0);
                 mgv_create_engine("", &engine);
                 //  Console.WriteLine("mgv_create_engine return:{0}\n", mgv_get_error_str(ret));
 

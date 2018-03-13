@@ -6,6 +6,7 @@ using Orleans;
 using Orleans.Runtime.Host;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -19,20 +20,30 @@ namespace FaceServerDaemon
     partial class Program
     {
         const double WARNING_VALUE = 73.0f;
-        //  string dllpath = @"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll";
-
-        [DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static int mgv_set_log(int level);
-        [DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static unsafe int mgv_create_engine(string model_path, Engine** pengine);
-        [DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static string mgv_get_error_str(int code);
-        [DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static unsafe int mgv_destroy_engine(Engine* engine);
-        [DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static unsafe int GetFeatureFromJpeg(byte[] f1, int len1, byte[] f2, int len2);
-        [DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static unsafe float CalcFeatureSimilarity(byte[] featData1, int featLen1, byte[] featData2, int featLen2);
+        //[DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        //public extern static int mgv_set_log(int level);
+        //[DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        //public extern static unsafe int mgv_create_engine(string model_path, Engine** pengine);
+        //[DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        //public extern static string mgv_get_error_str(int code);
+        //[DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        //public extern static unsafe int mgv_destroy_engine(Engine* engine);
+        //[DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        //public extern static unsafe int GetFeatureFromJpeg(byte[] f1, int len1, byte[] f2, int len2);
+        //[DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        //public extern static unsafe float CalcFeatureSimilarity(byte[] featData1, int featLen1, byte[] featData2, int featLen2);
 
         private static IHubProxy HubProxy { get; set; }
         private static HubConnection Connection { get; set; }
@@ -137,6 +148,13 @@ namespace FaceServerDaemon
         //    await host.StartAsync();
         //    return host;
         //}
+        private static string GetTraceFile()
+        {
+            var basePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var date = DateTime.Now.Date.ToString("yy-MM-dd");
+            var traceFile = basePath + "\\grainlog" + date + ".txt";
+            return traceFile;
+        }
         static   int Main(string[] args)
            //  static async Task<int> Main(string[] args)
         {
@@ -145,37 +163,20 @@ namespace FaceServerDaemon
            {
                AppDomainInitializer = InitSilo
            });
-
+            var traceFile = GetTraceFile();
+            Trace.AutoFlush = true;
+            Trace.Listeners.Add(new TextWriterTraceListener(traceFile));
             unsafe
             {
                 Engine* engine = null;
-
-                var ret = mgv_set_log(1);
-                Console.WriteLine(ret);
-                ret = -1;
-                Console.WriteLine("haha 111");
+                Trace.TraceInformation("before mgv_set_log,{0},", "");
+                var ret = mgv_set_log(0);
+                Trace.TraceInformation("after mgv_set_log,{0},",  ret);
                 ret = mgv_create_engine("", &engine);
-                Console.WriteLine("haha 222-{0}-", ret);
+                Trace.TraceInformation("after mgv_create_engine,{0},", ret);
                 //  Console.WriteLine("mgv_create_engine return:{0}\n", mgv_get_error_str(ret));
 
-                var index = 0;
-                //do
-                //{
-                //    try
-                //    {
-                //        Console.WriteLine("begin receive message -{0}-", index++);
-                //        var onemsg = MsmqOps.ReceiveByPeek(MsmqOps.sourceQueueName);
-                //        Console.WriteLine(" receive one message -{0}-", onemsg.content);
-                //        var param = JsonConvert.SerializeObject(onemsg);
-                //        var _tcheck = new Thread(new ParameterizedThreadStart(CompareTwoPic));
-                //        _tcheck.Start(param);
-                //        Console.WriteLine("haha thread start-{0}-", param);
-                //    }
-                //    catch(Exception ex)
-                //    {
-                //        Console.WriteLine("message processing error -{0}-", ex.Message);
-                //    }
-                //} while (index<999);
+                
                 Console.WriteLine("Orleans Silo is running.\nPress Enter to terminate...");
                 Console.ReadLine();
                 ret = mgv_destroy_engine(engine);
@@ -201,7 +202,7 @@ namespace FaceServerDaemon
             //Console.ReadLine();
 
             // We do a clean shutdown in the other AppDomain
-          //  hostDomain.DoCallBack(ShutdownSilo);
+            hostDomain.DoCallBack(ShutdownSilo);
             return 0;
         }
         static void ShutdownSilo()

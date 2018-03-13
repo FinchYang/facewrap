@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -26,10 +27,13 @@ namespace GrainCollection
         [DllImport(@"E:\BaiduNetdiskDownload\windows_c_sdk_x64_small_440hard_release_20180306\windows_c_sdk_x64_small_440hard_release_20180306\exe\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static unsafe float CalcFeatureSimilarity(byte[] featData1, int featLen1, byte[] featData2, int featLen2);
         public Task<int> SayHello(string file1, string file2)
-      //  public Task<int> SayHello(string f1,string f2)
         {
+            var traceFile = GetTraceFile();
+            Trace.AutoFlush = true;
+            Trace.Listeners.Add(new TextWriterTraceListener(traceFile));
+            Trace.TraceError("SayHello,{0},{1}", file1, file2);
+
             return Task.FromResult(CompareTwoPic(file1, file2));
-           // return Task.FromResult(111);
         }
         public struct FaceFile
         {
@@ -81,6 +85,13 @@ namespace GrainCollection
             }
             return code;
         }
+        private static string GetTraceFile()
+        {
+            var basePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var date = DateTime.Now.Date.ToString("yy-MM-dd");
+            var traceFile = basePath + "\\grainlog" + date + ".txt";
+            return traceFile;
+        }
         private static int CompareTwoPic(string FaceFile1, string FaceFile2)
         {
             FaceFile fcontent1, fcontent2;
@@ -92,22 +103,28 @@ namespace GrainCollection
             byte[] featData1 = new byte[4096];
             byte[] featData2 = new byte[4096];
 
+            var traceFile = GetTraceFile();
+            Trace.AutoFlush = true;
+            Trace.Listeners.Add(new TextWriterTraceListener(traceFile));
+
             var ret = -1;
             featLen1 = GetFeatureFromJpeg(fcontent1.fcontent, fcontent1.flen, featData1, 4096 * 8);
             ret = ShowReturnCode(featLen1);
             if (ret <= 0)
             {
+                Trace.TraceError("GetFeatureFromJpeg,{0},{1}", FaceFile1, ret);
                 return ret;
             }
             featLen2 = GetFeatureFromJpeg(fcontent2.fcontent, fcontent2.flen, featData2, 4096 * 8);
             ret = ShowReturnCode(featLen2);
             if (ret <= 0)
             {
+                Trace.TraceError("GetFeatureFromJpeg,{0},{1}", FaceFile2, ret);
                 return ret;
             }
 
             float score = CalcFeatureSimilarity(featData1, featLen1, featData2, featLen2);
-            // return (int)score;
+            GC.Collect(0, GCCollectionMode.Forced);
             if (score <= 57.0f)
             {
                 return 2;
