@@ -29,70 +29,42 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.textBoxpicturesource = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBoxcurrentimage = new System.Windows.Forms.TextBox();
             this.buttoncompare = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.pictureBoxsource = new System.Windows.Forms.PictureBox();
-            this.pictureBoxcurrentimage = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonstopcapture = new System.Windows.Forms.Button();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.buttonrestart = new System.Windows.Forms.Button();
-            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.button1 = new System.Windows.Forms.Button();
-            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-            this.pictureid = new System.Windows.Forms.PictureBox();
             this.buttonreadid = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.buttonrestart = new System.Windows.Forms.Button();
+            this.pictureBoxcurrentimage = new System.Windows.Forms.PictureBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.pictureid = new System.Windows.Forms.PictureBox();
+            this.picturecapture1 = new System.Windows.Forms.PictureBox();
+            this.picturecapture2 = new System.Windows.Forms.PictureBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxid = new System.Windows.Forms.TextBox();
+            this.textBoxname = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxsource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
-            this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.Panel2.SuspendLayout();
-            this.splitContainer3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
-            this.splitContainer4.Panel1.SuspendLayout();
-            this.splitContainer4.Panel2.SuspendLayout();
-            this.splitContainer4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
-            this.splitContainer5.Panel1.SuspendLayout();
-            this.splitContainer5.Panel2.SuspendLayout();
-            this.splitContainer5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturecapture1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturecapture2)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // textBoxpicturesource
-            // 
-            resources.ApplyResources(this.textBoxpicturesource, "textBoxpicturesource");
-            this.textBoxpicturesource.Name = "textBoxpicturesource";
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
-            // textBoxcurrentimage
-            // 
-            resources.ApplyResources(this.textBoxcurrentimage, "textBoxcurrentimage");
-            this.textBoxcurrentimage.Name = "textBoxcurrentimage";
             // 
             // buttoncompare
             // 
@@ -110,15 +82,10 @@
             // pictureBoxsource
             // 
             resources.ApplyResources(this.pictureBoxsource, "pictureBoxsource");
+            this.pictureBoxsource.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBoxsource.Name = "pictureBoxsource";
             this.pictureBoxsource.TabStop = false;
-            // 
-            // pictureBoxcurrentimage
-            // 
-            resources.ApplyResources(this.pictureBoxcurrentimage, "pictureBoxcurrentimage");
-            this.pictureBoxcurrentimage.Name = "pictureBoxcurrentimage";
-            this.pictureBoxcurrentimage.TabStop = false;
-            this.pictureBoxcurrentimage.Click += new System.EventHandler(this.pictureBoxcurrentimage_Click);
+            this.pictureBoxsource.Click += new System.EventHandler(this.pictureBoxsource_Click);
             // 
             // menuStrip1
             // 
@@ -141,52 +108,18 @@
             this.buttonstopcapture.UseVisualStyleBackColor = true;
             this.buttonstopcapture.Click += new System.EventHandler(this.buttonstopcapture_Click);
             // 
-            // splitContainer1
+            // buttonreadid
             // 
-            resources.ApplyResources(this.splitContainer1, "splitContainer1");
-            this.splitContainer1.Name = "splitContainer1";
+            resources.ApplyResources(this.buttonreadid, "buttonreadid");
+            this.buttonreadid.Name = "buttonreadid";
+            this.buttonreadid.UseVisualStyleBackColor = true;
+            this.buttonreadid.Click += new System.EventHandler(this.buttonreadid_Click);
             // 
-            // splitContainer1.Panel1
+            // button1
             // 
-            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            // 
-            // splitContainer2
-            // 
-            resources.ApplyResources(this.splitContainer2, "splitContainer2");
-            this.splitContainer2.Name = "splitContainer2";
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.splitContainer3);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.richTextBox1);
-            // 
-            // splitContainer3
-            // 
-            resources.ApplyResources(this.splitContainer3, "splitContainer3");
-            this.splitContainer3.Name = "splitContainer3";
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.buttonreadid);
-            this.splitContainer3.Panel1.Controls.Add(this.button1);
-            this.splitContainer3.Panel1.Controls.Add(this.buttonrestart);
-            this.splitContainer3.Panel1.Controls.Add(this.textBoxpicturesource);
-            this.splitContainer3.Panel1.Controls.Add(this.label1);
-            this.splitContainer3.Panel1.Controls.Add(this.textBoxcurrentimage);
-            this.splitContainer3.Panel1.Controls.Add(this.buttonstopcapture);
-            this.splitContainer3.Panel1.Controls.Add(this.label2);
-            this.splitContainer3.Panel1.Controls.Add(this.buttoncompare);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // buttonrestart
             // 
@@ -195,59 +128,122 @@
             this.buttonrestart.UseVisualStyleBackColor = true;
             this.buttonrestart.Click += new System.EventHandler(this.buttonrestart_Click);
             // 
-            // splitContainer4
+            // pictureBoxcurrentimage
             // 
-            resources.ApplyResources(this.splitContainer4, "splitContainer4");
-            this.splitContainer4.Name = "splitContainer4";
+            resources.ApplyResources(this.pictureBoxcurrentimage, "pictureBoxcurrentimage");
+            this.pictureBoxcurrentimage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBoxcurrentimage.Name = "pictureBoxcurrentimage";
+            this.pictureBoxcurrentimage.TabStop = false;
             // 
-            // splitContainer4.Panel1
+            // groupBox1
             // 
-            this.splitContainer4.Panel1.Controls.Add(this.splitContainer5);
+            this.groupBox1.Controls.Add(this.buttonreadid);
+            this.groupBox1.Controls.Add(this.buttoncompare);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.TabStop = false;
             // 
-            // splitContainer4.Panel2
+            // groupBox2
             // 
-            this.splitContainer4.Panel2.Controls.Add(this.pictureBoxsource);
-            // 
-            // button1
-            // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer5
-            // 
-            resources.ApplyResources(this.splitContainer5, "splitContainer5");
-            this.splitContainer5.Name = "splitContainer5";
-            // 
-            // splitContainer5.Panel1
-            // 
-            this.splitContainer5.Panel1.Controls.Add(this.pictureid);
-            // 
-            // splitContainer5.Panel2
-            // 
-            this.splitContainer5.Panel2.Controls.Add(this.pictureBoxcurrentimage);
+            this.groupBox2.Controls.Add(this.picturecapture2);
+            this.groupBox2.Controls.Add(this.picturecapture1);
+            this.groupBox2.Controls.Add(this.pictureBoxcurrentimage);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.TabStop = false;
             // 
             // pictureid
             // 
             resources.ApplyResources(this.pictureid, "pictureid");
+            this.pictureid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureid.Name = "pictureid";
             this.pictureid.TabStop = false;
             // 
-            // buttonreadid
+            // picturecapture1
             // 
-            resources.ApplyResources(this.buttonreadid, "buttonreadid");
-            this.buttonreadid.Name = "buttonreadid";
-            this.buttonreadid.UseVisualStyleBackColor = true;
-            this.buttonreadid.Click += new System.EventHandler(this.buttonreadid_Click);
+            resources.ApplyResources(this.picturecapture1, "picturecapture1");
+            this.picturecapture1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picturecapture1.Name = "picturecapture1";
+            this.picturecapture1.TabStop = false;
+            // 
+            // picturecapture2
+            // 
+            resources.ApplyResources(this.picturecapture2, "picturecapture2");
+            this.picturecapture2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picturecapture2.Name = "picturecapture2";
+            this.picturecapture2.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.pictureBoxsource);
+            resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.TabStop = false;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.pictureid);
+            resources.ApplyResources(this.groupBox4, "groupBox4");
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.TabStop = false;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.textBoxname);
+            this.groupBox5.Controls.Add(this.textBoxid);
+            this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Controls.Add(this.label1);
+            this.groupBox5.Controls.Add(this.button1);
+            resources.ApplyResources(this.groupBox5, "groupBox5");
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.TabStop = false;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.buttonstopcapture);
+            this.groupBox6.Controls.Add(this.buttonrestart);
+            resources.ApplyResources(this.groupBox6, "groupBox6");
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.TabStop = false;
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.Name = "label1";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label2.Name = "label2";
+            // 
+            // textBoxid
+            // 
+            resources.ApplyResources(this.textBoxid, "textBoxid");
+            this.textBoxid.Name = "textBoxid";
+            // 
+            // textBoxname
+            // 
+            resources.ApplyResources(this.textBoxname, "textBoxname");
+            this.textBoxname.Name = "textBoxname";
             // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.Controls.Add(this.splitContainer1);
+            this.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.HelpButton = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
@@ -257,57 +253,48 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxsource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
-            this.splitContainer3.Panel1.ResumeLayout(false);
-            this.splitContainer3.Panel1.PerformLayout();
-            this.splitContainer3.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
-            this.splitContainer3.ResumeLayout(false);
-            this.splitContainer4.Panel1.ResumeLayout(false);
-            this.splitContainer4.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
-            this.splitContainer4.ResumeLayout(false);
-            this.splitContainer5.Panel1.ResumeLayout(false);
-            this.splitContainer5.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
-            this.splitContainer5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturecapture1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturecapture2)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBoxpicturesource;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBoxcurrentimage;
         private System.Windows.Forms.Button buttoncompare;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.PictureBox pictureBoxsource;
-        private System.Windows.Forms.PictureBox pictureBoxcurrentimage;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.Button buttonstopcapture;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.Button buttonrestart;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.SplitContainer splitContainer5;
-        private System.Windows.Forms.PictureBox pictureid;
         private System.Windows.Forms.Button buttonreadid;
+        private System.Windows.Forms.PictureBox pictureBoxcurrentimage;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.PictureBox pictureid;
+        private System.Windows.Forms.PictureBox picturecapture2;
+        private System.Windows.Forms.PictureBox picturecapture1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox textBoxname;
+        private System.Windows.Forms.TextBox textBoxid;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox6;
     }
 }
 

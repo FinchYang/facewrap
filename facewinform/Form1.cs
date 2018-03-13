@@ -14,15 +14,17 @@ using System.Text;
 using System.Linq;
 using System.Drawing.Imaging;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace face
 {
     public partial class Form1 : Form
     {
         string FileNameId = string.Empty;
-        string FileNameCapture = string.Empty;
+        string[] FileNameCapture =new string[] { string.Empty, string.Empty, string.Empty };
         string dllpath = @"idr210sdk";
 
+        int continuouscapture = 0;
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int InitComm(int iPort);
         [DllImport(@"idr210sdk\sdtapi.dll")]
@@ -129,50 +131,20 @@ namespace face
                     UpdateStatus(string.Format("请先读取身份证信息！"));
                     return;
                 }
-                if (FileNameCapture == string.Empty)
+               // if (FileNameCapture == string.Empty)
+               if(continuouscapture<3)
                 {
-                    UpdateStatus(string.Format("请先等待人脸照片抓取成功！"));
+                    UpdateStatus(string.Format("请先等待人脸照片抓取成功！-{0}",continuouscapture));
                     return;
                 }
-                var a = new System.Diagnostics.Process();
-                a.StartInfo.UseShellExecute = false;
-                a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
-                a.StartInfo.CreateNoWindow = true ;
-                a.StartInfo.Arguments = string.Format(" {0} {1}", FileNameCapture, FileNameId);
-                a.StartInfo.FileName = Path.Combine(homepath, "compare", "FaceCompareCon.exe");
-                //  a.StartInfo.FileName = @"C:\dev\ocx\TestOCX\ConsoleApplication1\aaa.exe";
-                a.Start();
-                a.WaitForExit();
-                // var ret = a.ExitCode;
-                var result = JsonConvert.DeserializeObject<result>(File.ReadAllText(Path.Combine(homepath, "compare","compareresult.txt")));
-                FileNameCapture = string.Empty;
-                UpdateStatus(string.Format("result score:{0}", result.score));
-                if (result.ok)
+               for(int i = 0; i < 3; i++)
                 {
-                    switch (result.status)
+                    if (compareone(FileNameCapture[i],i+1))
                     {
-                        case CompareStatus.unkown:
-                            break;
-                        case CompareStatus.success:
-                            UpdateStatus(string.Format("是同一个人，WARNING_VALUE={0}", 73));
-                            MessageBox.Show("比对成功，是同一个人");
-                            FileNameId = string.Empty;
-                            //to do ：upload cloud
-                            break;
-                        case CompareStatus.failure:
-                            UpdateStatus(string.Format("不是同一个人，WARNING_VALUE={0}",73));
-                            break;
-                        case CompareStatus.uncertainty:
-                            UpdateStatus(string.Format("不确定是否同一人，WARNING_VALUE={0}", 73));
-                            break;
-                        default:
-                            break;
+                        break;
                     }
                 }
-                else
-                {
-                    MessageBox.Show(string.Format( "比对出错，{0}",result.errcode));
-                }
+                continuouscapture = 0;
             }
             catch (Exception ex)
             {
@@ -180,6 +152,56 @@ namespace face
             }
         }
 
+        bool compareone(string capturefile,int index)
+        {
+            var stop = new Stopwatch();
+            stop.Start();
+            var a = new System.Diagnostics.Process();
+            a.StartInfo.UseShellExecute = false;
+            a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
+            a.StartInfo.CreateNoWindow = true;
+            a.StartInfo.Arguments = string.Format(" {0} {1}", capturefile, FileNameId);
+            a.StartInfo.FileName = Path.Combine(homepath, "compare", "FaceCompareCon.exe");
+            //  a.StartInfo.FileName = @"C:\dev\ocx\TestOCX\ConsoleApplication1\aaa.exe";
+            a.Start();
+            a.WaitForExit();
+            stop.Stop();
+            UpdateStatus(string.Format("time elapsed:{0}", stop.ElapsedMilliseconds));
+            // var ret = a.ExitCode;
+            var result = JsonConvert.DeserializeObject<result>(File.ReadAllText(Path.Combine(homepath, "compare", "compareresult.txt")));
+          //  FileNameCapture = string.Empty;
+            UpdateStatus(string.Format("result score:{0}", result.score));
+
+            if (result.ok)
+            {
+                switch (result.status)
+                {
+                    case CompareStatus.unkown:
+                        break;
+                    case CompareStatus.success:
+                        UpdateStatus(string.Format("第{1}张照片对比是同一个人，WARNING_VALUE={0}", 73,index));
+                        MessageBox.Show("比对成功，是同一个人");
+                        FileNameId = string.Empty;
+                        //to do ：upload cloud
+                        break;
+                    case CompareStatus.failure:
+                        UpdateStatus(string.Format("第{1}张照片对比不是同一个人，WARNING_VALUE={0}", 73, index));
+                        break;
+                    case CompareStatus.uncertainty:
+                        UpdateStatus(string.Format("第{1}张照片不确定是否同一人，WARNING_VALUE={0}", 73, index));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                UpdateStatus(string.Format("第{1}张照片比对出错，{0}", result.errcode, index));
+            }
+
+            if (result.ok && result.status == CompareStatus.success) return true;
+            else return false;            
+        }
         public struct FaceFile
         {
             public byte[] fcontent;
@@ -270,12 +292,28 @@ namespace face
 
                         if (HaveFace(currentFrame))
                         {
-                            FileNameCapture = Path.GetTempFileName() + "haveface.jpg";
-                            currentFrame.Save(FileNameCapture);
-                            pictureBoxcurrentimage.Image = currentFrame.Bitmap;
-                            UpdateStatus(string.Format("照片抓取成功,{0}", ++facenum));
-                            Application.Idle -= new EventHandler(FrameGrabber);
-                            grabber.Dispose();
+                            FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
+                            currentFrame.Save(FileNameCapture[continuouscapture]);
+                            switch (continuouscapture)
+                            {
+                                case 0:
+                                    pictureBoxcurrentimage.Image = currentFrame.Bitmap;
+                                    break;
+                                case 1:
+                                    picturecapture1.Image = currentFrame.Bitmap;
+                                    break;
+                                default:
+                                    picturecapture2.Image = currentFrame.Bitmap;
+                                    break;
+                            }
+                            
+                            UpdateStatus(string.Format("照片抓取成功,{0}", continuouscapture));
+                            continuouscapture++;
+                            if (continuouscapture > 2) {
+                                Application.Idle -= new EventHandler(FrameGrabber);
+                                grabber.Dispose();
+                                UpdateStatus(string.Format("3张照片抓取完成"));
+                            }                           
                         }
                     }
                 }
@@ -387,8 +425,12 @@ namespace face
                             UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(174).Take(9).ToArray())));
                             UpdateStatus(string.Format(Encoding.Default.GetString(Msg.Skip(183).Take(9).ToArray())));
                             var FileNameIdtmp = Path.Combine(homepath, dllpath, "photo.bmp");
-                            FileNameId = Path.Combine(homepath, dllpath, "photo.jpg");
-                            Image.FromFile(FileNameIdtmp).Save(FileNameId, ImageFormat.Jpeg);
+                            FileNameId = Path.GetTempFileName();
+                            using(var jpg=new Bitmap(FileNameIdtmp))
+                            {
+                                jpg.Save(FileNameId, ImageFormat.Jpeg);
+                            }
+                          //  Image.FromFile(FileNameIdtmp).Save(FileNameId, ImageFormat.Jpeg);
                             pictureid.Image = Image.FromFile(FileNameId);
                             UpdateStatus(string.Format("身份证信息读取成功"));
                         }
@@ -403,6 +445,16 @@ namespace face
             }
 
             ret = CloseComm();
+        }
+
+        private void pictureBoxsource_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void splitContainer4_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
