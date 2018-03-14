@@ -33,17 +33,17 @@ namespace FaceRepository.Controllers
         [Route("PostCompared")]
         public async Task<IActionResult> PostCompared([FromBody] ComparedInfo trails)
         {
-            _log.LogDebug("{0}",111111);
+           // _log.LogDebug("{0}",111111);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _log.LogDebug("{0}", 2222);
+          //  _log.LogDebug("{0}", 2222);
             try
             {
                 using (var db = new dbmodel.faceContext())
                 {
-                    _log.LogDebug("{0}", 3333);
+               //     _log.LogDebug("{0}", 3333);
                     var person = db.Person.FirstOrDefault(c => c.Idcardno == trails.id);
                     if (person == null)
                     {
@@ -62,7 +62,9 @@ namespace FaceRepository.Controllers
                             Info = new PictureInfo { base64pic = trails.idphoto },
                         });
                     }
-                    _log.LogDebug("{0}", 4444);
+                    _log.LogDebug("{0}", Convert.ToBase64String(trails.capturephoto).Take(30));
+                    _log.LogDebug("{0}", Convert.ToBase64String(trails.capturephoto).Skip(3000).Take(30));
+                    _log.LogDebug("{0}", Convert.ToBase64String(trails.capturephoto).TakeLast(30));
                     db.Trails.Add(new Trails
                     {
                         TimeStamp = DateTime.Now,
