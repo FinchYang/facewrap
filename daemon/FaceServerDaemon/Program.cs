@@ -181,25 +181,7 @@ namespace FaceServerDaemon
                 Console.ReadLine();
                 ret = mgv_destroy_engine(engine);
             }
-            //   DoSomeClientWork();
-
-            //try
-            //{
-            //    var host = await StartSilo();
-            //    Console.WriteLine("Press Enter to terminate...");
-            //    Console.ReadLine();
-
-            //    await host.StopAsync();
-
-            //    return 0;
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex);
-            //    return 1;
-            //}
-            //Console.WriteLine("Orleans Silo is running.\nPress Enter to terminate...");
-            //Console.ReadLine();
+           
 
             // We do a clean shutdown in the other AppDomain
             hostDomain.DoCallBack(ShutdownSilo);

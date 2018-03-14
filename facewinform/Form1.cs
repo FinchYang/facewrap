@@ -15,15 +15,19 @@ using System.Linq;
 using System.Drawing.Imaging;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http;
+using System.Configuration;
 
 namespace face
 {
     public partial class Form1 : Form
     {
+        private delegate void UpdateStatusDelegate(string status);
         string FileNameId = string.Empty;
         string[] FileNameCapture =new string[] { string.Empty, string.Empty, string.Empty };
         string dllpath = @"idr210sdk";
-
+        ComparedInfo upload = new ComparedInfo { address="temp",operatingagency="hehe"};
         int continuouscapture = 0;
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int InitComm(int iPort);
@@ -34,7 +38,6 @@ namespace face
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int Routon_IC_HL_ReadCard(int SID, int BID, int KeyType, byte[] Key, byte[] data);
 
-
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int Authenticate();
 
@@ -42,42 +45,7 @@ namespace face
         public extern static int ReadBaseMsg(byte[] pMsg, int len);
 
         [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int ReadNewAppMsg(byte[] pMsg, out int len);
-
-        //[DllImport(@"idr210sdk\sdtapi.dll")]
-        //public extern static int InitComm(int iPort);
-        //[DllImport(@"C:\dev\FaceServer\facewinform\idr210sdk\desktop\sdtapi.dll")]
-        //public extern static int CloseComm();
-        //[DllImport(@"C:\dev\FaceServer\facewinform\idr210sdk\desktop\sdtapi.dll")]
-        //public extern static int Routon_IC_HL_ReadCardSN(StringBuilder SN);
-        //[DllImport(@"C:\dev\FaceServer\facewinform\idr210sdk\desktop\sdtapi.dll")]
-        //public extern static int Routon_IC_HL_ReadCard(int SID, int BID, int KeyType, byte[] Key, byte[] data);
-
-
-        //[DllImport(@"C:\dev\FaceServer\facewinform\idr210sdk\desktop\sdtapi.dll")]
-        //public extern static int Authenticate();
-
-        //[DllImport(@"C:\dev\FaceServer\facewinform\idr210sdk\desktop\sdtapi.dll")]
-        //public extern static int ReadBaseMsg(byte[] pMsg, int len);
-
-        //[DllImport(@"C:\dev\FaceServer\facewinform\idr210sdk\desktop\sdtapi.dll")]
-        //public extern static int ReadNewAppMsg(byte[] pMsg, out int len);
-
-        //const double WARNING_VALUE = 73.0f;
-        //public struct Engine { };
-
-        //[DllImport(@"C:\dev\facesdk\lib\x86\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
-        //public extern static int mgv_set_log(int level);
-        //[DllImport(@"C:\dev\facesdk\lib\x86\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
-        //public extern static unsafe int mgv_create_engine(string model_path, Engine** pengine);
-        //[DllImport(@"C:\dev\facesdk\lib\x86\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
-        //public extern static string mgv_get_error_str(int code);
-        //[DllImport(@"C:\dev\facesdk\lib\x86\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
-        //public extern static unsafe int mgv_destroy_engine(Engine* engine);
-        //[DllImport(@"C:\dev\facesdk\lib\x86\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
-        //public extern static unsafe int GetFeatureFromJpeg(byte[] f1, int len1, byte[] f2, int len2);
-        //[DllImport(@"C:\dev\facesdk\lib\x86\core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
-        //public extern static unsafe float CalcFeatureSimilarity(byte[] featData1, int featLen1, byte[] featData2, int featLen2);
+        public extern static int ReadNewAppMsg(byte[] pMsg, out int len);  
 
         private FilterInfoCollection videoDevices;
         private string sourceImage = string.Empty;
@@ -94,33 +62,16 @@ namespace face
                                        //   Image<Gray, byte> gray_frame = null; //grayscale current image aquired from webcam for processing
         private int facenum = 0;
         string homepath = string.Empty;
+        string host = string.Empty;
+        string action = string.Empty;
+         string idphotofile = string.Empty;
+        string capturephotofile = string.Empty;
         public Form1()
         {
             InitializeComponent();
             homepath = Environment.CurrentDirectory;
-        }
-        public class result
-        {
-            public bool ok { get; set; }
-            public float score { get; set; }
-            public CompareStatus status { get; set; }
-            public mgverror errcode { get; set; }
-        }
-        public enum CompareStatus
-        {
-            unkown, success, failure, uncertainty
-        }
-
-        public enum mgverror
-        {
-            unkown,
-            MGV_ERR = -1,
-            MGV_MALLOC_ERR = -2,
-            MGV_IMAGE_FORMAT_ERR = -3,
-            MGV_PARA_ERR = -4,
-            MGV_IMAGE_OUT_OF_RANGE = -5,
-            MGV_NO_FACE_DETECTED = -6,
-            MGV_MULTIPLE_FACES_DETECTED = -7,
+            host = ConfigurationManager.AppSettings["host"];
+            action = ConfigurationManager.AppSettings["action"];
         }
         private void buttoncompare_Click(object sender, EventArgs e)
         {
@@ -131,7 +82,6 @@ namespace face
                     UpdateStatus(string.Format("请先读取身份证信息！"));
                     return;
                 }
-               // if (FileNameCapture == string.Empty)
                if(continuouscapture<3)
                 {
                     UpdateStatus(string.Format("请先等待人脸照片抓取成功！-{0}",continuouscapture));
@@ -151,7 +101,6 @@ namespace face
                 UpdateStatus(string.Format("exception :{0},{1},{2}", FileNameCapture, FileNameId, ex.Message));
             }
         }
-
         bool compareone(string capturefile,int index)
         {
             var stop = new Stopwatch();
@@ -161,15 +110,13 @@ namespace face
             a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
             a.StartInfo.CreateNoWindow = true;
             a.StartInfo.Arguments = string.Format(" {0} {1}", capturefile, FileNameId);
+            capturephotofile = capturefile;
             a.StartInfo.FileName = Path.Combine(homepath, "compare", "FaceCompareCon.exe");
-            //  a.StartInfo.FileName = @"C:\dev\ocx\TestOCX\ConsoleApplication1\aaa.exe";
             a.Start();
             a.WaitForExit();
             stop.Stop();
             UpdateStatus(string.Format("time elapsed:{0}", stop.ElapsedMilliseconds));
-            // var ret = a.ExitCode;
             var result = JsonConvert.DeserializeObject<result>(File.ReadAllText(Path.Combine(homepath, "compare", "compareresult.txt")));
-          //  FileNameCapture = string.Empty;
             UpdateStatus(string.Format("result score:{0}", result.score));
 
             if (result.ok)
@@ -180,9 +127,11 @@ namespace face
                         break;
                     case CompareStatus.success:
                         UpdateStatus(string.Format("第{1}张照片对比是同一个人，WARNING_VALUE={0}", 73,index));
+                        var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
+                        th.Start(upload);
+                        
                         MessageBox.Show("比对成功，是同一个人");
                         FileNameId = string.Empty;
-                        //to do ：upload cloud
                         break;
                     case CompareStatus.failure:
                         UpdateStatus(string.Format("第{1}张照片对比不是同一个人，WARNING_VALUE={0}", 73, index));
@@ -202,6 +151,41 @@ namespace face
             if (result.ok && result.status == CompareStatus.success) return true;
             else return false;            
         }
+
+        private void uploadinfo(object obj)
+        {
+            var ui = (ComparedInfo)obj;
+            ui.capturephoto = File.ReadAllBytes(capturephotofile);
+            ui.idphoto = File.ReadAllBytes(idphotofile);
+            
+            var url = string.Format("http://{0}/{1}", host, action);
+            try
+            {
+              //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 111) });
+
+                var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
+             //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
+                using (var http = new HttpClient(handler))
+                {
+                  //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 333) });
+                    var content = new StringContent(JsonConvert.SerializeObject(ui));
+                  //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 444) });
+                    content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                    var hrm = http.PostAsync(url, content);
+                    var response = hrm.Result;
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("capturefile.{0},{1}", capturephotofile, ui.capturephoto) });
+                    string srcString = response.Content.ReadAsStringAsync().Result;
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", srcString) });
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", response.StatusCode) });
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", hrm.Status) });
+                }
+            }
+            catch (Exception ex)
+            {
+                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", ex.Message) });
+            }
+        }
+
         public struct FaceFile
         {
             public byte[] fcontent;
@@ -415,17 +399,27 @@ namespace face
                         ret = ReadBaseMsg(Msg, 0);
                         if (ret > 0)
                         {
-                            UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Take(31).ToArray())));
-                            UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(31).Take(3).ToArray())));
-                            UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(34).Take(10).ToArray())));
-                            UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(44).Take(9).ToArray())));
-                            UpdateStatus(string.Format(Encoding.Default.GetString(Msg.Skip(53).Take(71).ToArray())));
-                            UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(124).Take(19).ToArray())));
-                            UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(143).Take(31).ToArray())));
-                            UpdateStatus(string.Format(System.Text.Encoding.Default.GetString(Msg.Skip(174).Take(9).ToArray())));
-                            UpdateStatus(string.Format(Encoding.Default.GetString(Msg.Skip(183).Take(9).ToArray())));
+                            upload.name = System.Text.Encoding.Default.GetString(Msg.Take(31).ToArray());
+                            UpdateStatus(string.Format(upload.name));
+                            upload.gender = System.Text.Encoding.Default.GetString(Msg.Skip(31).Take(3).ToArray());
+                            UpdateStatus(string.Format(upload.gender));
+                            upload.nation = System.Text.Encoding.Default.GetString(Msg.Skip(34).Take(10).ToArray());
+                            UpdateStatus(string.Format(upload.nation));
+                            upload.birthday = System.Text.Encoding.Default.GetString(Msg.Skip(44).Take(9).ToArray());
+                            UpdateStatus(string.Format(upload.birthday));
+                            upload.idaddress = Encoding.Default.GetString(Msg.Skip(53).Take(71).ToArray());
+                            UpdateStatus(string.Format(upload.idaddress));
+                            upload.id = System.Text.Encoding.Default.GetString(Msg.Skip(124).Take(19).ToArray());
+                            UpdateStatus(string.Format(upload.id));
+                            upload.issuer = System.Text.Encoding.Default.GetString(Msg.Skip(143).Take(31).ToArray());
+                            UpdateStatus(string.Format(upload.issuer));
+                            upload.startdate = System.Text.Encoding.Default.GetString(Msg.Skip(174).Take(9).ToArray());
+                            UpdateStatus(string.Format(upload.startdate));
+                            upload.enddate = Encoding.Default.GetString(Msg.Skip(183).Take(9).ToArray());
+                            UpdateStatus(string.Format(upload.enddate));
                             var FileNameIdtmp = Path.Combine(homepath, dllpath, "photo.bmp");
                             FileNameId = Path.GetTempFileName();
+                            idphotofile = FileNameId;
                             using(var jpg=new Bitmap(FileNameIdtmp))
                             {
                                 jpg.Save(FileNameId, ImageFormat.Jpeg);
