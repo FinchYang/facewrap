@@ -14,7 +14,7 @@ namespace FaceRepository.Controllers
 {
     [Produces("application/json")]
   //  [Route("api/Trails")]
-    public class TrailsController : Controller
+    public partial class TrailsController : Controller
     {
         public readonly ILogger<TrailsController> _log;
 
@@ -22,13 +22,7 @@ namespace FaceRepository.Controllers
         {
             _log = log;
         }
-
-       
-        public class commonresponse
-        {
-            public int status { get; set; }
-            public string explanation { get; set; }
-        }
+        
         [HttpPost]
         [Route("PostCompared")]
         public async Task<IActionResult> PostCompared([FromBody] ComparedInfo trails)
@@ -81,9 +75,7 @@ namespace FaceRepository.Controllers
                 return BadRequest(ex);
             }
             return Ok( new commonresponse { status=0,explanation="ok"});
-        }
-
-    
+        }  
     
     }
 }
