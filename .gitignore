@@ -26,7 +26,7 @@
 *.log
 *.txt
 *.json
-*.sql
+
 *.manifest
 *.nuspec
 # Precompiled Headers
