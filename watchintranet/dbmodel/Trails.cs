@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using FaceRepository.Models;
 
-namespace FaceRepository.dbmodel
+namespace watchintranet.dbmodel
 {
     public partial class Trails
     {
@@ -10,7 +9,7 @@ namespace FaceRepository.dbmodel
         public DateTime TimeStamp { get; set; }
         public string Address { get; set; }
         public string Operatingagency { get; set; }
-        public JsonObject<FaceRepository.Models.PictureInfo> Info { get; set; }
+        public JsonObject<PictureInfo> Info { get; set; }
         public string Idcardno { get; set; }
     }
 }

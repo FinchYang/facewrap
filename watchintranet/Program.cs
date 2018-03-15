@@ -2,7 +2,8 @@
 using System.IO;
 using System.Net;
 using System.Text;
-
+using System.Linq;
+//using Microsoft.EntityFrameworkCore;
 namespace watchintranet
 {
     class Program
@@ -12,23 +13,40 @@ namespace watchintranet
         private static string FtpPassword = "pass";//FtpUserID, FtpPassword
         static void Main(string[] args)
         {
-            do
+            using (var db = new dbmodel.faceContext())
             {
-                var flist = GetFileList("*.*");
-                foreach (var f in flist)
+                do
                 {
-                    if (FtpDownload(f, f, true))
+                    var flist = GetFileList("*.*");
+                    foreach (var f in flist)
                     {
-                        Delete(f);
-                        var lines = File.ReadAllLines(f);
-                        foreach (var l in lines)
+                        if (FtpDownload(f, f, true))
                         {
-
+                            Delete(f);
+                            var lines = File.ReadAllLines(f);
+                            foreach (var l in lines)
+                            {
+                                var fields = l.Split(",");
+                                if (fields.Length < 2)
+                                {
+                                    continue;
+                                }
+                                var status = -1;
+                                if (int.TryParse(fields[1], out status))
+                                {
+                                    continue;
+                                }
+                                var res = db.Noidlog.FirstOrDefault(c => c.Idcardno == fields[1]);
+                                if (res == null) continue;
+                                res.Compared = 1;
+                                res.Result =(short) status;
+                            }
                         }
                     }
-                }
-                System.Threading.Thread.Sleep(1000 * 10);
-            } while (true);
+                    db.SaveChanges();
+                    System.Threading.Thread.Sleep(1000 * 10);
+                } while (true);
+            }
         }
 
         /// <summary>

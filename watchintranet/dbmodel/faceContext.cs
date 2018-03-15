@@ -2,12 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace FaceRepository.dbmodel
+namespace watchintranet.dbmodel
 {
     public partial class faceContext : DbContext
     {
         public virtual DbSet<Noidlog> Noidlog { get; set; }
-        public virtual DbSet<Noidloghis> Noidloghis { get; set; }
         public virtual DbSet<Organization> Organization { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<Trails> Trails { get; set; }
@@ -65,47 +64,6 @@ namespace FaceRepository.dbmodel
                     .HasColumnName("result")
                     .HasColumnType("smallint(2)")
                     .HasDefaultValueSql("'0'");
-            });
-
-            modelBuilder.Entity<Noidloghis>(entity =>
-            {
-                entity.HasKey(e => e.Noidloghis1);
-
-                entity.ToTable("noidloghis");
-
-                entity.HasIndex(e => e.Noidloghis1)
-                    .HasName("noidloghis")
-                    .IsUnique();
-
-                entity.Property(e => e.Noidloghis1)
-                    .HasColumnName("noidloghis")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Businessnumber)
-                    .IsRequired()
-                    .HasColumnName("businessnumber")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.Capturephoto)
-                    .IsRequired()
-                    .HasColumnName("capturephoto");
-
-                entity.Property(e => e.Compared)
-                    .HasColumnName("compared")
-                    .HasColumnType("tinyint(1)");
-
-                entity.Property(e => e.Idcardno)
-                    .IsRequired()
-                    .HasColumnName("idcardno")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.Result)
-                    .HasColumnName("result")
-                    .HasColumnType("smallint(2)");
-
-                entity.Property(e => e.Stamp)
-                    .HasColumnName("stamp")
-                    .HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Organization>(entity =>

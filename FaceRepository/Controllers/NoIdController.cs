@@ -157,6 +157,12 @@ namespace FaceRepository.Controllers
                         rl.Add(new NoidResult{
                                 id=a.Idcardno,status=(CompareResult)a.Result
                         });
+                        db.Noidloghis.Add(new Noidloghis{
+                            Idcardno=a.Idcardno,Capturephoto=a.Capturephoto,
+                            Compared=a.Compared.Value,Result=a.Result.Value,
+                            Businessnumber=a.Businessnumber,Stamp=DateTime.Now
+                        });
+                        db.Noidlog.Remove(a);
                     }
                     await db.SaveChangesAsync();
                      return Ok(rl);
