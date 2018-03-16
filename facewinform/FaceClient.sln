@@ -7,11 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceDeskTop", "FaceDeskTop.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test id read", "ConsoleApp1\test id read.csproj", "{F2C2CC2E-1675-423A-B0CB-DFF2E8D32A36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceRepository", "..\FaceRepository\FaceRepository.csproj", "{CE950D35-E056-46B0-A7AB-E2AA2F97C923}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaceRepository", "..\FaceRepository\FaceRepository.csproj", "{CE950D35-E056-46B0-A7AB-E2AA2F97C923}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testrepository", "testrepository\testrepository.csproj", "{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryCommon", "RepositoryCommon\RepositoryCommon.csproj", "{B278F8B4-153F-4251-8778-8586EE197456}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryCommon", "RepositoryCommon\RepositoryCommon.csproj", "{B278F8B4-153F-4251-8778-8586EE197456}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,26 +85,6 @@ Global
 		{CE950D35-E056-46B0-A7AB-E2AA2F97C923}.Release|x64.Build.0 = Release|Any CPU
 		{CE950D35-E056-46B0-A7AB-E2AA2F97C923}.Release|x86.ActiveCfg = Release|Any CPU
 		{CE950D35-E056-46B0-A7AB-E2AA2F97C923}.Release|x86.Build.0 = Release|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Debug|Win32.Build.0 = Debug|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Debug|x64.Build.0 = Debug|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Debug|x86.Build.0 = Debug|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Release|Win32.ActiveCfg = Release|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Release|Win32.Build.0 = Release|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Release|x64.ActiveCfg = Release|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Release|x64.Build.0 = Release|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Release|x86.ActiveCfg = Release|Any CPU
-		{0EE784F3-FDA5-418F-84C2-60BE0BAEF031}.Release|x86.Build.0 = Release|Any CPU
 		{B278F8B4-153F-4251-8778-8586EE197456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B278F8B4-153F-4251-8778-8586EE197456}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B278F8B4-153F-4251-8778-8586EE197456}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
