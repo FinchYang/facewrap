@@ -201,6 +201,12 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 21</value>
+  </data>
+  <data name="openToolStripMenuItem.Text" xml:space="preserve">
+    <value>安全退出</value>
+  </data>
   <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -224,12 +230,6 @@
   </data>
   <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
     <value>7</value>
-  </data>
-  <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 21</value>
-  </data>
-  <data name="openToolStripMenuItem.Text" xml:space="preserve">
-    <value>安全退出</value>
   </data>
   <data name="buttonstopcapture.Location" type="System.Drawing.Point, System.Drawing">
     <value>36, 74</value>
@@ -390,6 +390,24 @@
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="picturecapture2.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="picturecapture2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="picturecapture2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 432</value>
+  </data>
+  <data name="picturecapture2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 200</value>
+  </data>
+  <data name="picturecapture2.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="picturecapture2.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
   <data name="&gt;&gt;picturecapture2.Name" xml:space="preserve">
     <value>picturecapture2</value>
   </data>
@@ -401,6 +419,24 @@
   </data>
   <data name="&gt;&gt;picturecapture2.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="picturecapture1.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="picturecapture1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="picturecapture1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 226</value>
+  </data>
+  <data name="picturecapture1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 200</value>
+  </data>
+  <data name="picturecapture1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="picturecapture1.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
   </data>
   <data name="&gt;&gt;picturecapture1.Name" xml:space="preserve">
     <value>picturecapture1</value>
@@ -466,66 +502,6 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;pictureid.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="picturecapture1.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="picturecapture1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="picturecapture1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 226</value>
-  </data>
-  <data name="picturecapture1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 200</value>
-  </data>
-  <data name="picturecapture1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="picturecapture1.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;picturecapture1.Name" xml:space="preserve">
-    <value>picturecapture1</value>
-  </data>
-  <data name="&gt;&gt;picturecapture1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;picturecapture1.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;picturecapture1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="picturecapture2.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="picturecapture2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="picturecapture2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 432</value>
-  </data>
-  <data name="picturecapture2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 200</value>
-  </data>
-  <data name="picturecapture2.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="picturecapture2.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;picturecapture2.Name" xml:space="preserve">
-    <value>picturecapture2</value>
-  </data>
-  <data name="&gt;&gt;picturecapture2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;picturecapture2.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;picturecapture2.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">

@@ -1,4 +1,4 @@
-CREATE TABLE `organization` (
+use face;CREATE TABLE `organization` (
   `idorganization` int(11) NOT NULL AUTO_INCREMENT,
   `businessnumber` varchar(45) NOT NULL,
   `name` varchar(45) NOT NULL,

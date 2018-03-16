@@ -1,4 +1,4 @@
-CREATE TABLE `noidloghis` (
+use face;CREATE TABLE `noidloghis` (
   `noidloghis` int(11) NOT NULL AUTO_INCREMENT,
   `idcardno` varchar(45) NOT NULL,
   `capturephoto` json NOT NULL,

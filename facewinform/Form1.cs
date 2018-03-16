@@ -450,5 +450,57 @@ namespace face
         {
 
         }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (continuouscapture < 3)
+            {
+                UpdateStatus(string.Format("请先等待人脸照片抓取成功！-{0}", continuouscapture));
+                return;
+            }
+            var ui = new NoidInput();
+            for(int i = 0; i < 3; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        ui.pic1 = File.ReadAllBytes(FileNameCapture[i]);
+                        break;
+                    case 1:
+                        ui.pic2 = File.ReadAllBytes(FileNameCapture[i]);
+                        break;
+                    default:
+                        ui.pic3 = File.ReadAllBytes(FileNameCapture[i]);
+                        break;
+                }
+            }
+            ui.id = textBoxid.Text;
+            ui.name = textBoxname.Text;
+
+            var url = string.Format("http://{0}/{1}", host, "NoidUpload");
+            try
+            {
+                //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 111) });
+
+                var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
+                //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
+                using (var http = new HttpClient(handler))
+                {
+                    //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 333) });
+                    var content = new StringContent(JsonConvert.SerializeObject(ui));
+                    //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 444) });
+                    content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                    var hrm = http.PostAsync(url, content);
+                    var response = hrm.Result;
+                    string srcString = response.Content.ReadAsStringAsync().Result;
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("NoidUpload.{0},", srcString) });
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("NoidUpload.{0},", response.StatusCode) });
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("NoidUpload.{0},", hrm.Status) });
+                }
+            }
+            catch (Exception ex)
+            {
+                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("NoidUpload.{0},", ex.Message) });
+            }
+        }
     }
 }

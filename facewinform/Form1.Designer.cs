@@ -41,25 +41,25 @@
             this.pictureBoxcurrentimage = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.pictureid = new System.Windows.Forms.PictureBox();
-            this.picturecapture1 = new System.Windows.Forms.PictureBox();
             this.picturecapture2 = new System.Windows.Forms.PictureBox();
+            this.picturecapture1 = new System.Windows.Forms.PictureBox();
+            this.pictureid = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBoxid = new System.Windows.Forms.TextBox();
             this.textBoxname = new System.Windows.Forms.TextBox();
+            this.textBoxid = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxsource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picturecapture1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturecapture2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturecapture1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureid)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -120,6 +120,7 @@
             resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // buttonrestart
             // 
@@ -152,12 +153,12 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
-            // pictureid
+            // picturecapture2
             // 
-            resources.ApplyResources(this.pictureid, "pictureid");
-            this.pictureid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureid.Name = "pictureid";
-            this.pictureid.TabStop = false;
+            resources.ApplyResources(this.picturecapture2, "picturecapture2");
+            this.picturecapture2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picturecapture2.Name = "picturecapture2";
+            this.picturecapture2.TabStop = false;
             // 
             // picturecapture1
             // 
@@ -166,12 +167,12 @@
             this.picturecapture1.Name = "picturecapture1";
             this.picturecapture1.TabStop = false;
             // 
-            // picturecapture2
+            // pictureid
             // 
-            resources.ApplyResources(this.picturecapture2, "picturecapture2");
-            this.picturecapture2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picturecapture2.Name = "picturecapture2";
-            this.picturecapture2.TabStop = false;
+            resources.ApplyResources(this.pictureid, "pictureid");
+            this.pictureid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureid.Name = "pictureid";
+            this.pictureid.TabStop = false;
             // 
             // groupBox3
             // 
@@ -198,19 +199,15 @@
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
             // 
-            // groupBox6
+            // textBoxname
             // 
-            this.groupBox6.Controls.Add(this.buttonstopcapture);
-            this.groupBox6.Controls.Add(this.buttonrestart);
-            resources.ApplyResources(this.groupBox6, "groupBox6");
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.TabStop = false;
+            resources.ApplyResources(this.textBoxname, "textBoxname");
+            this.textBoxname.Name = "textBoxname";
             // 
-            // label1
+            // textBoxid
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Name = "label1";
+            resources.ApplyResources(this.textBoxid, "textBoxid");
+            this.textBoxid.Name = "textBoxid";
             // 
             // label2
             // 
@@ -218,15 +215,19 @@
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label2.Name = "label2";
             // 
-            // textBoxid
+            // label1
             // 
-            resources.ApplyResources(this.textBoxid, "textBoxid");
-            this.textBoxid.Name = "textBoxid";
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.Name = "label1";
             // 
-            // textBoxname
+            // groupBox6
             // 
-            resources.ApplyResources(this.textBoxname, "textBoxname");
-            this.textBoxname.Name = "textBoxname";
+            this.groupBox6.Controls.Add(this.buttonstopcapture);
+            this.groupBox6.Controls.Add(this.buttonrestart);
+            resources.ApplyResources(this.groupBox6, "groupBox6");
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.TabStop = false;
             // 
             // Form1
             // 
@@ -258,9 +259,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picturecapture1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturecapture2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picturecapture1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureid)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);

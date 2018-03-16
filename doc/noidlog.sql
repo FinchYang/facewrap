@@ -1,3 +1,5 @@
+
+use face;
 CREATE TABLE `noidlog` (
   `idnoidlog` int(11) NOT NULL AUTO_INCREMENT,
   `idcardno` varchar(45) NOT NULL,
