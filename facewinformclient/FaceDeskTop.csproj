@@ -138,6 +138,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DetectFace.cs" />
+    <Compile Include="FaceFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

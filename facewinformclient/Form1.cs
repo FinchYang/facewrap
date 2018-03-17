@@ -108,7 +108,7 @@ namespace face
             var a = new System.Diagnostics.Process();
             a.StartInfo.UseShellExecute = false;
             a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
-            a.StartInfo.CreateNoWindow = true;
+          //  a.StartInfo.CreateNoWindow = true;
             a.StartInfo.Arguments = string.Format(" {0} {1}", capturefile, FileNameId);
             capturephotofile = capturefile;
             a.StartInfo.FileName = Path.Combine(homepath, "compare", "FaceCompareCon.exe");
@@ -186,12 +186,6 @@ namespace face
             {
                 BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", ex.Message) });
             }
-        }
-
-        public struct FaceFile
-        {
-            public byte[] fcontent;
-            public int flen;
         }
         static FaceFile freadAll(string fname)
         {
