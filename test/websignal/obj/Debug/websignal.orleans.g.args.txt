@@ -1,0 +1,2 @@
+/in:obj\Debug\websignal.dll
+/out:C:\dev\FaceServer\websignal\obj\Debug\websignal.orleans.g.cs

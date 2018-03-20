@@ -1,0 +1,14 @@
+C:\dev\FaceServer\facewinform\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+C:\dev\FaceServer\facewinform\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+C:\dev\FaceServer\facewinform\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+C:\dev\FaceServer\facewinform\ConsoleApp1\obj\Debug\test id read.csprojResolveAssemblyReference.cache
+C:\dev\FaceServer\facewinform\ConsoleApp1\obj\Debug\test id read.csproj.CoreCompileInputs.cache
+C:\dev\FaceServer\facewinform\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+C:\dev\FaceServer\facewinform\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
+F:\dev\FaceServer\facewinform\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+F:\dev\FaceServer\facewinform\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+F:\dev\FaceServer\facewinform\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+F:\dev\FaceServer\facewinform\ConsoleApp1\obj\Debug\test id read.csprojResolveAssemblyReference.cache
+F:\dev\FaceServer\facewinform\ConsoleApp1\obj\Debug\test id read.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\facewinform\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+F:\dev\FaceServer\facewinform\ConsoleApp1\obj\Debug\ConsoleApp1.pdb

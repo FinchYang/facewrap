@@ -6,29 +6,18 @@
 *.pdb
 *.png
 *.bmp
-*.ico
 *.jpg
 *.jpeg
-*.xls*
-*.doc*
 *.bak
 *.tmp
-*.nupkg
 *.tlb
 *.cache
 *.zip
-*.user
 *.mfb
 *.suo
 *.gif
-*.xaml
-*.baml
 *.log
-*.txt
-*.json
 
-*.manifest
-*.nuspec
 # Precompiled Headers
 *.gch
 *.pch
@@ -38,7 +27,6 @@
 *.so
 *.dylib
 *.dll
-.vs
 # Fortran module files
 *.mod
 *.smod
