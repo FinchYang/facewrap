@@ -173,4 +173,8 @@ F:\dev\FaceServer\FaceServerCloudApi\obj\Debug\FaceServer.csproj.CoreCompileInpu
 F:\dev\FaceServer\FaceServerCloudApi\obj\Debug\FaceServer.csproj.CopyComplete
 F:\dev\FaceServer\FaceServerCloudApi\obj\Debug\FaceServer.dll
 F:\dev\FaceServer\FaceServerCloudApi\obj\Debug\FaceServer.pdb
+I:\faceoutput\server\ApplicationInsights.config
+I:\faceoutput\server\FaceServer.dll.config
+I:\faceoutput\server\FaceServer.dll
+I:\faceoutput\server\FaceServer.pdb
 F:\dev\FaceServer\FaceServerCloudApi\obj\Debug\FaceServer.orleans.g.cs

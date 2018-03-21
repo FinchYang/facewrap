@@ -31,4 +31,8 @@ E:\face\server\FaceServerDaemon.exe.config
 E:\face\server\FaceServerDaemon.exe
 E:\face\server\FaceServerDaemon.pdb
 F:\dev\FaceServer\orleansdaemon\FaceServerDaemon\obj\Debug\FaceServerDaemon.csproj.CopyComplete
+I:\faceoutput\server\orleansdaemon\OrleansConfiguration.xml
+I:\faceoutput\server\orleansdaemon\FaceServerDaemon.exe.config
+I:\faceoutput\server\orleansdaemon\FaceServerDaemon.exe
+I:\faceoutput\server\orleansdaemon\FaceServerDaemon.pdb
 F:\dev\FaceServer\orleansdaemon\FaceServerDaemon\obj\Debug\FaceServerDaemon.orleans.g.cs

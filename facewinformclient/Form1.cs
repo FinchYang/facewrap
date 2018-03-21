@@ -106,17 +106,26 @@ namespace face
             var stop = new Stopwatch();
             stop.Start();
             var a = new System.Diagnostics.Process();
-            a.StartInfo.UseShellExecute = false;
+            a.StartInfo.UseShellExecute = true;
             a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
           //  a.StartInfo.CreateNoWindow = true;
             a.StartInfo.Arguments = string.Format(" {0} {1}", capturefile, FileNameId);
+            UpdateStatus(string.Format("files:{0}", a.StartInfo.Arguments));
             capturephotofile = capturefile;
             a.StartInfo.FileName = Path.Combine(homepath, "compare", "FaceCompareCon.exe");
+          //  a.StartInfo.FileName = Path.Combine(homepath, "compare", "ccompare.exe");
             a.Start();
             a.WaitForExit();
+            var ret = a.ExitCode;
             stop.Stop();
-            UpdateStatus(string.Format("time elapsed:{0}", stop.ElapsedMilliseconds));
-
+            UpdateStatus(string.Format("time elapsed:{0},exitcode={1}", stop.ElapsedMilliseconds,ret));
+            //if (ret == 1)
+            //{
+            //    MessageBox.Show("比对成功，是同一个人");
+            //               FileNameId = string.Empty;
+            //    return true;
+            //}
+            //else return false;
             var resultfile = Path.Combine(homepath, "compare", "compareresult.txt");
             var result = JsonConvert.DeserializeObject<result>(File.ReadAllText(resultfile));
             UpdateStatus(string.Format("result score:{0}", result.score));
@@ -128,7 +137,7 @@ namespace face
                     case CompareStatus.unkown:
                         break;
                     case CompareStatus.success:
-                        UpdateStatus(string.Format("第{1}张照片对比是同一个人，WARNING_VALUE={0}", 73,index));
+                        UpdateStatus(string.Format("第{1}张照片对比是同一个人，WARNING_VALUE={0}", 73, index));
                         var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
                         th.Start(upload);
                         File.Delete(resultfile);
@@ -151,7 +160,7 @@ namespace face
             }
 
             if (result.ok && result.status == CompareStatus.success) return true;
-            else return false;            
+            else return false;
         }
 
         private void uploadinfo(object obj)

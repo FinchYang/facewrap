@@ -17,7 +17,8 @@
 *.suo
 *.gif
 *.log
-
+*/obj/*
+*/bin/*
 # Precompiled Headers
 *.gch
 *.pch

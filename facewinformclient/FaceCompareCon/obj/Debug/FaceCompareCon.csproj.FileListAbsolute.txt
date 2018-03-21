@@ -22,3 +22,6 @@ F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Debug\FaceCompareCon.cspr
 F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Debug\FaceCompareCon.csproj.CopyComplete
 F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Debug\FaceCompareCon.exe
 F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Debug\FaceCompareCon.pdb
+I:\faceoutput\desktop\compare\FaceCompareCon.exe.config
+I:\faceoutput\desktop\compare\FaceCompareCon.exe
+I:\faceoutput\desktop\compare\FaceCompareCon.pdb

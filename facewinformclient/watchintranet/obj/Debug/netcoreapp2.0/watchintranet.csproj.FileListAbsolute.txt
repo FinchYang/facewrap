@@ -3,9 +3,9 @@ F:\dev\FaceServer\facewinformclient\watchintranet\bin\Debug\netcoreapp2.0\watchi
 F:\dev\FaceServer\facewinformclient\watchintranet\bin\Debug\netcoreapp2.0\watchintranet.runtimeconfig.dev.json
 F:\dev\FaceServer\facewinformclient\watchintranet\bin\Debug\netcoreapp2.0\watchintranet.dll
 F:\dev\FaceServer\facewinformclient\watchintranet\bin\Debug\netcoreapp2.0\watchintranet.pdb
-F:\dev\FaceServer\facewinformclient\watchintranet\obj\Debug\netcoreapp2.0\watchintranet.csprojResolveAssemblyReference.cache
 F:\dev\FaceServer\facewinformclient\watchintranet\obj\Debug\netcoreapp2.0\watchintranet.csproj.CoreCompileInputs.cache
 F:\dev\FaceServer\facewinformclient\watchintranet\obj\Debug\netcoreapp2.0\watchintranet.AssemblyInfoInputs.cache
 F:\dev\FaceServer\facewinformclient\watchintranet\obj\Debug\netcoreapp2.0\watchintranet.AssemblyInfo.cs
 F:\dev\FaceServer\facewinformclient\watchintranet\obj\Debug\netcoreapp2.0\watchintranet.dll
 F:\dev\FaceServer\facewinformclient\watchintranet\obj\Debug\netcoreapp2.0\watchintranet.pdb
+F:\dev\FaceServer\facewinformclient\watchintranet\obj\Debug\netcoreapp2.0\watchintranet.csprojResolveAssemblyReference.cache
