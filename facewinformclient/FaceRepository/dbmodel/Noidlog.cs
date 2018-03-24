@@ -8,10 +8,10 @@ namespace FaceRepository.dbmodel
     {
         public int Idnoidlog { get; set; }
         public string Idcardno { get; set; }
-        public JsonObject<PictureInfo> Capturephoto { get; set; }
-        public sbyte? Compared { get; set; }
-        public short? Result { get; set; }
+        public JsonObject<PictureInfoNoid> Capturephoto { get; set; }
+        public bool Compared { get; set; }
+        public short Result { get; set; }
         public string Businessnumber { get; set; }
-        public sbyte? Notified { get; set; }
+        public bool Notified { get; set; }
     }
 }

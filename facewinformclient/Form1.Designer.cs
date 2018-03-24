@@ -52,6 +52,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.buttongetresult = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxsource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).BeginInit();
@@ -190,6 +191,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.buttongetresult);
             this.groupBox5.Controls.Add(this.textBoxname);
             this.groupBox5.Controls.Add(this.textBoxid);
             this.groupBox5.Controls.Add(this.label2);
@@ -228,6 +230,13 @@
             resources.ApplyResources(this.groupBox6, "groupBox6");
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.TabStop = false;
+            // 
+            // buttongetresult
+            // 
+            resources.ApplyResources(this.buttongetresult, "buttongetresult");
+            this.buttongetresult.Name = "buttongetresult";
+            this.buttongetresult.UseVisualStyleBackColor = true;
+            this.buttongetresult.Click += new System.EventHandler(this.buttongetresult_Click);
             // 
             // Form1
             // 
@@ -296,6 +305,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button buttongetresult;
     }
 }
 

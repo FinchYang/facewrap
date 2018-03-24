@@ -286,7 +286,7 @@
     <value>NoControl</value>
   </data>
   <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>169, 83</value>
+    <value>21, 87</value>
   </data>
   <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>151, 23</value>
@@ -307,7 +307,7 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="buttonrestart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -552,6 +552,33 @@
   <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="buttongetresult.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttongetresult.Location" type="System.Drawing.Point, System.Drawing">
+    <value>207, 87</value>
+  </data>
+  <data name="buttongetresult.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 23</value>
+  </data>
+  <data name="buttongetresult.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="buttongetresult.Text" xml:space="preserve">
+    <value>对比结果</value>
+  </data>
+  <data name="&gt;&gt;buttongetresult.Name" xml:space="preserve">
+    <value>buttongetresult</value>
+  </data>
+  <data name="&gt;&gt;buttongetresult.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttongetresult.Parent" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="&gt;&gt;buttongetresult.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="textBoxname.Location" type="System.Drawing.Point, System.Drawing">
     <value>100, 50</value>
   </data>
@@ -571,7 +598,7 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;textBoxname.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="textBoxid.Location" type="System.Drawing.Point, System.Drawing">
     <value>100, 20</value>
@@ -592,7 +619,7 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;textBoxid.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -625,7 +652,7 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -655,7 +682,7 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
     <value>558, 176</value>

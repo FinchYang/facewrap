@@ -169,6 +169,7 @@ namespace face
             ui.capturephoto = File.ReadAllBytes(capturephotofile);
             ui.idphoto = File.ReadAllBytes(idphotofile);
             
+          //  var url = string.Format("http://{0}/{1}", "localhost:5000", "PostCompared");
             var url = string.Format("http://{0}/{1}", host, action);
             try
             {
@@ -457,6 +458,11 @@ namespace face
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            if (textBoxid.Text.Length < 15)
+            {
+                UpdateStatus(string.Format("请输入正确的身份证号！"));
+                return;
+            }
             if (continuouscapture < 3)
             {
                 UpdateStatus(string.Format("请先等待人脸照片抓取成功！-{0}", continuouscapture));
@@ -500,11 +506,61 @@ namespace face
                     BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("NoidUpload.{0},", srcString) });
                     BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("NoidUpload.{0},", response.StatusCode) });
                     BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("NoidUpload.{0},", hrm.Status) });
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        continuouscapture = 0;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("NoidUpload.{0},", ex.Message) });
+            }
+        }
+
+        public class NoidResultInput
+        {
+            public string businessnumber { get; set; }
+        }
+        public class NoidResult
+        {
+            public string id { get; set; }
+            public CompareResult status { get; set; }
+        }
+        public enum CompareResult
+    {
+        unknown, success, failure, uncertainty
+    }
+    private void buttongetresult_Click(object sender, EventArgs e)
+        {
+            var url = string.Format("http://{0}/{1}?businessnumber={2}", host, "GetNoidResult","demo");
+            try
+            {
+                var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
+                using (var http = new HttpClient(handler))
+                {
+                    //var content = new StringContent(JsonConvert.SerializeObject(new NoidResultInput { businessnumber="demo"}));
+                    //content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                    var hrm = http.GetAsync(url);
+                    var response = hrm.Result;
+                    string srcString = response.Content.ReadAsStringAsync().Result;
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("GetNoidResult.{0},", srcString) });
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("GetNoidResult.{0},", response.StatusCode) });
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("GetNoidResult.{0},", hrm.Status) });
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        //continuouscapture = 0; 0-no result,1-success,2-failure,3-uncertainty
+                        var a = JsonConvert.DeserializeObject<List<NoidResult>>(srcString);
+                        foreach( var b in a)
+                        {
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("id.{0},{1}", b.id,b.status) });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("GetNoidResult.{0},", ex.Message) });
             }
         }
     }

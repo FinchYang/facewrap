@@ -124,13 +124,17 @@ namespace FaceRepository.Controllers
                     db.Noidlog.Add(new Noidlog
                     {
                         Idcardno = input.id,
-                        Capturephoto = new PictureInfo { base64pic = input.pic1 }
+                        Capturephoto = new PictureInfoNoid { base64pic1 = input.pic1                        ,
+                            base64pic2 = input.pic2,
+                            base64pic3 = input.pic3,
+                        },
+                        Businessnumber="demo"
                     });
                     await db.SaveChangesAsync();
                 }
                 var temp = Path.Combine(Path.GetTempPath(), input.id);
                 System.IO.File.WriteAllText(temp, JsonConvert.SerializeObject(input));
-                FtpUploadFile(temp);
+             //   FtpUploadFile(temp);
             }
             catch (Exception ex)
             {
@@ -139,22 +143,29 @@ namespace FaceRepository.Controllers
             return Ok(new commonresponse { status = 0, explanation = "ok" });
         }
         [HttpGet]
-        [Route("NoidUpload")]
-        public async Task<IActionResult> GetNoidResult([FromBody] NoidResultInput input)
+        [Route("GetNoidResult")]
+        public async Task<IActionResult> GetNoidResult(string businessnumber)
         {
+            _log.LogError("ip={0},port={1},businessid={2}", Request.HttpContext.Connection.RemoteIpAddress,
+                   Request.HttpContext.Connection.RemotePort, businessnumber);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             try
             {
+                _log.LogError("ip={0},port={1},businessid={2}", Request.HttpContext.Connection.RemoteIpAddress,
+                    Request.HttpContext.Connection.RemotePort,businessnumber);
+
                 using (var db = new dbmodel.faceContext())
                 {
-                    var result = db.Noidlog.Where(c => c.Businessnumber == input.businessnumber && c.Compared == 1 && c.Notified == 0);
+                    var result = db.Noidlog.Where(c => c.Businessnumber == businessnumber && c.Compared
+                    //&& !c.Notified
+                    );
                     var rl = new List<NoidResult>();
                     foreach (var a in result)
                     {
-                        a.Notified = 1;
+                        a.Notified = true;
                         rl.Add(new NoidResult
                         {
                             id = a.Idcardno,
@@ -164,8 +175,8 @@ namespace FaceRepository.Controllers
                         {
                             Idcardno = a.Idcardno,
                             Capturephoto = a.Capturephoto,
-                            Compared = a.Compared.Value,
-                            Result = a.Result.Value,
+                            Compared = a.Compared,
+                            Result = a.Result,
                             Businessnumber = a.Businessnumber,
                             Stamp = DateTime.Now
                         });
