@@ -19,3 +19,6 @@ F:\dev\FaceServer\orleansdaemon\testfaces\obj\Debug\testfaces.csproj.CoreCompile
 F:\dev\FaceServer\orleansdaemon\testfaces\obj\Debug\testfaces.csproj.CopyComplete
 F:\dev\FaceServer\orleansdaemon\testfaces\obj\Debug\testfaces.exe
 F:\dev\FaceServer\orleansdaemon\testfaces\obj\Debug\testfaces.pdb
+I:\faceoutput\testfaces.exe.config
+I:\faceoutput\testfaces.exe
+I:\faceoutput\testfaces.pdb
