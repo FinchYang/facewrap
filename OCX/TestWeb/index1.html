@@ -6,13 +6,17 @@
     <meta charset="utf-8" />
 </head>
 <body>
-    <object id="x" classid="clsid:7cbebdca-776e-4238-9191-1554c6872b8b" TYPE="application/x-itst-activex" ></object>
+    <object id="x" classid="clsid:7cbebdca-776e-4238-9191-1554c6872b8b" TYPE="application/x-itst-activex"></object>
     <hr />
     <input type="button" value="调用ActiveX中的多线程方法" onclick="fnTest()" />
+    <input type="text" id="result" placeholder="---hehe" />
     <script type="text/javascript">
         var fnTest = function () {
             var x = document.getElementById("x");
-            x.Start("这是js中的参数");
+            var y = x.face_compare_by_fixedfiles("I:/faceoutput/ycl1.jpg", "I:/faceoutput/5879.jpg");//传入图片文件
+            x.Start("这是js--" + y);
+
+            document.getElementById("result").innerText = y;
         }
     </script>
 </body>

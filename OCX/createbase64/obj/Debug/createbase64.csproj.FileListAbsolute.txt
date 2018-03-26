@@ -1,0 +1,7 @@
+F:\dev\FaceServer\OCX\createbase64\bin\Debug\createbase64.exe.config
+F:\dev\FaceServer\OCX\createbase64\bin\Debug\createbase64.exe
+F:\dev\FaceServer\OCX\createbase64\bin\Debug\createbase64.pdb
+F:\dev\FaceServer\OCX\createbase64\obj\Debug\createbase64.csprojResolveAssemblyReference.cache
+F:\dev\FaceServer\OCX\createbase64\obj\Debug\createbase64.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\OCX\createbase64\obj\Debug\createbase64.exe
+F:\dev\FaceServer\OCX\createbase64\obj\Debug\createbase64.pdb

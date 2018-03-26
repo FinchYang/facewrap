@@ -74,7 +74,7 @@ namespace TestOCX
                 a.StartInfo.UseShellExecute = true;
                 a.StartInfo.WorkingDirectory = @homepath;// Path.Combine(homepath, "compare");
                 //  a.StartInfo.CreateNoWindow = true;
-                a.StartInfo.Arguments = string.Format(" {0} {1}", pic1, pic1);
+                a.StartInfo.Arguments = string.Format(" {0} {1}", pic1, pic2);
                 Start(string.Format("files:{0}", a.StartInfo.Arguments));
 
                 a.StartInfo.FileName = Path.Combine(homepath, "a.exe");
