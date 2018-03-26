@@ -5,7 +5,7 @@
 #include "face-sdk.h"
 #include "sdk.h"
 
-#pragma comment(lib, "lib/core_sdk.lib")
+#pragma comment(lib, "core_sdk.lib")
 #define WARNING_VALUE 73.0f
 
 typedef struct FaceFile

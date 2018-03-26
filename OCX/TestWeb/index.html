@@ -7,13 +7,14 @@
 </head>
 <body>
     <object id="x" classid="clsid:7cbebdca-776e-4238-9191-1554c6872b8b"></object>
-    <hr />
-    <input type="button" value="调用ActiveX中的多线程方法" onclick="fnTest()" />
+  <!--//  <hr />-->
+    <input type="button" value="调用中的多线程方法" onclick="fnTest()" />
     <input type="text" id="result" placeholder="haha" />
     <script type="text/javascript">
         var fnTest = function () {
             var x = document.getElementById("x");
-            var y = x.face_compare("这是js中的参数", "asdkf");
+            var y = x.face_compare_by_fixedfiles("I:/faceoutput/ycl1.jpg", "I:/faceoutput/5879.jpg");//传入图片文件
+            //var y = x.face_compare_by_base64(base64pic1, base64pic2);//传入不带前缀的base64 jpeg图片
             x.Start("这是js--"+y);
 
             document.getElementById("result").innerText = y;

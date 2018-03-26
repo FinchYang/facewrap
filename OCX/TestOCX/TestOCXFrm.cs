@@ -19,7 +19,7 @@ namespace TestOCX
         const double WARNING_VALUE = 73.0f;
         public struct Engine { };
       
-        [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Winapi)]
         public extern static int mgv_set_log(int level);
         [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
         public extern static unsafe int mgv_create_engine(string model_path, Engine** pengine);
@@ -36,7 +36,57 @@ namespace TestOCX
             InitializeComponent();
          
         }
-       
+        string homepath = @"F:\dev\FaceServer\facewinformclient\ccompare";
+        public string face_compare_by_fixedfiles(object aa, object b)
+        {
+            try
+            {             
+                var a = new System.Diagnostics.Process();
+                a.StartInfo.UseShellExecute = true;
+                a.StartInfo.WorkingDirectory = @homepath;// Path.Combine(homepath, "compare");
+                //  a.StartInfo.CreateNoWindow = true;
+                a.StartInfo.Arguments = string.Format(" {0} {1}", aa.ToString(), b.ToString());
+                Start(string.Format("files:{0}", a.StartInfo.Arguments));
+                
+                a.StartInfo.FileName = Path.Combine(homepath,  "a.exe");
+                //  a.StartInfo.FileName = Path.Combine(homepath, "compare", "ccompare.exe");
+                a.Start();
+                a.WaitForExit();
+                return a.ExitCode.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        public string face_compare_by_base64(object aa, object b)
+        {
+            try
+            {
+                var fbyte1 = Convert.FromBase64String(aa.ToString());
+                var fbyte2 = Convert.FromBase64String(b.ToString());
+                var pic1 = Path.GetTempFileName() + ".jpg";
+                var pic2 = Path.GetTempFileName() + ".jpg";
+                File.WriteAllBytes(pic1, fbyte1);
+                File.WriteAllBytes(pic2, fbyte2);
+
+                var a = new System.Diagnostics.Process();
+                a.StartInfo.UseShellExecute = true;
+                a.StartInfo.WorkingDirectory = @homepath;// Path.Combine(homepath, "compare");
+                //  a.StartInfo.CreateNoWindow = true;
+                a.StartInfo.Arguments = string.Format(" {0} {1}", pic1, pic1);
+                Start(string.Format("files:{0}", a.StartInfo.Arguments));
+
+                a.StartInfo.FileName = Path.Combine(homepath, "a.exe");
+                a.Start();
+                a.WaitForExit();
+                return a.ExitCode.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
         public string face_compare(object a, object b)
         {
             try
@@ -44,8 +94,9 @@ namespace TestOCX
                 unsafe
                 {
                     Engine* engine = null;
-
+                    Start("before mgv_set_log");
                     mgv_set_log(0);
+                    Start("before mgv_create_engine");
                     //  fixed (unsafe engine = new Engine()) {
                     mgv_create_engine("", &engine);
                     //  }
@@ -168,7 +219,7 @@ namespace TestOCX
         }
         public void Start(object obj)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 2; i++)
             {
                 Thread t = new Thread(new ParameterizedThreadStart(ShowTime));
                 t.Start(obj.ToString() + "，线程：" + i.ToString());

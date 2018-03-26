@@ -89,8 +89,9 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dateTimePicker1);
+            this.Enabled = false;
             this.Name = "TestOCXFrm";
-            this.Size = new System.Drawing.Size(1027, 283);
+            this.Size = new System.Drawing.Size(0, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
