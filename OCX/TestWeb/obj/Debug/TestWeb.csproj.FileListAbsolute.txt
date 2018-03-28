@@ -19,3 +19,12 @@ F:\dev\FaceServer\OCX\TestWeb\obj\Debug\TestWeb.csprojResolveAssemblyReference.c
 F:\dev\FaceServer\OCX\TestWeb\obj\Debug\TestWeb.csproj.CoreCompileInputs.cache
 F:\dev\FaceServer\OCX\TestWeb\obj\Debug\TestWeb.dll
 F:\dev\FaceServer\OCX\TestWeb\obj\Debug\TestWeb.pdb
+c:\ccompare\TestWeb.dll.config
+c:\ccompare\TestWeb.dll
+c:\ccompare\TestWeb.pdb
+c:\ccompare\index2.html
+c:\ccompare\index1.html
+c:\ccompare\index.html
+c:\ccompare\Web.config
+c:\ccompare\Web.Debug.config
+c:\ccompare\Web.Release.config

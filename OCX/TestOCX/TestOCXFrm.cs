@@ -36,17 +36,22 @@ namespace TestOCX
             InitializeComponent();
          
         }
-        string homepath = @"F:\dev\FaceServer\facewinformclient\ccompare";
-        public string face_compare_by_fixedfiles(object aa, object b)
+        string homepath = @"c:\ccompare";
+        public string face_compare_by_fixedfiles(object aa, object b,bool displayinfo=false)
         {
             try
             {             
                 var a = new System.Diagnostics.Process();
-                a.StartInfo.UseShellExecute = true;
+               
                 a.StartInfo.WorkingDirectory = @homepath;// Path.Combine(homepath, "compare");
-                //  a.StartInfo.CreateNoWindow = true;
+                if (!displayinfo) {
+                    a.StartInfo.CreateNoWindow = true;
+                    a.StartInfo.UseShellExecute = false;
+                    a.StartInfo.RedirectStandardOutput = true;
+                }
+                  
                 a.StartInfo.Arguments = string.Format(" {0} {1}", aa.ToString(), b.ToString());
-                Start(string.Format("files:{0}", a.StartInfo.Arguments));
+              //  Start(string.Format("files:{0},{1}",displayinfo, a.StartInfo.Arguments));
                 
                 a.StartInfo.FileName = Path.Combine(homepath,  "a.exe");
                 //  a.StartInfo.FileName = Path.Combine(homepath, "compare", "ccompare.exe");
@@ -59,7 +64,7 @@ namespace TestOCX
                 return ex.Message;
             }
         }
-        public string face_compare_by_base64(object aa, object b)
+        public string face_compare_by_base64(object aa, object b, bool displayinfo = false)
         {
             try
             {
@@ -71,11 +76,15 @@ namespace TestOCX
                 File.WriteAllBytes(pic2, fbyte2);
 
                 var a = new System.Diagnostics.Process();
-                a.StartInfo.UseShellExecute = true;
+                if (!displayinfo)
+                {
+                    a.StartInfo.CreateNoWindow = true;
+                    a.StartInfo.UseShellExecute = false;
+                    a.StartInfo.RedirectStandardOutput = true;
+                }
                 a.StartInfo.WorkingDirectory = @homepath;// Path.Combine(homepath, "compare");
-                //  a.StartInfo.CreateNoWindow = true;
                 a.StartInfo.Arguments = string.Format(" {0} {1}", pic1, pic2);
-                Start(string.Format("files:{0}", a.StartInfo.Arguments));
+              //  Start(string.Format("files:{0}", a.StartInfo.Arguments));
 
                 a.StartInfo.FileName = Path.Combine(homepath, "a.exe");
                 a.Start();

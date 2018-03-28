@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     float score = CalcFeatureSimilarity(featData1, featLen1, featData2, featLen2);
     ret = mgv_destroy_engine(engine);
 printf("%f,%d",score,ret);
-getchar();
+//getchar();
     if (score <= 57.0f)
     {
         printf("no\n");

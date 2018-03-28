@@ -26,4 +26,8 @@ F:\dev\FaceServer\OCX\TestOCX\obj\Debug\TestOCX.csproj.CoreCompileInputs.cache
 F:\dev\FaceServer\OCX\TestOCX\obj\Debug\TestOCX.dll
 F:\dev\FaceServer\OCX\TestOCX\obj\Debug\TestOCX.pdb
 F:\dev\FaceServer\OCX\TestOCX\bin\Debug\TestOCX.tlb
+c:\ccompare\regDll.cmd
+c:\ccompare\TestOCX.dll
+c:\ccompare\TestOCX.pdb
+c:\ccompare\TestOCX.tlb
 F:\dev\FaceServer\OCX\TestOCX\obj\Debug\TestOCX.csprojResolveAssemblyReference.cache

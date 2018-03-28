@@ -106,9 +106,10 @@ namespace face
             var stop = new Stopwatch();
             stop.Start();
             var a = new System.Diagnostics.Process();
-            a.StartInfo.UseShellExecute = true;
+            a.StartInfo.UseShellExecute = false;
+            a.StartInfo.RedirectStandardOutput = true;
             a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
-          //  a.StartInfo.CreateNoWindow = true;
+            a.StartInfo.CreateNoWindow = true;
             a.StartInfo.Arguments = string.Format(" {0} {1}", capturefile, FileNameId);
             UpdateStatus(string.Format("files:{0}", a.StartInfo.Arguments));
             capturephotofile = capturefile;
@@ -370,6 +371,7 @@ namespace face
 
         private void buttonrestart_Click(object sender, EventArgs e)
         {
+            continuouscapture = 0;
             grabber = new VideoCapture();
             grabber.QueryFrame();
             Application.Idle += new EventHandler(FrameGrabber);
