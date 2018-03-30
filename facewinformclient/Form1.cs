@@ -16,8 +16,10 @@ using System.Drawing.Imaging;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net;
-using System.Net.Http;
 using System.Configuration;
+using System.Net.Http;
+using System.Threading;
+using System.Reflection;
 
 namespace face
 {
@@ -45,8 +47,8 @@ namespace face
         public extern static int ReadBaseMsg(byte[] pMsg, int len);
 
         [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int ReadNewAppMsg(byte[] pMsg, out int len);  
-
+        public extern static int ReadNewAppMsg(byte[] pMsg, out int len);
+        private Thread _tCheckSelfUpdate;
         private FilterInfoCollection videoDevices;
         private string sourceImage = string.Empty;
         private string currentImage = string.Empty;
@@ -60,7 +62,7 @@ namespace face
         Image<Bgr, Byte> currentFrame; //current image aquired from webcam for display
                                        //  Image<Gray, byte> result, TrainedFace = null; //used to store the result image and trained face
                                        //   Image<Gray, byte> gray_frame = null; //grayscale current image aquired from webcam for processing
-        private int facenum = 0;
+     //   private int facenum = 0;
         string homepath = string.Empty;
         string host = string.Empty;
         string action = string.Empty;
@@ -163,7 +165,65 @@ namespace face
             if (result.ok && result.status == CompareStatus.success) return true;
             else return false;
         }
+        internal class UpdateInfo
+        {
+            public string Name { get; set; }
+            public string Date { get; set; }
+            public byte[] FileContent { get; set; }
+            public UpdateInfo()
+            {
+            }
+        }
+        private void CheckUpdate()
+        {
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            var lv = long.Parse(version.Replace(".", ""));
+            var url = string.Format("http://{0}/home/GetNoticeUpdatePackage?version={1}", host, lv);
+            var srcString = string.Empty;
+            var update = true;
+            do
+            {
+                try
+                {
+                    using (var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip })
+                    using (var http = new HttpClient(handler))
+                    {
+                        var response = http.GetAsync(url);
+                        // response.EnsureSuccessStatusCode();
+                        srcString = response.Result.Content.ReadAsStringAsync().Result;
+                    }
+                    try
+                    {
+                        var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
+                        if (ui.Name == string.Empty) return;
+                        var exportPath = AppDomain.CurrentDomain.BaseDirectory;
 
+                        var path = Path.Combine(exportPath, ui.Name);
+                        File.WriteAllBytes(path, ui.FileContent);
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("CheckUpdate download  {2} ok :{0},{1}",
+                                version, ui.Date,ui.Name) });
+                        if (MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
+                            MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                        {
+                            Process.Start(path);
+                            Process.GetCurrentProcess().Kill();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("CheckUpdate processing :{0},url={1},{2}", version, url, ex.Message) });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("发送请求时出错"))
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新查询:{0},url={1},{2}", version, url, "网站可能在更新，下次启动再查。") });
+                    else
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新查询 error:{0},url={1},{2}", version, url, ex.Message) });
+                }
+                Thread.Sleep(1000 * 60 * 60);
+            } while (update);
+        }
         private void uploadinfo(object obj)
         {
             var ui = (ComparedInfo)obj;
@@ -180,9 +240,7 @@ namespace face
              //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
                 using (var http = new HttpClient(handler))
                 {
-                  //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 333) });
                     var content = new StringContent(JsonConvert.SerializeObject(ui));
-                  //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 444) });
                     content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                     var hrm = http.PostAsync(url, content);
                     var response = hrm.Result;
@@ -264,6 +322,9 @@ namespace face
                 grabber.QueryFrame();
 
                 Application.Idle += new EventHandler(FrameGrabber);
+
+                _tCheckSelfUpdate = new Thread(new ThreadStart(CheckUpdate));
+                _tCheckSelfUpdate.Start();
             }
             catch (ApplicationException)
             {
@@ -335,6 +396,7 @@ namespace face
                 Application.Idle -= new EventHandler(FrameGrabber);
                 grabber.Dispose();
                 recognizer.Dispose();
+                _tCheckSelfUpdate.Abort();
             }
             catch (Exception)
             {
