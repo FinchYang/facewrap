@@ -1,0 +1,6 @@
+F:\dev\FaceServer\OCX\testgc\bin\Debug\testgc.exe
+F:\dev\FaceServer\OCX\testgc\bin\Debug\testgc.pdb
+F:\dev\FaceServer\OCX\testgc\obj\Debug\testgc.csprojResolveAssemblyReference.cache
+F:\dev\FaceServer\OCX\testgc\obj\Debug\testgc.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\OCX\testgc\obj\Debug\testgc.exe
+F:\dev\FaceServer\OCX\testgc\obj\Debug\testgc.pdb

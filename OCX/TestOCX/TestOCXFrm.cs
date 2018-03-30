@@ -23,6 +23,7 @@ namespace TestOCX
         const double WARNING_VALUE = 73.0f;
         public struct Engine { };
         bool update = false;
+        bool download = false;
         string exepath = string.Empty;
         [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Winapi)]
         public extern static int mgv_set_log(int level);
@@ -39,7 +40,7 @@ namespace TestOCX
         public TestOCXFrm()
         {
             InitializeComponent();
-            CheckUpdateEx();
+            CheckUpdate();
         }
         string homepath = @"c:\ccompare";
         internal class UpdateInfo
@@ -87,33 +88,47 @@ namespace TestOCX
             }
 
         }
+        static void GetCost(string state)
+        {
+            using (var p1 = new PerformanceCounter("Process", "Working Set - Private", "explorer"))
+            {
+                MessageBox.Show("当前状态：" + state + ";  占用内存:"+(p1.NextValue() / 1024 / 1024).ToString("0.0") + "MB");
+            }
+        }
         private void CheckUpdate()
         {
             var version =System.Reflection. Assembly.GetExecutingAssembly().GetName().Version.ToString();
             var lv = long.Parse(version.Replace(".", ""));
             var url = string.Format("http://{0}/home/GetNoticeUpdatePackage?version={1}", "192.168.0.140:5000", lv);
             var srcString = string.Empty;
-            var update = true;
-           
                 try
                 {
-                    using (var handler = new  HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip })
+             //   GetCost("程序启动");
+                using (var handler = new  HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip })
                     using (var http = new HttpClient(handler))
                     {
                         var response = http.GetAsync(url);
                         // response.EnsureSuccessStatusCode();
                         srcString = response.Result.Content.ReadAsStringAsync().Result;
+                  if(!response.Result.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show(response.ToString());
+                        return;
+                    }
                     }
                     try
                     {
-                        var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
-                        if (string.IsNullOrEmpty( ui.Name )) return;
-                        var exportPath = AppDomain.CurrentDomain.BaseDirectory;
-
-                        var path = Path.Combine(exportPath, ui.Name);
-                        File.WriteAllBytes(path, ui.FileContent);
-                    GC.WaitForFullGCComplete();
-                        if (MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
+                    //GetCost("data = null");                   
+                    //var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
+                 //   GetCost("after deserial");
+                    if (string.IsNullOrEmpty(srcString)) return;
+                    //    var exportPath = AppDomain.CurrentDomain.BaseDirectory;
+                    //GetCost("数据制造完成");
+                    var path = Path.GetTempFileName()+".exe";// Path.Combine(exportPath, ui.Name);
+                        File.WriteAllBytes(path,Convert.FromBase64String( srcString));
+                 //   System.GC.Collect();
+                 //   GetCost("System.GC.Collect()");
+                    if (MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
                             MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
                         {
                             Process.Start(path);
@@ -135,13 +150,13 @@ namespace TestOCX
         {
             try
             {
-                if (update&& MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
-                              MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
-                {
-                    update = false;
-                    Process.Start(exepath);
-                    Process.GetCurrentProcess().Kill();
-                }
+                //if (update&& MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
+                //              MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                //{
+                //    update = false;
+                //    Process.Start(exepath);
+                //    Process.GetCurrentProcess().Kill();
+                //}
 
                 var a = new System.Diagnostics.Process();
                
@@ -170,13 +185,13 @@ namespace TestOCX
         {
             try
             {
-                if (update && MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
-                           MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
-                {
-                    update = false;
-                    Process.Start(exepath);
-                    Process.GetCurrentProcess().Kill();
-                }
+                //if (update && MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
+                //           MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                //{
+                //    update = false;
+                //    Process.Start(exepath);
+                //    Process.GetCurrentProcess().Kill();
+                //}
 
                 var fbyte1 = Convert.FromBase64String(aa.ToString());
                 var fbyte2 = Convert.FromBase64String(b.ToString());

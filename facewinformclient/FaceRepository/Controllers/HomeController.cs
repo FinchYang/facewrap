@@ -22,7 +22,7 @@ namespace FaceRepository.Controllers
         }
         public IActionResult GetFaceDesktopUpdatePackage(long version)
         {
-            var ret = new UpdateInfo();
+           // var ret = new UpdateInfo();
             try
             {
                 var ppath = @"c:\installer";
@@ -38,10 +38,10 @@ namespace FaceRepository.Controllers
                         var m = reg.Match(tmp).ToString();
                         if (long.Parse(m) > version)
                         {
-                            ret.Name = fileInfo.Name;
-                            ret.Date = fileInfo.CreationTime.ToLocalTime().ToString("F");
-                            ret.FileContent = System.IO.File.ReadAllBytes(fileInfo.FullName);
-                            break;
+                            //ret.Name = fileInfo.Name;
+                            //ret.Date = fileInfo.CreationTime.ToLocalTime().ToString("F");
+                            return Ok(Convert.ToBase64String( System.IO.File.ReadAllBytes(fileInfo.FullName)));
+                           // break;
                         }
                     }
                 }
@@ -49,13 +49,14 @@ namespace FaceRepository.Controllers
             catch (Exception ex)
             {
                 _log.LogError(string.Format("FaceDesktop,GetNoticeUpdatePackage error:{0}", version), ex);
+                return Error();
             }
-
-            return Ok(ret);
+            
+            return Ok(string.Empty);
         }
         public IActionResult GetNoticeUpdatePackage(long version)
         {
-            var ret = new UpdateInfo { Name = string.Empty, Date = string.Empty };
+           // var ret = string.Empty;// new UpdateInfo { Name = string.Empty, Date = string.Empty };
             try
             {
                 var ppath = @"c:\installer";
@@ -71,10 +72,10 @@ namespace FaceRepository.Controllers
                         var m = reg.Match(tmp).ToString();
                         if (long.Parse(m) > version)
                         {
-                            ret.Name = fileInfo.Name;
-                            ret.Date = fileInfo.CreationTime.ToLocalTime().ToString("F");
-                            ret.FileContent =System.IO. File.ReadAllBytes(fileInfo.FullName);
-                            break;
+                            //ret.Name = fileInfo.Name;
+                            //ret.Date = fileInfo.CreationTime.ToLocalTime().ToString("F");
+                            return Ok(Convert.ToBase64String( System.IO. File.ReadAllBytes(fileInfo.FullName)));
+                           // break;
                         }
                     }
                 }
@@ -82,9 +83,10 @@ namespace FaceRepository.Controllers
             catch (Exception ex)
             {
              _log.LogError(string.Format("FaceDesktop,GetNoticeUpdatePackage error:{0}", version), ex);
+              //  return Error();
             }
-            _log.LogInformation("FaceDesktop,GetNoticeUpdatePackage :{0},{1}", HttpContext.Connection.RemoteIpAddress, ret.Name);
-            return Ok(ret);
+           // _log.LogInformation("FaceDesktop,GetNoticeUpdatePackage :{0},{1}", HttpContext.Connection.RemoteIpAddress, ret.Name);
+            return Ok(string.Empty);
         }
         public IActionResult Index()
         {

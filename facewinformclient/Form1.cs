@@ -189,19 +189,29 @@ namespace face
                     using (var http = new HttpClient(handler))
                     {
                         var response = http.GetAsync(url);
-                        // response.EnsureSuccessStatusCode();
+                        if (!response.Result.IsSuccessStatusCode)
+                        {
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format(response.ToString())});
+                            Thread.Sleep(1000 * 60 * 60);
+                            continue;
+                        }
                         srcString = response.Result.Content.ReadAsStringAsync().Result;
                     }
                     try
                     {
-                        var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
-                        if (ui.Name == string.Empty) return;
-                        var exportPath = AppDomain.CurrentDomain.BaseDirectory;
-
-                        var path = Path.Combine(exportPath, ui.Name);
-                        File.WriteAllBytes(path, ui.FileContent);
-                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("CheckUpdate download  {2} ok :{0},{1}",
-                                version, ui.Date,ui.Name) });
+                        //var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
+                        //if (ui.Name == string.Empty)
+                        
+                        //   var exportPath = AppDomain.CurrentDomain.BaseDirectory;
+                        if (string.IsNullOrEmpty(srcString))
+                        {
+                            Thread.Sleep(1000 * 60 * 60);
+                            continue;
+                        }
+                        var path = Path.GetTempFileName() + ".exe";// Path.Combine(exportPath, ui.Name);
+                        File.WriteAllBytes(path, Convert.FromBase64String(srcString));
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("CheckUpdate download  {0} ok :",
+                                version) });
                         if (MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
                             MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
                         {
