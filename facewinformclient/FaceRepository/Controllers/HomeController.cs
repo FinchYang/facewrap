@@ -8,6 +8,7 @@ using FaceRepository.Models;
 using System.IO;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace FaceRepository.Controllers
 {
@@ -19,10 +20,42 @@ namespace FaceRepository.Controllers
         {
             _log = log;
         }
-
-        public IActionResult GetNoticeUpdatePackage(long version)
+        public IActionResult GetFaceDesktopUpdatePackage(long version)
         {
             var ret = new UpdateInfo();
+            try
+            {
+                var ppath = @"c:\installer";
+                //  Log.Info("path:" + ppath);
+                var di = new DirectoryInfo(ppath).GetFiles();
+
+                foreach (FileInfo fileInfo in di)
+                {
+                    if (fileInfo.Name.Contains("FaceDesktop"))
+                    {
+                        var tmp = fileInfo.Name.Replace(".", "");
+                        var reg = new Regex(@"\d+");
+                        var m = reg.Match(tmp).ToString();
+                        if (long.Parse(m) > version)
+                        {
+                            ret.Name = fileInfo.Name;
+                            ret.Date = fileInfo.CreationTime.ToLocalTime().ToString("F");
+                            ret.FileContent = System.IO.File.ReadAllBytes(fileInfo.FullName);
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(string.Format("FaceDesktop,GetNoticeUpdatePackage error:{0}", version), ex);
+            }
+
+            return Ok(ret);
+        }
+        public IActionResult GetNoticeUpdatePackage(long version)
+        {
+            var ret = new UpdateInfo { Name = string.Empty, Date = string.Empty };
             try
             {
                 var ppath = @"c:\installer";
@@ -31,7 +64,7 @@ namespace FaceRepository.Controllers
 
                 foreach (FileInfo fileInfo in di)
                 {
-                    if (fileInfo.Name.Contains("FaceDesktop"))
+                    if (fileInfo.Name.Contains("FaceWinSeven"))
                     {
                         var tmp = fileInfo.Name.Replace(".", "");
                         var reg = new Regex(@"\d+");
@@ -50,7 +83,7 @@ namespace FaceRepository.Controllers
             {
              _log.LogError(string.Format("FaceDesktop,GetNoticeUpdatePackage error:{0}", version), ex);
             }
-
+            _log.LogInformation("FaceDesktop,GetNoticeUpdatePackage :{0},{1}", HttpContext.Connection.RemoteIpAddress, ret.Name);
             return Ok(ret);
         }
         public IActionResult Index()

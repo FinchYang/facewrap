@@ -8,6 +8,10 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.IO;
+using System.Diagnostics;
+using System.Net;
+using System.Net.Http;
+using Newtonsoft.Json;
 //using Newtonsoft.Json;
 
 namespace TestOCX
@@ -18,7 +22,8 @@ namespace TestOCX
         delegate void D(object obj);
         const double WARNING_VALUE = 73.0f;
         public struct Engine { };
-      
+        bool update = false;
+        string exepath = string.Empty;
         [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Winapi)]
         public extern static int mgv_set_log(int level);
         [DllImport(@"core_sdk.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -34,13 +39,110 @@ namespace TestOCX
         public TestOCXFrm()
         {
             InitializeComponent();
-         
+            CheckUpdateEx();
         }
         string homepath = @"c:\ccompare";
+        internal class UpdateInfo
+        {
+            public string Name { get; set; }
+            public string Date { get; set; }
+            public byte[] FileContent { get; set; }
+            public UpdateInfo()
+            {
+            }
+        }
+        private void CheckUpdateEx()
+        {
+            var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            var lv = long.Parse(version.Replace(".", ""));
+            var url = string.Format("http://{0}/home/GetNoticeUpdatePackage?version={1}", "192.168.0.140:5000", lv);
+            var srcString = string.Empty;
+
+            try
+            {
+                using (var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip })
+                using (var http = new HttpClient(handler))
+                {
+                    var response = http.GetAsync(url);
+                    srcString = response.Result.Content.ReadAsStringAsync().Result;
+                }
+                try
+                {
+                    var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
+                    if (string.IsNullOrEmpty(ui.Name)) return;
+                    var exportPath = AppDomain.CurrentDomain.BaseDirectory;
+
+                    exepath = Path.Combine(exportPath, ui.Name);
+                    File.WriteAllBytes(exepath, ui.FileContent);
+                    update = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(string.Format("CheckUpdate processing :{0},url={1},{2}", version, url, ex.Message));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("out processing :{0},url={1},{2}", version, url, ex.Message));
+            }
+
+        }
+        private void CheckUpdate()
+        {
+            var version =System.Reflection. Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            var lv = long.Parse(version.Replace(".", ""));
+            var url = string.Format("http://{0}/home/GetNoticeUpdatePackage?version={1}", "192.168.0.140:5000", lv);
+            var srcString = string.Empty;
+            var update = true;
+           
+                try
+                {
+                    using (var handler = new  HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip })
+                    using (var http = new HttpClient(handler))
+                    {
+                        var response = http.GetAsync(url);
+                        // response.EnsureSuccessStatusCode();
+                        srcString = response.Result.Content.ReadAsStringAsync().Result;
+                    }
+                    try
+                    {
+                        var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
+                        if (string.IsNullOrEmpty( ui.Name )) return;
+                        var exportPath = AppDomain.CurrentDomain.BaseDirectory;
+
+                        var path = Path.Combine(exportPath, ui.Name);
+                        File.WriteAllBytes(path, ui.FileContent);
+                    GC.WaitForFullGCComplete();
+                        if (MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
+                            MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                        {
+                            Process.Start(path);
+                            Process.GetCurrentProcess().Kill();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show( string.Format("CheckUpdate processing :{0},url={1},{2}", version, url, ex.Message) );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(string.Format("out processing :{0},url={1},{2}", version, url, ex.Message));
+                }
+           
+        }
         public string face_compare_by_fixedfiles(object aa, object b,bool displayinfo=false)
         {
             try
-            {             
+            {
+                if (update&& MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
+                              MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                {
+                    update = false;
+                    Process.Start(exepath);
+                    Process.GetCurrentProcess().Kill();
+                }
+
                 var a = new System.Diagnostics.Process();
                
                 a.StartInfo.WorkingDirectory = @homepath;// Path.Combine(homepath, "compare");
@@ -68,6 +170,14 @@ namespace TestOCX
         {
             try
             {
+                if (update && MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
+                           MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                {
+                    update = false;
+                    Process.Start(exepath);
+                    Process.GetCurrentProcess().Kill();
+                }
+
                 var fbyte1 = Convert.FromBase64String(aa.ToString());
                 var fbyte2 = Convert.FromBase64String(b.ToString());
                 var pic1 = Path.GetTempFileName() + ".jpg";

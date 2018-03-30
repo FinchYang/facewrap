@@ -178,7 +178,7 @@ namespace face
         {
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             var lv = long.Parse(version.Replace(".", ""));
-            var url = string.Format("http://{0}/home/GetNoticeUpdatePackage?version={1}", host, lv);
+            var url = string.Format("http://{0}/home/GetFaceDesktopUpdatePackage?version={1}", host, lv);
             var srcString = string.Empty;
             var update = true;
             do
