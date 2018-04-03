@@ -27,9 +27,9 @@ namespace face
     {
         private delegate void UpdateStatusDelegate(string status);
         string FileNameId = string.Empty;
-        string[] FileNameCapture =new string[] { string.Empty, string.Empty, string.Empty };
+        string[] FileNameCapture = new string[] { string.Empty, string.Empty, string.Empty };
         string dllpath = @"idr210sdk";
-        ComparedInfo upload = new ComparedInfo { address="temp",operatingagency="hehe"};
+        ComparedInfo upload = new ComparedInfo { address = "temp", operatingagency = "hehe" };
         int continuouscapture = 0;
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int InitComm(int iPort);
@@ -62,11 +62,11 @@ namespace face
         Image<Bgr, Byte> currentFrame; //current image aquired from webcam for display
                                        //  Image<Gray, byte> result, TrainedFace = null; //used to store the result image and trained face
                                        //   Image<Gray, byte> gray_frame = null; //grayscale current image aquired from webcam for processing
-     //   private int facenum = 0;
+                                       //   private int facenum = 0;
         string homepath = string.Empty;
         string host = string.Empty;
         string action = string.Empty;
-         string idphotofile = string.Empty;
+        string idphotofile = string.Empty;
         string capturephotofile = string.Empty;
         public Form1()
         {
@@ -79,19 +79,19 @@ namespace face
         {
             try
             {
-                if(FileNameId == string.Empty)
+                if (FileNameId == string.Empty)
                 {
                     UpdateStatus(string.Format("请先读取身份证信息！"));
                     return;
                 }
-               if(continuouscapture<3)
+                if (continuouscapture < 3)
                 {
-                    UpdateStatus(string.Format("请先等待人脸照片抓取成功！-{0}",continuouscapture));
+                    UpdateStatus(string.Format("请先等待人脸照片抓取成功！-{0}", continuouscapture));
                     return;
                 }
-               for(int i = 0; i < 3; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                    if (compareone(FileNameCapture[i],i+1))
+                    if (compareone(FileNameCapture[i], i + 1))
                     {
                         break;
                     }
@@ -103,7 +103,7 @@ namespace face
                 UpdateStatus(string.Format("exception :{0},{1},{2}", FileNameCapture, FileNameId, ex.Message));
             }
         }
-        bool compareone(string capturefile,int index)
+        bool compareone(string capturefile, int index)
         {
             var stop = new Stopwatch();
             stop.Start();
@@ -116,12 +116,12 @@ namespace face
             UpdateStatus(string.Format("files:{0}", a.StartInfo.Arguments));
             capturephotofile = capturefile;
             a.StartInfo.FileName = Path.Combine(homepath, "compare", "FaceCompareCon.exe");
-          //  a.StartInfo.FileName = Path.Combine(homepath, "compare", "ccompare.exe");
+            //  a.StartInfo.FileName = Path.Combine(homepath, "compare", "ccompare.exe");
             a.Start();
             a.WaitForExit();
             var ret = a.ExitCode;
             stop.Stop();
-            UpdateStatus(string.Format("time elapsed:{0},exitcode={1}", stop.ElapsedMilliseconds,ret));
+            UpdateStatus(string.Format("time elapsed:{0},exitcode={1}", stop.ElapsedMilliseconds, ret));
             //if (ret == 1)
             //{
             //    MessageBox.Show("比对成功，是同一个人");
@@ -191,7 +191,7 @@ namespace face
                         var response = http.GetAsync(url);
                         if (!response.Result.IsSuccessStatusCode)
                         {
-                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format(response.ToString())});
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format(response.ToString()) });
                             Thread.Sleep(1000 * 60 * 60);
                             continue;
                         }
@@ -201,7 +201,7 @@ namespace face
                     {
                         //var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
                         //if (ui.Name == string.Empty)
-                        
+
                         //   var exportPath = AppDomain.CurrentDomain.BaseDirectory;
                         if (string.IsNullOrEmpty(srcString))
                         {
@@ -239,15 +239,15 @@ namespace face
             var ui = (ComparedInfo)obj;
             ui.capturephoto = File.ReadAllBytes(capturephotofile);
             ui.idphoto = File.ReadAllBytes(idphotofile);
-            
-          //  var url = string.Format("http://{0}/{1}", "localhost:5000", "PostCompared");
+
+            //  var url = string.Format("http://{0}/{1}", "localhost:5000", "PostCompared");
             var url = string.Format("http://{0}/{1}", host, action);
             try
             {
-              //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 111) });
+                //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 111) });
 
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
-             //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
+                //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
                 using (var http = new HttpClient(handler))
                 {
                     var content = new StringContent(JsonConvert.SerializeObject(ui));
@@ -368,14 +368,15 @@ namespace face
                                     picturecapture2.Image = currentFrame.Bitmap;
                                     break;
                             }
-                            
+
                             UpdateStatus(string.Format("照片抓取成功,{0}", continuouscapture));
                             continuouscapture++;
-                            if (continuouscapture > 2) {
+                            if (continuouscapture > 2)
+                            {
                                 Application.Idle -= new EventHandler(FrameGrabber);
                                 grabber.Dispose();
                                 UpdateStatus(string.Format("3张照片抓取完成"));
-                            }                           
+                            }
                         }
                     }
                 }
@@ -430,7 +431,7 @@ namespace face
         {
 
         }
-       
+
         private void openToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             Close();
@@ -500,11 +501,11 @@ namespace face
                             var FileNameIdtmp = Path.Combine(homepath, dllpath, "photo.bmp");
                             FileNameId = Path.GetTempFileName();
                             idphotofile = FileNameId;
-                            using(var jpg=new Bitmap(FileNameIdtmp))
+                            using (var jpg = new Bitmap(FileNameIdtmp))
                             {
                                 jpg.Save(FileNameId, ImageFormat.Jpeg);
                             }
-                          //  Image.FromFile(FileNameIdtmp).Save(FileNameId, ImageFormat.Jpeg);
+                            //  Image.FromFile(FileNameIdtmp).Save(FileNameId, ImageFormat.Jpeg);
                             pictureid.Image = Image.FromFile(FileNameId);
                             UpdateStatus(string.Format("身份证信息读取成功"));
                         }
@@ -543,7 +544,7 @@ namespace face
                 return;
             }
             var ui = new NoidInput();
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 switch (i)
                 {
@@ -602,12 +603,12 @@ namespace face
             public CompareResult status { get; set; }
         }
         public enum CompareResult
-    {
-        unknown, success, failure, uncertainty
-    }
-    private void buttongetresult_Click(object sender, EventArgs e)
         {
-            var url = string.Format("http://{0}/{1}?businessnumber={2}", host, "GetNoidResult","demo");
+            unknown, success, failure, uncertainty
+        }
+        private void buttongetresult_Click(object sender, EventArgs e)
+        {
+            var url = string.Format("http://{0}/{1}?businessnumber={2}", host, "GetNoidResult", "demo");
             try
             {
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
@@ -625,9 +626,9 @@ namespace face
                     {
                         //continuouscapture = 0; 0-no result,1-success,2-failure,3-uncertainty
                         var a = JsonConvert.DeserializeObject<List<NoidResult>>(srcString);
-                        foreach( var b in a)
+                        foreach (var b in a)
                         {
-                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("id.{0},{1}", b.id,b.status) });
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("id.{0},{1}", b.id, b.status) });
                         }
                     }
                 }

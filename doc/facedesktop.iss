@@ -28,6 +28,9 @@ Source: "{#sourcedir}\compare\platforms\*"; DestDir: "{app}\compare\platforms"; 
 Source: "{#sourcedir}\compare\translations\*"; DestDir: "{app}\compare\translations"; Flags: ignoreversion 
 Source: "{#sourcedir}\idr210sdk\*"; DestDir: "{app}\idr210sdk"; Flags: ignoreversion
 Source: "{#sourcedir}\*"; DestDir: "{app}"; Flags: ignoreversion
-
+[Tasks]
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkablealone
+Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: checkablealone
 [Icons]
 Name: "{group}\FaceDesktop"; Filename: "{app}\FaceDesktop.exe"
+Name: "{userdesktop}\FaceDesktop";Filename: "{app}\FaceDesktop.EXE";WorkingDir: "{app}";Comment:"快速人证合一比对！"
