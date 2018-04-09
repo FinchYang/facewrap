@@ -1,0 +1,12 @@
+I:\faceoutput\servrestapi\netcoreapp2.0\FaceRepository.deps.json
+I:\faceoutput\servrestapi\netcoreapp2.0\FaceRepository.runtimeconfig.json
+I:\faceoutput\servrestapi\netcoreapp2.0\FaceRepository.runtimeconfig.dev.json
+I:\faceoutput\servrestapi\netcoreapp2.0\FaceRepository.dll
+I:\faceoutput\servrestapi\netcoreapp2.0\FaceRepository.pdb
+F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.csprojResolveAssemblyReference.cache
+F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.AssemblyInfoInputs.cache
+F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.AssemblyInfo.cs
+F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.csproj.CopyComplete
+F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.dll
+F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.pdb

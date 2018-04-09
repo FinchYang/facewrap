@@ -1,0 +1,12 @@
+F:\dev\FaceServer\facewinformclient\FaceRepository
+--output-path=obj\Release\netcoreapp2.0\
+--application-name=FaceRepository
+--content-root=F:\dev\FaceServer\facewinformclient\FaceRepository
+--file=F:\dev\FaceServer\facewinformclient\FaceRepository\Views\Home\About.cshtml
+--file=F:\dev\FaceServer\facewinformclient\FaceRepository\Views\Home\Contact.cshtml
+--file=F:\dev\FaceServer\facewinformclient\FaceRepository\Views\Home\Index.cshtml
+--file=F:\dev\FaceServer\facewinformclient\FaceRepository\Views\Shared\Error.cshtml
+--file=F:\dev\FaceServer\facewinformclient\FaceRepository\Views\Shared\_Layout.cshtml
+--file=F:\dev\FaceServer\facewinformclient\FaceRepository\Views\Shared\_ValidationScriptsPartial.cshtml
+--file=F:\dev\FaceServer\facewinformclient\FaceRepository\Views\_ViewImports.cshtml
+--file=F:\dev\FaceServer\facewinformclient\FaceRepository\Views\_ViewStart.cshtml

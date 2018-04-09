@@ -2,7 +2,7 @@
 ; Demonstrates copying 3 files and creating an icon.
 
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
-#define MyAppVersion "1.0.0.1"
+#define MyAppVersion "1.0.0.3"
 #define sourcedir "I:\faceoutput\desktop"
 [Setup]
 AppName=FaceDesktop

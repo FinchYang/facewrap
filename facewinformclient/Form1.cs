@@ -178,24 +178,34 @@ namespace face
         {
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             var lv = long.Parse(version.Replace(".", ""));
-            var url = string.Format("http://{0}/home/GetFaceDesktopUpdatePackage?version={1}", host, lv);
+            var url = string.Format("http://{0}/GetFaceDesktopUpdatePackage?version={1}", host, lv);
             var srcString = string.Empty;
             var update = true;
             do
             {
                 try
                 {
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 111) });
                     using (var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip })
                     using (var http = new HttpClient(handler))
                     {
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
                         var response = http.GetAsync(url);
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", "234234") });
                         if (!response.Result.IsSuccessStatusCode)
                         {
-                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format(response.ToString()) });
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("no update") });
                             Thread.Sleep(1000 * 60 * 60);
                             continue;
                         }
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 444) });
                         srcString = response.Result.Content.ReadAsStringAsync().Result;
+
+                        var res = response.Result;
+                       // string ss = res.Content.ReadAsStringAsync().Result;
+                      //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", srcString) });
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", res.StatusCode) });
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", response.Status) });
                     }
                     try
                     {
@@ -209,7 +219,7 @@ namespace face
                             continue;
                         }
                         var path = Path.GetTempFileName() + ".exe";// Path.Combine(exportPath, ui.Name);
-                        File.WriteAllBytes(path, Convert.FromBase64String(srcString));
+                        File.WriteAllBytes(path, Convert.FromBase64String(srcString.Substring(1,srcString.Length-2)));
                         BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("CheckUpdate download  {0} ok :",
                                 version) });
                         if (MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
@@ -244,17 +254,17 @@ namespace face
             var url = string.Format("http://{0}/{1}", host, action);
             try
             {
-                //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 111) });
+                  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", url) });
 
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
-                //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
+                   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
                 using (var http = new HttpClient(handler))
                 {
                     var content = new StringContent(JsonConvert.SerializeObject(ui));
                     content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                     var hrm = http.PostAsync(url, content);
                     var response = hrm.Result;
-                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("capturefile.{0},{1}", capturephotofile, ui.capturephoto) });
+                   // BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("capturefile.{0},{1}", capturephotofile, ui.capturephoto) });
                     string srcString = response.Content.ReadAsStringAsync().Result;
                     BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", srcString) });
                     BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", response.StatusCode) });
@@ -567,15 +577,15 @@ namespace face
             var url = string.Format("http://{0}/{1}", host, "NoidUpload");
             try
             {
-                //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 111) });
+                  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", url) });
 
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
-                //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
+                   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
                 using (var http = new HttpClient(handler))
                 {
-                    //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 333) });
+                      BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 333) });
                     var content = new StringContent(JsonConvert.SerializeObject(ui));
-                    //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 444) });
+                      BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 444) });
                     content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                     var hrm = http.PostAsync(url, content);
                     var response = hrm.Result;

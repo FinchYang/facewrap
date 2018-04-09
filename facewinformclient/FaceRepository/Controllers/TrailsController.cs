@@ -28,17 +28,17 @@ namespace FaceRepository.Controllers
         [Route("PostCompared")]
         public async Task<IActionResult> PostCompared([FromBody] ComparedInfo trails)
         {
-            // _log.LogDebug("{0}",111111);
+             _log.LogDebug("{0}",111111);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            //  _log.LogDebug("{0}", 2222);
+              _log.LogDebug("{0}", 2222);
             try
             {
                 using (var db = new dbmodel.faceContext())
                 {
-                    //     _log.LogDebug("{0}", 3333);
+                         _log.LogDebug("{0}", 3333);
                     var person = db.Person.FirstOrDefault(c => c.Idcardno == trails.id);
                     if (person == null)
                     {

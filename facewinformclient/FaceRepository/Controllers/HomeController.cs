@@ -20,40 +20,7 @@ namespace FaceRepository.Controllers
         {
             _log = log;
         }
-        public IActionResult GetFaceDesktopUpdatePackage(long version)
-        {
-           // var ret = new UpdateInfo();
-            try
-            {
-                var ppath = @"c:\installer";
-                //  Log.Info("path:" + ppath);
-                var di = new DirectoryInfo(ppath).GetFiles();
-
-                foreach (FileInfo fileInfo in di)
-                {
-                    if (fileInfo.Name.Contains("FaceDesktop"))
-                    {
-                        var tmp = fileInfo.Name.Replace(".", "");
-                        var reg = new Regex(@"\d+");
-                        var m = reg.Match(tmp).ToString();
-                        if (long.Parse(m) > version)
-                        {
-                            //ret.Name = fileInfo.Name;
-                            //ret.Date = fileInfo.CreationTime.ToLocalTime().ToString("F");
-                            return Ok(Convert.ToBase64String( System.IO.File.ReadAllBytes(fileInfo.FullName)));
-                           // break;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _log.LogError(string.Format("FaceDesktop,GetNoticeUpdatePackage error:{0}", version), ex);
-                return Error();
-            }
-            
-            return Ok(string.Empty);
-        }
+     
         public IActionResult GetNoticeUpdatePackage(long version)
         {
            // var ret = string.Empty;// new UpdateInfo { Name = string.Empty, Date = string.Empty };
