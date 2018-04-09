@@ -1,0 +1,3 @@
+F:\dev\FaceServer\OrleansCoreFace\GrainCollection\obj\Debug\netcoreapp2.0\codegen\GrainCollection.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\OrleansCoreFace\GrainCollection\obj\Debug\netcoreapp2.0\codegen\GrainCollection.AssemblyInfoInputs.cache
+F:\dev\FaceServer\OrleansCoreFace\GrainCollection\obj\Debug\netcoreapp2.0\codegen\GrainCollection.AssemblyInfo.cs

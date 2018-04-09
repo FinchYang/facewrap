@@ -1,0 +1,6 @@
+F:\dev\FaceServer\OrleansCoreFace\OrleansCoreFace\bin\Debug\netcoreapp2.0\GrainCollection.dll
+F:\dev\FaceServer\OrleansCoreFace\OrleansCoreFace\bin\Debug\netcoreapp2.0\GrainInterface.dll
+F:\dev\FaceServer\OrleansCoreFace\OrleansCoreFace\obj\Debug\netcoreapp2.0\OrleansCoreFace.csprojResolveAssemblyReference.cache
+F:\dev\FaceServer\OrleansCoreFace\OrleansCoreFace\obj\Debug\netcoreapp2.0\OrleansCoreFace.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\OrleansCoreFace\OrleansCoreFace\obj\Debug\netcoreapp2.0\OrleansCoreFace.AssemblyInfoInputs.cache
+F:\dev\FaceServer\OrleansCoreFace\OrleansCoreFace\obj\Debug\netcoreapp2.0\OrleansCoreFace.AssemblyInfo.cs

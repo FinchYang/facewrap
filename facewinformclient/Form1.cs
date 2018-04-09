@@ -319,6 +319,10 @@ namespace face
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            textBoxname.Visible = false;
+            textBoxid.Visible = false;
+            buttongetresult.Visible = false;
+            buttoncloudcompare.Visible = false;
             try
             {
                 videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -350,7 +354,7 @@ namespace face
                 {
                     if (currentFrame != null)
                     {
-                        pictureBoxsource.Image = currentFrame.Bitmap;
+                        pictureBoxsource.BackgroundImage = currentFrame.Bitmap;
 
                         if (HaveFace(currentFrame))
                         {
@@ -359,13 +363,13 @@ namespace face
                             switch (continuouscapture)
                             {
                                 case 0:
-                                    pictureBoxcurrentimage.Image = currentFrame.Bitmap;
+                                    pictureBoxcurrentimage.BackgroundImage = currentFrame.Bitmap;
                                     break;
                                 case 1:
-                                    picturecapture1.Image = currentFrame.Bitmap;
+                                    picturecapture1.BackgroundImage = currentFrame.Bitmap;
                                     break;
                                 default:
-                                    picturecapture2.Image = currentFrame.Bitmap;
+                                    picturecapture2.BackgroundImage = currentFrame.Bitmap;
                                     break;
                             }
 
@@ -506,7 +510,8 @@ namespace face
                                 jpg.Save(FileNameId, ImageFormat.Jpeg);
                             }
                             //  Image.FromFile(FileNameIdtmp).Save(FileNameId, ImageFormat.Jpeg);
-                            pictureid.Image = Image.FromFile(FileNameId);
+                          //  pictureid.Image = Image.FromFile(FileNameId);
+                            pictureid.BackgroundImage= Image.FromFile(FileNameId);
                             UpdateStatus(string.Format("身份证信息读取成功"));
                         }
                     }
@@ -522,10 +527,7 @@ namespace face
             ret = CloseComm();
         }
 
-        private void pictureBoxsource_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void splitContainer4_Panel2_Paint(object sender, PaintEventArgs e)
         {
@@ -637,6 +639,61 @@ namespace face
             {
                 BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("GetNoidResult.{0},", ex.Message) });
             }
+        }
+
+        private void buttonnoid_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.BackgroundImage = Image.FromFile("noid.jpg");
+                pictureid.Visible = false;
+                buttoncompare.Visible = false;
+                buttonreadid.Visible = false;
+
+                textBoxname.Visible = true;
+                textBoxid.Visible = true;
+                buttongetresult.Visible = true;
+                buttoncloudcompare.Visible = true;
+            }
+            catch(Exception ex)
+            {
+                UpdateStatus(string.Format("buttonnoid_Click:{0}", ex.Message));
+            }
+        }
+
+        private void buttonhaveid_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureid.Visible = true;
+            buttoncompare.Visible = true;
+            buttonreadid.Visible = true;
+
+           
+            textBoxname.Visible = false;
+            textBoxid.Visible = false;
+            buttongetresult.Visible = false;
+            buttoncloudcompare.Visible = false;
+
+            this.BackgroundImage = Image.FromFile("haveid.jpg");
+            }
+            catch (Exception ex)
+            {
+                UpdateStatus(string.Format("haveid:{0}", ex.Message));
+            }
+        }
+
+        private void buttonclose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void buttonmin_Click(object sender, EventArgs e)
+        {
+            // this.Visible = false;
+            //  ShowInTaskbar = true;
+            //   Hide();
+            WindowState = FormWindowState.Minimized;
         }
     }
 }

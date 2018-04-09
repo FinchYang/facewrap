@@ -71,4 +71,5 @@ F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csproj.CoreCompileInpu
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csproj.CopyComplete
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.exe
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.pdb
-F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csprojResolveAssemblyReference.cache
+I:\faceoutput\desktop\noid.jpg
+I:\faceoutput\desktop\haveid.jpg

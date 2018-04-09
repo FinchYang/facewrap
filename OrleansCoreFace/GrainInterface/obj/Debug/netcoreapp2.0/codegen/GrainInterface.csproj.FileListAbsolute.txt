@@ -1,0 +1,5 @@
+F:\dev\FaceServer\OrleansCoreFace\GrainInterface\bin\Debug\netcoreapp2.0\GrainInterface.deps.json
+F:\dev\FaceServer\OrleansCoreFace\GrainInterface\bin\Debug\netcoreapp2.0\GrainInterface.dll
+F:\dev\FaceServer\OrleansCoreFace\GrainInterface\bin\Debug\netcoreapp2.0\GrainInterface.pdb
+F:\dev\FaceServer\OrleansCoreFace\GrainInterface\obj\Debug\netcoreapp2.0\codegen\GrainInterface.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\OrleansCoreFace\GrainInterface\obj\Debug\netcoreapp2.0\codegen\GrainInterface.AssemblyInfoInputs.cache
