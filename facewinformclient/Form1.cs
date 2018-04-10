@@ -165,15 +165,6 @@ namespace face
             if (result.ok && result.status == CompareStatus.success) return true;
             else return false;
         }
-        internal class UpdateInfo
-        {
-            public string Name { get; set; }
-            public string Date { get; set; }
-            public byte[] FileContent { get; set; }
-            public UpdateInfo()
-            {
-            }
-        }
         private void CheckUpdate()
         {
             var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -251,7 +242,7 @@ namespace face
             ui.idphoto = File.ReadAllBytes(idphotofile);
 
             //  var url = string.Format("http://{0}/{1}", "localhost:5000", "PostCompared");
-            var url = string.Format("http://{0}/{1}", host, action);
+            var url = string.Format("http://{0}/{1}", host, action);// "api/Trails");// 
             try
             {
                   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", url) });
@@ -604,25 +595,12 @@ namespace face
                 BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("NoidUpload.{0},", ex.Message) });
             }
         }
-
-        public class NoidResultInput
-        {
-            public string businessnumber { get; set; }
-        }
-        public class NoidResult
-        {
-            public string id { get; set; }
-            public CompareResult status { get; set; }
-        }
-        public enum CompareResult
-        {
-            unknown, success, failure, uncertainty
-        }
         private void buttongetresult_Click(object sender, EventArgs e)
         {
             var url = string.Format("http://{0}/{1}?businessnumber={2}", host, "GetNoidResult", "demo");
             try
             {
+                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("GetNoidResult--11.{0},", url) });
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                 using (var http = new HttpClient(handler))
                 {

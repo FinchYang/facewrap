@@ -124,6 +124,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FaceCompare.cs" />
+    <Compile Include="FaceFile.cs" />
+    <Compile Include="FaceSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -35,11 +35,6 @@ namespace GrainCollection
 
             return Task.FromResult(CompareTwoPic(files));
         }
-        public struct FaceFile
-        {
-            public byte[] fcontent;
-            public int flen;
-        }
         const double WARNING_VALUE = 73.0f;
         static FaceFile freadAll(string fname)
         {
@@ -91,11 +86,6 @@ namespace GrainCollection
             var date = DateTime.Now.Date.ToString("yy-MM-dd");
             var traceFile = basePath + "\\grainlog" + date + ".txt";
             return traceFile;
-        }
-        public class FaceSource
-        {
-            public string FaceFile1 { get; set; }
-            public string FaceFile2 { get; set; }
         }
         private static int CompareTwoPic(string FaceFiles)
         {
