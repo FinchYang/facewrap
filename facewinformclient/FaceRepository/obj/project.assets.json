@@ -5137,16 +5137,6 @@
         "runtime": {
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
-      },
-      "RepositoryCommon/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.0",
-        "compile": {
-          "bin/placeholder/RepositoryCommon.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/RepositoryCommon.dll": {}
-        }
       }
     }
   },
@@ -13370,11 +13360,6 @@
         "windowsazure.storage.8.1.4.nupkg.sha512",
         "windowsazure.storage.nuspec"
       ]
-    },
-    "RepositoryCommon/1.0.0": {
-      "type": "project",
-      "path": "../RepositoryCommon/RepositoryCommon.csproj",
-      "msbuildProject": "../RepositoryCommon/RepositoryCommon.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -13382,8 +13367,7 @@
       "Microsoft.AspNetCore.All >= 2.0.5",
       "Microsoft.NETCore.App >= 2.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.2",
-      "Pomelo.EntityFrameworkCore.MySql >= 2.0.1",
-      "RepositoryCommon >= 1.0.0"
+      "Pomelo.EntityFrameworkCore.MySql >= 2.0.1"
     ]
   },
   "packageFolders": {
@@ -13419,11 +13403,7 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {
-            "F:\\dev\\FaceServer\\facewinformclient\\RepositoryCommon\\RepositoryCommon.csproj": {
-              "projectPath": "F:\\dev\\FaceServer\\facewinformclient\\RepositoryCommon\\RepositoryCommon.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

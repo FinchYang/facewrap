@@ -28,7 +28,4 @@
   <ItemGroup>
     <Folder Include="dbmodel\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RepositoryCommon\RepositoryCommon.csproj" />
-  </ItemGroup>
 </Project>

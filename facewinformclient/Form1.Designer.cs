@@ -16,6 +16,8 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                grabber.Dispose();
+                recognizer.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -47,6 +49,9 @@
             this.buttonhaveid = new System.Windows.Forms.Button();
             this.buttonclose = new System.Windows.Forms.Button();
             this.buttonmin = new System.Windows.Forms.Button();
+            this.labelscore = new System.Windows.Forms.Label();
+            this.labelversion = new System.Windows.Forms.Label();
+            this.labeltip = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxsource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturecapture2)).BeginInit();
@@ -69,7 +74,7 @@
             this.richTextBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             resources.ApplyResources(this.richTextBox1, "richTextBox1");
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+         //   this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // pictureBoxsource
             // 
@@ -198,12 +203,39 @@
             this.buttonmin.UseVisualStyleBackColor = false;
             this.buttonmin.Click += new System.EventHandler(this.buttonmin_Click);
             // 
+            // labelscore
+            // 
+            this.labelscore.BackColor = System.Drawing.Color.Transparent;
+            this.labelscore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            resources.ApplyResources(this.labelscore, "labelscore");
+            this.labelscore.ForeColor = System.Drawing.Color.Green;
+            this.labelscore.Name = "labelscore";
+            // 
+            // labelversion
+            // 
+            this.labelversion.BackColor = System.Drawing.Color.Transparent;
+            this.labelversion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            resources.ApplyResources(this.labelversion, "labelversion");
+            this.labelversion.ForeColor = System.Drawing.Color.DimGray;
+            this.labelversion.Name = "labelversion";
+            // 
+            // labeltip
+            // 
+            this.labeltip.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.labeltip.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            resources.ApplyResources(this.labeltip, "labeltip");
+            this.labeltip.ForeColor = System.Drawing.Color.DimGray;
+            this.labeltip.Name = "labeltip";
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Controls.Add(this.labeltip);
+            this.Controls.Add(this.labelversion);
+            this.Controls.Add(this.labelscore);
             this.Controls.Add(this.buttonmin);
             this.Controls.Add(this.buttonclose);
             this.Controls.Add(this.buttonhaveid);
@@ -260,6 +292,9 @@
         private System.Windows.Forms.Button buttonhaveid;
         private System.Windows.Forms.Button buttonclose;
         private System.Windows.Forms.Button buttonmin;
+        private System.Windows.Forms.Label labelscore;
+        private System.Windows.Forms.Label labelversion;
+        private System.Windows.Forms.Label labeltip;
     }
 }
 
