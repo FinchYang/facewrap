@@ -13,10 +13,11 @@
         /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
         protected override void Dispose(bool disposing)
         {
+            ReleaseData();
             if (disposing && (components != null))
             {
                 components.Dispose();
-                grabber.Dispose();
+              //  grabber.Dispose();
                 recognizer.Dispose();
             }
             base.Dispose(disposing);
@@ -33,7 +34,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.buttoncompare = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.pictureBoxsource = new System.Windows.Forms.PictureBox();
+            this.pictureBoxsource = new Emgu.CV.UI.ImageBox();
             this.buttonstopcapture = new System.Windows.Forms.Button();
             this.buttonreadid = new System.Windows.Forms.Button();
             this.buttoncloudcompare = new System.Windows.Forms.Button();
@@ -276,7 +277,7 @@
         #endregion
         private System.Windows.Forms.Button buttoncompare;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.PictureBox pictureBoxsource;
+        private Emgu.CV.UI.ImageBox pictureBoxsource;
         private System.Windows.Forms.Button buttonstopcapture;
         private System.Windows.Forms.Button buttonrestart;
         private System.Windows.Forms.Button buttoncloudcompare;

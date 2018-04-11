@@ -45,7 +45,8 @@ namespace FaceRepository.Controllers
                         {
                             //ret.Name = fileInfo.Name;
                             //ret.Date = fileInfo.CreationTime.ToLocalTime().ToString("F");
-                            return Ok(Convert.ToBase64String(System.IO.File.ReadAllBytes(fileInfo.FullName)));
+                            return File(System.IO.File.ReadAllBytes(fileInfo.FullName), "application/octet-stream" );
+                         //   return Ok(Convert.ToBase64String(System.IO.File.ReadAllBytes(fileInfo.FullName)));
                           //  return Ok(System.IO.File.ReadAllBytes(fileInfo.FullName));
                           //  return Ok("hahah");
                             // break;

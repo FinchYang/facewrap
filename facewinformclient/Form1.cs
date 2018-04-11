@@ -60,7 +60,7 @@ namespace face
         List<int> Names_List_ID = new List<int>();
         private string playpath = string.Empty;
         private string directory = string.Empty;
-        VideoCapture grabber;
+     //   VideoCapture grabber;
         Image<Bgr, Byte> currentFrame; //current image aquired from webcam for display
                                        //  Image<Gray, byte> result, TrainedFace = null; //used to store the result image and trained face
                                        //   Image<Gray, byte> gray_frame = null; //grayscale current image aquired from webcam for processing
@@ -71,12 +71,77 @@ namespace face
         string idphotofile = string.Empty;
         string capturephotofile = string.Empty;
         bool capturing = true;
+        private VideoCapture _capture = null;
+        private bool _captureInProgress;
+        private Mat _frame;
         public Form1()
         {
             InitializeComponent();
             homepath = Environment.CurrentDirectory;
             host = ConfigurationManager.AppSettings["host"];
             action = ConfigurationManager.AppSettings["action"];
+            CvInvoke.UseOpenCL = false;
+            try
+            {
+                _capture = new VideoCapture();
+                _capture.ImageGrabbed += ProcessFrame;
+            }
+            catch (NullReferenceException excpt)
+            {
+                MessageBox.Show(excpt.Message);
+            }
+            _frame = new Mat();
+        }
+        private void ProcessFrame(object sender, EventArgs arg)
+        {
+            if (_capture != null && _capture.Ptr != IntPtr.Zero)
+            {
+                _capture.Retrieve(_frame, 0);
+               // picturecapture1.BackgroundImage = null;
+                pictureBoxsource.BackgroundImage = _frame.Bitmap;
+                try
+                {
+                    using (currentFrame = _frame.ToImage<Bgr, Byte>())
+                    {
+                        if (currentFrame != null)
+                        {
+                            //pictureBoxsource.BackgroundImage = currentFrame.Bitmap;
+
+                            if (HaveFace(currentFrame))
+                            {
+                                //FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
+                                //currentFrame.Save(FileNameCapture[continuouscapture]);
+                                //switch (continuouscapture)
+                                //{
+                                //    case 0:
+                                //        pictureBoxcurrentimage.BackgroundImage = currentFrame.Bitmap;
+                                //        break;
+                                //    case 1:
+                                //        picturecapture1.BackgroundImage = currentFrame.Bitmap;
+                                //        break;
+                                //    default:
+                                //        picturecapture2.BackgroundImage = currentFrame.Bitmap;
+                                //        break;
+                                //}
+                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("照片抓取成功,{0}", continuouscapture) });
+                                //// UpdateStatus(string.Format("照片抓取成功,{0}", continuouscapture));
+                                //continuouscapture++;
+                                //if (continuouscapture > 2)
+                                //{
+                                //    capturing = false;
+                                //    _capture.Pause();
+                                //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("3张照片抓取完成") });
+                                //    //UpdateStatus(string.Format("3张照片抓取完成"));
+                                //}
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    UpdateStatus(string.Format("in FrameGrabber,{0}", ex.Message));
+                }
+            }
         }
         private void buttoncompare_Click(object sender, EventArgs e)
         {
@@ -205,38 +270,53 @@ namespace face
                         }
                       //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 444) });
                         srcString = response.Result.Content.ReadAsStringAsync().Result;
-
-                        var res = response.Result;
+                        if (response.Result.StatusCode == HttpStatusCode.OK)
+                        {
+                            var path = Path.GetTempFileName() + ".exe";// Path.Combine(exportPath, ui.Name);
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 2222) });
+                            File.WriteAllBytes(path, response.Result.Content.ReadAsByteArrayAsync().Result);
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新下载 {0}，{1} ok :", version, lv) });
+                            if (MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
+                                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                            {
+                                Process.Start(path);
+                                Process.GetCurrentProcess().Kill();
+                            }
+                        }
+                       
+                       // var res = response.Result;
                        // string ss = res.Content.ReadAsStringAsync().Result;
                       //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", srcString) });
                      //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新下载--{0},", res.StatusCode) });
                        // BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", response.Status) });
                     }
-                    try
-                    {
-                        //var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
-                        //if (ui.Name == string.Empty)
-
-                        //   var exportPath = AppDomain.CurrentDomain.BaseDirectory;
-                        if (string.IsNullOrEmpty(srcString))
-                        {
-                            Thread.Sleep(1000 * 60 * 60);
-                            continue;
-                        }
-                        var path = Path.GetTempFileName() + ".exe";// Path.Combine(exportPath, ui.Name);
-                        File.WriteAllBytes(path, Convert.FromBase64String(srcString.Substring(1,srcString.Length-2)));
-                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新下载 {0}，{1} ok :",   version,lv) });
-                        if (MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
-                            MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
-                        {
-                            Process.Start(path);
-                            Process.GetCurrentProcess().Kill();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("CheckUpdate processing :{0},url={1},{2}", version, url, ex.Message) });
-                    }
+                    //try
+                    //{
+                    //    //var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
+                    //    //if (ui.Name == string.Empty)
+                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 1111) });
+                    //    //   var exportPath = AppDomain.CurrentDomain.BaseDirectory;
+                    //    if (string.IsNullOrEmpty(srcString))
+                    //    {
+                    //        Thread.Sleep(1000 * 60 * 60);
+                    //        continue;
+                    //    }
+                    //    var path = Path.GetTempFileName() + ".exe";// Path.Combine(exportPath, ui.Name);
+                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 2222) });
+                    //    File.WriteAllBytes(path, Convert.FromBase64String(srcString.Substring(1,srcString.Length-2)));
+                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 3333) });
+                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新下载 {0}，{1} ok :",   version,lv) });
+                    //    if (MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
+                    //        MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+                    //    {
+                    //        Process.Start(path);
+                    //        Process.GetCurrentProcess().Kill();
+                    //    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("CheckUpdate processing :{0},url={1},{2}", version, url, ex.Message) });
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -288,7 +368,11 @@ namespace face
             richTextBox1.SelectionStart = richTextBox1.Text.Length;
             richTextBox1.ScrollToCaret();
         }
-
+        private void ReleaseData()
+        {
+            if (_capture != null)
+                _capture.Dispose();
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             textBoxname.Visible = false;
@@ -306,11 +390,11 @@ namespace face
                     UpdateStatus("没有摄像头，无法开始拍照，请连接摄像头！");
                     return;
                 }
-                grabber = new VideoCapture();
-                grabber.QueryFrame();
+                //grabber = new VideoCapture();
+                //grabber.QueryFrame();
 
-                Application.Idle += new EventHandler(FrameGrabber);
-
+                //Application.Idle += new EventHandler(FrameGrabber);
+               // _capture.Start();
                 _tCheckSelfUpdate = new Thread(new ThreadStart(CheckUpdate));
                 _tCheckSelfUpdate.Start();
             }
@@ -324,52 +408,52 @@ namespace face
             }
         }
 
-        void FrameGrabber(object sender, EventArgs e)
-        {
-            try
-            {
-                using (currentFrame = grabber.QueryFrame().ToImage<Bgr, Byte>())
-                {
-                    if (currentFrame != null)
-                    {
-                        pictureBoxsource.BackgroundImage = currentFrame.Bitmap;
+        //void FrameGrabber(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        using (currentFrame = grabber.QueryFrame().ToImage<Bgr, Byte>())
+        //        {
+        //            if (currentFrame != null)
+        //            {
+        //                pictureBoxsource.BackgroundImage = currentFrame.Bitmap;
 
-                        if (HaveFace(currentFrame))
-                        {
-                            FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
-                            currentFrame.Save(FileNameCapture[continuouscapture]);
-                            switch (continuouscapture)
-                            {
-                                case 0:
-                                    pictureBoxcurrentimage.BackgroundImage = currentFrame.Bitmap;
-                                    break;
-                                case 1:
-                                    picturecapture1.BackgroundImage = currentFrame.Bitmap;
-                                    break;
-                                default:
-                                    picturecapture2.BackgroundImage = currentFrame.Bitmap;
-                                    break;
-                            }
+        //                if (HaveFace(currentFrame))
+        //                {
+        //                    FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
+        //                    currentFrame.Save(FileNameCapture[continuouscapture]);
+        //                    switch (continuouscapture)
+        //                    {
+        //                        case 0:
+        //                            pictureBoxcurrentimage.BackgroundImage = currentFrame.Bitmap;
+        //                            break;
+        //                        case 1:
+        //                            picturecapture1.BackgroundImage = currentFrame.Bitmap;
+        //                            break;
+        //                        default:
+        //                            picturecapture2.BackgroundImage = currentFrame.Bitmap;
+        //                            break;
+        //                    }
 
-                            UpdateStatus(string.Format("照片抓取成功,{0}", continuouscapture));
-                            continuouscapture++;
-                            if (continuouscapture > 2)
-                            {
-                                capturing = false;
-                                Application.Idle -= new EventHandler(FrameGrabber);
-                                grabber.Dispose();
+        //                    UpdateStatus(string.Format("照片抓取成功,{0}", continuouscapture));
+        //                    continuouscapture++;
+        //                    if (continuouscapture > 2)
+        //                    {
+        //                        capturing = false;
+        //                        //Application.Idle -= new EventHandler(FrameGrabber);
+        //                        //grabber.Dispose();
 
-                                UpdateStatus(string.Format("3张照片抓取完成"));
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                UpdateStatus(string.Format("in FrameGrabber,{0}", ex.Message));
-            }
-        }
+        //                        UpdateStatus(string.Format("3张照片抓取完成"));
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        UpdateStatus(string.Format("in FrameGrabber,{0}", ex.Message));
+        //    }
+        //}
         bool HaveFace(Image<Bgr, Byte> fname)
         {
             long detectionTime;
@@ -388,8 +472,8 @@ namespace face
         {
             try
             {
-                Application.Idle -= new EventHandler(FrameGrabber);
-                grabber.Dispose();
+                //Application.Idle -= new EventHandler(FrameGrabber);
+                //grabber.Dispose();
                 recognizer.Dispose();
                 _tCheckSelfUpdate.Abort();
             }
@@ -403,9 +487,13 @@ namespace face
          //   UpdateStatus(string.Format("stop click"));
             try
             {
+                if (_capture != null)
+                {
+                    _capture.Pause();
+                }
                 capturing = false;
-                Application.Idle -= new EventHandler(FrameGrabber);
-                grabber.Dispose();
+                //Application.Idle -= new EventHandler(FrameGrabber);
+                //grabber.Dispose();
             }
             catch (Exception ex)
             {
@@ -414,8 +502,13 @@ namespace face
         }
         private void buttonrestart_Click(object sender, EventArgs e)
         {
+           
             try
             {
+                if (_capture != null)
+                {
+                    _capture.Start();
+                }
                 if (capturing) return;
               //  UpdateStatus(string.Format("restart click"));
             continuouscapture = 0;
@@ -428,9 +521,9 @@ namespace face
                       
                
 
-                grabber = new VideoCapture();
-                grabber.QueryFrame();
-                Application.Idle += new EventHandler(FrameGrabber);
+                //grabber = new VideoCapture();
+                //grabber.QueryFrame();
+                //Application.Idle += new EventHandler(FrameGrabber);
                 capturing = true;
            
             }
