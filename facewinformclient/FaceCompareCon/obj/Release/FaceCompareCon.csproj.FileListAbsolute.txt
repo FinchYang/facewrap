@@ -1,0 +1,8 @@
+I:\faceoutput\desktop\compare\FaceCompareCon.exe.config
+I:\faceoutput\desktop\compare\FaceCompareCon.exe
+I:\faceoutput\desktop\compare\FaceCompareCon.pdb
+F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Release\FaceCompareCon.csprojResolveAssemblyReference.cache
+F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Release\FaceCompareCon.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Release\FaceCompareCon.csproj.CopyComplete
+F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Release\FaceCompareCon.exe
+F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Release\FaceCompareCon.pdb

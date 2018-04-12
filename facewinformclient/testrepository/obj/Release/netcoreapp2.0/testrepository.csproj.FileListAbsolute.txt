@@ -1,0 +1,16 @@
+F:\dev\FaceServer\facewinformclient\testrepository\bin\Release\netcoreapp2.0\testrepository.deps.json
+F:\dev\FaceServer\facewinformclient\testrepository\bin\Release\netcoreapp2.0\testrepository.runtimeconfig.json
+F:\dev\FaceServer\facewinformclient\testrepository\bin\Release\netcoreapp2.0\testrepository.runtimeconfig.dev.json
+F:\dev\FaceServer\facewinformclient\testrepository\bin\Release\netcoreapp2.0\testrepository.dll
+F:\dev\FaceServer\facewinformclient\testrepository\bin\Release\netcoreapp2.0\testrepository.pdb
+F:\dev\FaceServer\facewinformclient\testrepository\bin\Release\netcoreapp2.0\Newtonsoft.Json.dll
+F:\dev\FaceServer\facewinformclient\testrepository\bin\Release\netcoreapp2.0\RepositoryCommon.dll
+F:\dev\FaceServer\facewinformclient\testrepository\bin\Release\netcoreapp2.0\RepositoryCommon.pdb
+F:\dev\FaceServer\facewinformclient\testrepository\bin\Release\netcoreapp2.0\Newtonsoft.Json.xml
+F:\dev\FaceServer\facewinformclient\testrepository\obj\Release\netcoreapp2.0\testrepository.csprojResolveAssemblyReference.cache
+F:\dev\FaceServer\facewinformclient\testrepository\obj\Release\netcoreapp2.0\testrepository.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\facewinformclient\testrepository\obj\Release\netcoreapp2.0\testrepository.AssemblyInfoInputs.cache
+F:\dev\FaceServer\facewinformclient\testrepository\obj\Release\netcoreapp2.0\testrepository.AssemblyInfo.cs
+F:\dev\FaceServer\facewinformclient\testrepository\obj\Release\netcoreapp2.0\testrepository.csproj.CopyComplete
+F:\dev\FaceServer\facewinformclient\testrepository\obj\Release\netcoreapp2.0\testrepository.dll
+F:\dev\FaceServer\facewinformclient\testrepository\obj\Release\netcoreapp2.0\testrepository.pdb

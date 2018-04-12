@@ -54,14 +54,14 @@ namespace face
         private FilterInfoCollection videoDevices;
         private string sourceImage = string.Empty;
         private string currentImage = string.Empty;
-        FisherFaceRecognizer recognizer = new FisherFaceRecognizer(10, 10.0);
+     //   FisherFaceRecognizer recognizer = new FisherFaceRecognizer(10, 10.0);
         List<Image<Gray, byte>> trainingImages = new List<Image<Gray, byte>>();//Images
         List<string> Names_List = new List<string>(); //labels
         List<int> Names_List_ID = new List<int>();
         private string playpath = string.Empty;
         private string directory = string.Empty;
      //   VideoCapture grabber;
-        Image<Bgr, Byte> currentFrame; //current image aquired from webcam for display
+     //   Image<Bgr, Byte> currentFrame; //current image aquired from webcam for display
                                        //  Image<Gray, byte> result, TrainedFace = null; //used to store the result image and trained face
                                        //   Image<Gray, byte> gray_frame = null; //grayscale current image aquired from webcam for processing
                                        //   private int facenum = 0;
@@ -92,6 +92,7 @@ namespace face
             }
             _frame = new Mat();
         }
+        
         private void ProcessFrame(object sender, EventArgs arg)
         {
             if (_capture != null && _capture.Ptr != IntPtr.Zero)
@@ -101,53 +102,50 @@ namespace face
                 pictureBoxsource.BackgroundImage = _frame.Bitmap;
                 try
                 {
-                    using (currentFrame = _frame.ToImage<Bgr, Byte>())
-                    {
-                        if (currentFrame != null)
-                        {
-                            //pictureBoxsource.BackgroundImage = currentFrame.Bitmap;
-
-                            if (HaveFace(currentFrame))
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("请让客户摆正头部位置，自动抓拍并检测照片质量。。。") });
+                    if (detectfaceex(_frame))
+                             //   if (HaveFace(currentFrame))
                             {
-                                //FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
-                                //currentFrame.Save(FileNameCapture[continuouscapture]);
-                                //switch (continuouscapture)
-                                //{
-                                //    case 0:
-                                //        pictureBoxcurrentimage.BackgroundImage = currentFrame.Bitmap;
-                                //        break;
-                                //    case 1:
-                                //        picturecapture1.BackgroundImage = currentFrame.Bitmap;
-                                //        break;
-                                //    default:
-                                //        picturecapture2.BackgroundImage = currentFrame.Bitmap;
-                                //        break;
-                                //}
-                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("照片抓取成功,{0}", continuouscapture) });
-                                //// UpdateStatus(string.Format("照片抓取成功,{0}", continuouscapture));
-                                //continuouscapture++;
-                                //if (continuouscapture > 2)
-                                //{
-                                //    capturing = false;
-                                //    _capture.Pause();
-                                //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("3张照片抓取完成") });
-                                //    //UpdateStatus(string.Format("3张照片抓取完成"));
-                                //}
+                                FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
+                        _frame.Save(FileNameCapture[continuouscapture]);
+                                switch (continuouscapture)
+                                {
+                                    case 0:
+                                        pictureBoxcurrentimage.BackgroundImage = _frame.Bitmap;
+                                        break;
+                                    case 1:
+                                        picturecapture1.BackgroundImage = _frame.Bitmap;
+                                        break;
+                                    default:
+                                        picturecapture2.BackgroundImage = _frame.Bitmap;
+                                        break;
+                                }
+                                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("照片抓取成功,{0}", continuouscapture) });
+                                // UpdateStatus(string.Format("照片抓取成功,{0}", continuouscapture));
+                                continuouscapture++;
+                                if (continuouscapture > 2)
+                                {
+                                    capturing = false;
+                                    _capture.Pause();
+                                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("3张照片抓取完成") });
+                                    //UpdateStatus(string.Format("3张照片抓取完成"));
+                                }
                             }
-                        }
-                    }
+                   
                 }
                 catch (Exception ex)
                 {
-                    UpdateStatus(string.Format("in FrameGrabber,{0}", ex.Message));
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in FrameGrabber,{0}", ex.Message) });
                 }
             }
         }
+
+       
+
         private void buttoncompare_Click(object sender, EventArgs e)
         {
             try
-            {
-               
+            {               
                 labelscore.Text = string.Empty;
                 if (FileNameId == string.Empty)
                 {
@@ -180,6 +178,35 @@ namespace face
             {
                 UpdateStatus(string.Format("exception :{0},{1},{2}", FileNameCapture, FileNameId, ex.Message));
             }
+        }
+        private bool detectfaceex(Mat frame)
+        {
+            try
+            {
+              //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in detectfaceex,{0}", 111) });
+               
+                var capturefile = Path.GetTempFileName()+".jpg";
+                frame.Save(capturefile);
+
+                var a = new System.Diagnostics.Process();
+                a.StartInfo.UseShellExecute = false;
+                a.StartInfo.RedirectStandardOutput = true;
+                a.StartInfo.CreateNoWindow = true;
+                a.StartInfo.Arguments = capturefile;
+                a.StartInfo.FileName = "detectFace.exe";
+                a.Start();
+                a.WaitForExit();
+                var ret = a.ExitCode;
+                if (ret == 1234)
+                {
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in detectfaceex,{0}", ex.Message) });
+            }
+            return false;
         }
         bool compareone(string capturefile, int index)
         {
@@ -394,7 +421,7 @@ namespace face
                 //grabber.QueryFrame();
 
                 //Application.Idle += new EventHandler(FrameGrabber);
-               // _capture.Start();
+                _capture.Start();
                 _tCheckSelfUpdate = new Thread(new ThreadStart(CheckUpdate));
                 _tCheckSelfUpdate.Start();
             }
@@ -474,7 +501,7 @@ namespace face
             {
                 //Application.Idle -= new EventHandler(FrameGrabber);
                 //grabber.Dispose();
-                recognizer.Dispose();
+              //  recognizer.Dispose();
                 _tCheckSelfUpdate.Abort();
             }
             catch (Exception)
@@ -532,14 +559,6 @@ namespace face
                 UpdateStatus(string.Format("restart:{0}", ex));
             }
         }
-
-     
-      
-
-    
-
-     
-
         private void buttonreadid_Click(object sender, EventArgs e)
         {
             int ret;
@@ -765,6 +784,11 @@ namespace face
 
         private void buttonclose_Click(object sender, EventArgs e)
         {
+            try
+            {
+                _tCheckSelfUpdate.Abort();
+            }
+            catch (Exception) { }
             Close();
         }
 

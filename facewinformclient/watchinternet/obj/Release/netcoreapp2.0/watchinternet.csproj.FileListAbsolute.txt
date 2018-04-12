@@ -1,0 +1,11 @@
+F:\dev\FaceServer\facewinformclient\watchinternet\bin\Release\netcoreapp2.0\watchinternet.deps.json
+F:\dev\FaceServer\facewinformclient\watchinternet\bin\Release\netcoreapp2.0\watchinternet.runtimeconfig.json
+F:\dev\FaceServer\facewinformclient\watchinternet\bin\Release\netcoreapp2.0\watchinternet.runtimeconfig.dev.json
+F:\dev\FaceServer\facewinformclient\watchinternet\bin\Release\netcoreapp2.0\watchinternet.dll
+F:\dev\FaceServer\facewinformclient\watchinternet\bin\Release\netcoreapp2.0\watchinternet.pdb
+F:\dev\FaceServer\facewinformclient\watchinternet\obj\Release\netcoreapp2.0\watchinternet.csprojResolveAssemblyReference.cache
+F:\dev\FaceServer\facewinformclient\watchinternet\obj\Release\netcoreapp2.0\watchinternet.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\facewinformclient\watchinternet\obj\Release\netcoreapp2.0\watchinternet.AssemblyInfoInputs.cache
+F:\dev\FaceServer\facewinformclient\watchinternet\obj\Release\netcoreapp2.0\watchinternet.AssemblyInfo.cs
+F:\dev\FaceServer\facewinformclient\watchinternet\obj\Release\netcoreapp2.0\watchinternet.dll
+F:\dev\FaceServer\facewinformclient\watchinternet\obj\Release\netcoreapp2.0\watchinternet.pdb

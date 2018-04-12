@@ -18,7 +18,7 @@
             {
                 components.Dispose();
               //  grabber.Dispose();
-                recognizer.Dispose();
+               // recognizer.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -2,7 +2,7 @@
 ; Demonstrates copying 3 files and creating an icon.
 
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
-#define MyAppVersion "1.0.0.3"
+#define MyAppVersion "1.0.0.5"
 #define sourcedir "I:\faceoutput\desktop"
 [Setup]
 AppName=FaceDesktop
@@ -16,7 +16,7 @@ OutputDir=userdocs:FaceDesktop Output
 OutputBaseFilename=FaceDesktop{#MyAppVersion}
 [Files]
 ;Source: "FaceDesktop.exe"; DestDir: "{app}"
-Source: "{#sourcedir}\Readme.txt"; DestDir: "{app}"; Flags: isreadme
+;Source: "{#sourcedir}\Readme.txt"; DestDir: "{app}"; Flags: isreadme
 Source: "{#sourcedir}\compare\*"; DestDir: "{app}\compare"; Flags: ignoreversion 
 Source: "{#sourcedir}\zh-cn\*"; DestDir: "{app}\zh-cn"; Flags: ignoreversion 
 Source: "{#sourcedir}\x86\*"; DestDir: "{app}\x86"; Flags: ignoreversion 

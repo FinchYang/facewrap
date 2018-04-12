@@ -7,6 +7,5 @@ F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\Fac
 F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.csproj.CoreCompileInputs.cache
 F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.AssemblyInfoInputs.cache
 F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.AssemblyInfo.cs
-F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.csproj.CopyComplete
 F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.dll
 F:\dev\FaceServer\facewinformclient\FaceRepository\obj\Release\netcoreapp2.0\FaceRepository.pdb
