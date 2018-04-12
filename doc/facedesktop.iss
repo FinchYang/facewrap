@@ -20,6 +20,7 @@ OutputBaseFilename=FaceDesktop{#MyAppVersion}
 Source: "{#sourcedir}\compare\*"; DestDir: "{app}\compare"; Flags: ignoreversion 
 Source: "{#sourcedir}\zh-cn\*"; DestDir: "{app}\zh-cn"; Flags: ignoreversion 
 Source: "{#sourcedir}\x86\*"; DestDir: "{app}\x86"; Flags: ignoreversion 
+Source: "{#sourcedir}\x64\*"; DestDir: "{app}\x64"; Flags: ignoreversion 
 Source: "{#sourcedir}\compare\asset\*"; DestDir: "{app}\compare\asset"; Flags: ignoreversion 
 Source: "{#sourcedir}\compare\asset\models\*"; DestDir: "{app}\compare\asset\models"; Flags: ignoreversion 
 Source: "{#sourcedir}\compare\iconengines\*"; DestDir: "{app}\compare\iconengines"; Flags: ignoreversion 

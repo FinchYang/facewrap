@@ -1,6 +1,6 @@
 ﻿namespace face
 {
-    partial class Form1
+    partial class FormFace
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -31,7 +31,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFace));
             this.buttoncompare = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.pictureBoxsource = new Emgu.CV.UI.ImageBox();
@@ -63,8 +64,12 @@
             // buttoncompare
             // 
             this.buttoncompare.BackColor = System.Drawing.Color.LimeGreen;
-            this.buttoncompare.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             resources.ApplyResources(this.buttoncompare, "buttoncompare");
+            this.buttoncompare.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.buttoncompare.FlatAppearance.CheckedBackColor = System.Drawing.Color.Lime;
+            this.buttoncompare.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Green;
+            this.buttoncompare.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttoncompare.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttoncompare.Name = "buttoncompare";
             this.buttoncompare.UseVisualStyleBackColor = false;
             this.buttoncompare.Click += new System.EventHandler(this.buttoncompare_Click);
@@ -75,7 +80,6 @@
             this.richTextBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             resources.ApplyResources(this.richTextBox1, "richTextBox1");
             this.richTextBox1.Name = "richTextBox1";
-         //   this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // pictureBoxsource
             // 
@@ -87,8 +91,12 @@
             // buttonstopcapture
             // 
             this.buttonstopcapture.BackColor = System.Drawing.Color.White;
-            this.buttonstopcapture.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             resources.ApplyResources(this.buttonstopcapture, "buttonstopcapture");
+            this.buttonstopcapture.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
+            this.buttonstopcapture.FlatAppearance.CheckedBackColor = System.Drawing.Color.Lime;
+            this.buttonstopcapture.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            this.buttonstopcapture.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonstopcapture.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonstopcapture.Name = "buttonstopcapture";
             this.buttonstopcapture.UseVisualStyleBackColor = false;
             this.buttonstopcapture.Click += new System.EventHandler(this.buttonstopcapture_Click);
@@ -96,8 +104,11 @@
             // buttonreadid
             // 
             this.buttonreadid.BackColor = System.Drawing.Color.White;
-            this.buttonreadid.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             resources.ApplyResources(this.buttonreadid, "buttonreadid");
+            this.buttonreadid.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
+            this.buttonreadid.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            this.buttonreadid.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonreadid.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonreadid.Name = "buttonreadid";
             this.buttonreadid.UseVisualStyleBackColor = false;
             this.buttonreadid.Click += new System.EventHandler(this.buttonreadid_Click);
@@ -105,8 +116,12 @@
             // buttoncloudcompare
             // 
             this.buttoncloudcompare.BackColor = System.Drawing.Color.LimeGreen;
-            this.buttoncloudcompare.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             resources.ApplyResources(this.buttoncloudcompare, "buttoncloudcompare");
+            this.buttoncloudcompare.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.buttoncloudcompare.FlatAppearance.CheckedBackColor = System.Drawing.Color.Lime;
+            this.buttoncloudcompare.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Green;
+            this.buttoncloudcompare.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttoncloudcompare.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttoncloudcompare.Name = "buttoncloudcompare";
             this.buttoncloudcompare.UseVisualStyleBackColor = false;
             this.buttoncloudcompare.Click += new System.EventHandler(this.button1_Click);
@@ -114,8 +129,12 @@
             // buttonrestart
             // 
             this.buttonrestart.BackColor = System.Drawing.Color.White;
-            this.buttonrestart.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             resources.ApplyResources(this.buttonrestart, "buttonrestart");
+            this.buttonrestart.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
+            this.buttonrestart.FlatAppearance.CheckedBackColor = System.Drawing.Color.Lime;
+            this.buttonrestart.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            this.buttonrestart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonrestart.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonrestart.Name = "buttonrestart";
             this.buttonrestart.UseVisualStyleBackColor = false;
             this.buttonrestart.Click += new System.EventHandler(this.buttonrestart_Click);
@@ -151,8 +170,11 @@
             // buttongetresult
             // 
             this.buttongetresult.BackColor = System.Drawing.Color.White;
-            this.buttongetresult.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             resources.ApplyResources(this.buttongetresult, "buttongetresult");
+            this.buttongetresult.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
+            this.buttongetresult.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            this.buttongetresult.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttongetresult.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttongetresult.Name = "buttongetresult";
             this.buttongetresult.UseVisualStyleBackColor = false;
             this.buttongetresult.Click += new System.EventHandler(this.buttongetresult_Click);
@@ -228,12 +250,12 @@
             this.labeltip.ForeColor = System.Drawing.Color.DimGray;
             this.labeltip.Name = "labeltip";
             // 
-            // Form1
+            // FormFace
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.Color.GreenYellow;
             this.Controls.Add(this.labeltip);
             this.Controls.Add(this.labelversion);
             this.Controls.Add(this.labelscore);
@@ -256,10 +278,10 @@
             this.Controls.Add(this.pictureBoxcurrentimage);
             this.Controls.Add(this.richTextBox1);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.ForeColor = System.Drawing.Color.LawnGreen;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "FormFace";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);

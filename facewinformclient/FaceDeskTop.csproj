@@ -224,6 +224,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="btn_bai_down.png" />
+    <Content Include="btn_bai_nor.png" />
+    <Content Include="btn_bai_sel.png" />
+    <Content Include="btn_lv_down.png" />
+    <Content Include="btn_lv_nor.png" />
+    <Content Include="btn_lv_sel.png" />
     <Content Include="haarcascade_eye.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

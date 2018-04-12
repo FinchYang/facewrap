@@ -1,6 +1,6 @@
 ﻿namespace face
 {
-    public partial class Form1
+    public partial class FormFace
     {
         public class NoidResult
         {

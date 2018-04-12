@@ -19,8 +19,8 @@ namespace detectFace
 
             //Read the files as an 8-bit Bgr image  
 
-            image = new UMat(args[0], ImreadModes.Color); //UMat version
-                                                          //image = new Mat("lena.jpg", ImreadModes.Color); //CPU version
+         //   image = new UMat(args[0], ImreadModes.Color); //UMat version
+                                                          image = new Mat(args[0], ImreadModes.Color); //CPU version
             long detectionTime;
             List<Rectangle> faces = new List<Rectangle>();
             List<Rectangle> eyes = new List<Rectangle>();
