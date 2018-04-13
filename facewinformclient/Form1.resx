@@ -177,11 +177,14 @@
   <data name="buttoncompare.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
+  <data name="buttoncompare.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
   <data name="buttoncompare.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="buttoncompare.Location" type="System.Drawing.Point, System.Drawing">
-    <value>373, 395</value>
+    <value>374, 395</value>
   </data>
   <data name="buttoncompare.Size" type="System.Drawing.Size, System.Drawing">
     <value>213, 42</value>
@@ -206,10 +209,10 @@
     <value>11</value>
   </data>
   <data name="richTextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>632, 359</value>
+    <value>634, 361</value>
   </data>
   <data name="richTextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 234</value>
+    <value>299, 230</value>
   </data>
   <data name="richTextBox1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -248,7 +251,7 @@
     <value>pictureBoxsource</value>
   </data>
   <data name="&gt;&gt;pictureBoxsource.Type" xml:space="preserve">
-    <value>Emgu.CV.UI.ImageBox, Emgu.CV.UI, Version=3.3.0.2824, Culture=neutral, PublicKeyToken=null</value>
+    <value>Emgu.CV.UI.ImageBox, Emgu.CV.UI, Version=3.4.1.2976, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;pictureBoxsource.Parent" xml:space="preserve">
     <value>$this</value>
@@ -317,7 +320,10 @@
 </value>
   </data>
   <data name="buttonstopcapture.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
+    <value>Zoom</value>
+  </data>
+  <data name="buttonstopcapture.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="buttonstopcapture.Location" type="System.Drawing.Point, System.Drawing">
     <value>180, 610</value>
@@ -406,6 +412,9 @@
   <data name="buttonreadid.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
   </data>
+  <data name="buttonreadid.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
   <data name="buttonreadid.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -490,6 +499,9 @@
   </data>
   <data name="buttoncloudcompare.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
+  </data>
+  <data name="buttoncloudcompare.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="buttoncloudcompare.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -580,6 +592,9 @@
   </data>
   <data name="buttonrestart.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
+  </data>
+  <data name="buttonrestart.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="buttonrestart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -790,6 +805,9 @@
   </data>
   <data name="buttongetresult.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Stretch</value>
+  </data>
+  <data name="buttongetresult.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="buttongetresult.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>

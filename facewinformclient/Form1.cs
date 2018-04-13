@@ -509,19 +509,19 @@ namespace face
         //        UpdateStatus(string.Format("in FrameGrabber,{0}", ex.Message));
         //    }
         //}
-        bool HaveFace(Image<Bgr, Byte> fname)
-        {
-            long detectionTime;
-            List<Rectangle> faces = new List<Rectangle>();
-            List<Rectangle> eyes = new List<Rectangle>();
-            DetectFace.Detect(
-              fname, "haarcascade_frontalface_default.xml", "haarcascade_eye.xml",
-              faces, eyes,
-              out detectionTime);
-            if (faces.Count == 1 && eyes.Count == 2) return true;
+        //bool HaveFace(Image<Bgr, Byte> fname)
+        //{
+        //    long detectionTime;
+        //    List<Rectangle> faces = new List<Rectangle>();
+        //    List<Rectangle> eyes = new List<Rectangle>();
+        //    DetectFace.Detect(
+        //      fname, "haarcascade_frontalface_default.xml", "haarcascade_eye.xml",
+        //      faces, eyes,
+        //      out detectionTime);
+        //    if (faces.Count == 1 && eyes.Count == 2) return true;
 
-            return false;
-        }
+        //    return false;
+        //}
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -530,6 +530,8 @@ namespace face
                 //Application.Idle -= new EventHandler(FrameGrabber);
                 //grabber.Dispose();
                 //  recognizer.Dispose();
+                _capture.Dispose();
+                _frame.Dispose();
                 _tCheckSelfUpdate.Abort();
             }
             catch (Exception)
@@ -814,6 +816,8 @@ namespace face
         {
             try
             {
+                _capture.Dispose();
+                _frame.Dispose();
                 _tCheckSelfUpdate.Abort();
             }
             catch (Exception) { }
