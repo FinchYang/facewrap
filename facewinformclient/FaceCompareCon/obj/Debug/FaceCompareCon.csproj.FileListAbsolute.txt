@@ -17,11 +17,11 @@ E:\face\desktop\compare\FaceCompareCon.exe.config
 E:\face\desktop\compare\FaceCompareCon.exe
 E:\face\desktop\compare\FaceCompareCon.pdb
 F:\dev\FaceServer\ConsoleApp1\obj\Debug\FaceCompareCon.csproj.CopyComplete
+I:\faceoutput\desktop\compare\FaceCompareCon.exe.config
+I:\faceoutput\desktop\compare\FaceCompareCon.exe
+I:\faceoutput\desktop\compare\FaceCompareCon.pdb
 F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Debug\FaceCompareCon.csprojResolveAssemblyReference.cache
 F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Debug\FaceCompareCon.csproj.CoreCompileInputs.cache
 F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Debug\FaceCompareCon.csproj.CopyComplete
 F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Debug\FaceCompareCon.exe
 F:\dev\FaceServer\facewinformclient\FaceCompareCon\obj\Debug\FaceCompareCon.pdb
-I:\faceoutput\desktop\compare\FaceCompareCon.exe.config
-I:\faceoutput\desktop\compare\FaceCompareCon.exe
-I:\faceoutput\desktop\compare\FaceCompareCon.pdb

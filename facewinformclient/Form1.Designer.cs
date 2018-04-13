@@ -90,12 +90,14 @@
             // 
             // buttonstopcapture
             // 
+            this.buttonstopcapture.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDown;
             this.buttonstopcapture.BackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.buttonstopcapture, "buttonstopcapture");
             this.buttonstopcapture.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
+            this.buttonstopcapture.FlatAppearance.BorderSize = 10;
             this.buttonstopcapture.FlatAppearance.CheckedBackColor = System.Drawing.Color.Lime;
-            this.buttonstopcapture.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
-            this.buttonstopcapture.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonstopcapture.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Blue;
+            this.buttonstopcapture.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
             this.buttonstopcapture.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonstopcapture.Name = "buttonstopcapture";
             this.buttonstopcapture.UseVisualStyleBackColor = false;
@@ -252,10 +254,12 @@
             // 
             // FormFace
             // 
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.Color.GreenYellow;
+            this.ControlBox = false;
             this.Controls.Add(this.labeltip);
             this.Controls.Add(this.labelversion);
             this.Controls.Add(this.labelscore);
@@ -281,8 +285,8 @@
             this.ForeColor = System.Drawing.Color.LawnGreen;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormFace";
-            this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);

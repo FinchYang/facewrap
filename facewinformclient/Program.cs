@@ -113,7 +113,7 @@ namespace face
             {
                 sw.WriteLine(str);
                 sw.WriteLine("---------------------------------------------------------");
-                sw.Close();
+               // sw.Close();
             }
         }
     }

@@ -6,3 +6,4 @@ F:\dev\FaceServer\facewinformclient\RepositoryCommon\obj\Release\netcoreapp2.0\R
 F:\dev\FaceServer\facewinformclient\RepositoryCommon\obj\Release\netcoreapp2.0\RepositoryCommon.AssemblyInfo.cs
 F:\dev\FaceServer\facewinformclient\RepositoryCommon\obj\Release\netcoreapp2.0\RepositoryCommon.dll
 F:\dev\FaceServer\facewinformclient\RepositoryCommon\obj\Release\netcoreapp2.0\RepositoryCommon.pdb
+F:\dev\FaceServer\facewinformclient\RepositoryCommon\obj\Release\netcoreapp2.0\RepositoryCommon.csprojResolveAssemblyReference.cache

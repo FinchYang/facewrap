@@ -61,8 +61,10 @@ I:\faceoutput\desktop\x86\cvextern.dll
 I:\faceoutput\desktop\x86\msvcp140.dll
 I:\faceoutput\desktop\x86\opencv_ffmpeg330.dll
 I:\faceoutput\desktop\x86\vcruntime140.dll
-I:\faceoutput\desktop\haveid.jpg
-I:\faceoutput\desktop\noid.jpg
+I:\faceoutput\desktop\x64\opencv_ffmpeg341_64.dll
+I:\faceoutput\desktop\x86\opencv_ffmpeg341.dll
+I:\faceoutput\desktop\image\haveid.jpg
+I:\faceoutput\desktop\image\noid.jpg
 I:\faceoutput\desktop\FaceDeskTop.exe.config
 I:\faceoutput\desktop\FaceDeskTop.exe.manifest
 I:\faceoutput\desktop\FaceDeskTop.application
@@ -70,7 +72,7 @@ I:\faceoutput\desktop\FaceDeskTop.exe
 I:\faceoutput\desktop\FaceDeskTop.pdb
 I:\faceoutput\desktop\FaceDeskTop.exe.CodeAnalysisLog.xml
 I:\faceoutput\desktop\FaceDeskTop.exe.lastcodeanalysissucceeded
-F:\dev\FaceServer\facewinformclient\obj\Debug\face.Form1.resources
+F:\dev\FaceServer\facewinformclient\obj\Debug\face.FormFace.resources
 F:\dev\FaceServer\facewinformclient\obj\Debug\face.Properties.Resources.resources
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csproj.GenerateResource.cache
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csproj.CoreCompileInputs.cache
@@ -80,3 +82,4 @@ F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.application
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csproj.CopyComplete
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.exe
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.pdb
+F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csprojResolveAssemblyReference.cache

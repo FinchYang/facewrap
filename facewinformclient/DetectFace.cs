@@ -2,19 +2,19 @@
 //  Copyright (C) 2004-2017 by EMGU Corporation. All rights reserved.       
 //----------------------------------------------------------------------------
 
+using Emgu.CV;
+using Emgu.CV.Cuda;
+using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using Emgu.CV;
-using Emgu.CV.Structure;
 #if !(__IOS__ || NETFX_CORE)
-using Emgu.CV.Cuda;
 #endif
 
-namespace FaceDetection
+namespace face
 {
-   public static class DetectFace
+    public static class DetectFace
    {
       public static void Detect(
          IInputArray image, String faceFileName, String eyeFileName,

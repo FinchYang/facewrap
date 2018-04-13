@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Emgu.CV;
-using Emgu.CV.Face;
-using Emgu.CV.Structure;
-using FaceDetection;
 
 using AForge.Video.DirectShow;
 using System.Runtime.InteropServices;
@@ -20,6 +16,9 @@ using System.Configuration;
 using System.Net.Http;
 using System.Threading;
 using System.Reflection;
+using face.model;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace face
 {
@@ -72,7 +71,7 @@ namespace face
         string capturephotofile = string.Empty;
         bool capturing = true;
         private VideoCapture _capture = null;
-        private bool _captureInProgress;
+      //  private bool _captureInProgress;
         private Mat _frame;
         public FormFace()
         {
@@ -238,10 +237,12 @@ namespace face
             //var stop = new Stopwatch();
             //stop.Start();
             var a = new System.Diagnostics.Process();
+
             a.StartInfo.UseShellExecute = false;
             a.StartInfo.RedirectStandardOutput = true;
-            a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
             a.StartInfo.CreateNoWindow = true;
+
+            a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
             a.StartInfo.Arguments = string.Format(" {0} {1}", capturefile, FileNameId);
             //   UpdateStatus(string.Format("files:{0}", a.StartInfo.Arguments));
             capturephotofile = capturefile;
@@ -422,6 +423,8 @@ namespace face
         }
         private void ReleaseData()
         {
+            if (_frame != null)
+                _frame.Dispose();
             if (_capture != null)
                 _capture.Dispose();
         }
@@ -774,7 +777,7 @@ namespace face
                 pictureid.Visible = false;
                 buttoncompare.Visible = false;
                 buttonreadid.Visible = false;
-                BackgroundImage = Image.FromFile("noid.jpg");
+                BackgroundImage = Image.FromFile("image/noid.jpg");
 
 
             }
@@ -799,7 +802,7 @@ namespace face
                 textBoxid.Visible = false;
                 buttongetresult.Visible = false;
                 buttoncloudcompare.Visible = false;
-                BackgroundImage = Image.FromFile("haveid.jpg");
+             //   BackgroundImage = Image.FromFile("haveid.jpg");
             }
             catch (Exception ex)
             {
