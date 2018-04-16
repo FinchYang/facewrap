@@ -308,6 +308,7 @@ namespace face
             {
                 try
                 {
+                    Thread.Sleep(1000 * 60 );
                     //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 111) });
                     using (var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip })
                     using (var http = new HttpClient(handler))
@@ -373,10 +374,10 @@ namespace face
                 }
                 catch (Exception ex)
                 {
-                    if (ex.Message.Contains("发送请求时出错"))
-                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新查询:{0},url={1},{2}", version, url, "网站可能在更新，下次启动再查。") });
-                    else
-                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新查询 error:{0},url={1},{2}", version, url, ex.Message) });
+                    //if (ex.Message.Contains("发送请求时出错"))
+                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新查询:{0},url={1},{2}", version, url, "网站可能在更新，下次启动再查。") });
+                    //else
+                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新查询 error:{0},url={1},{2}", version, url, ex.Message) });
                 }
                 Thread.Sleep(1000 * 60 * 60);
             } while (update);
@@ -779,7 +780,7 @@ namespace face
                 pictureid.Visible = false;
                 buttoncompare.Visible = false;
                 buttonreadid.Visible = false;
-                BackgroundImage = Image.FromFile("image/noid.jpg");
+                BackgroundImage = Image.FromFile("image/wsf.png");
 
 
             }
@@ -804,7 +805,7 @@ namespace face
                 textBoxid.Visible = false;
                 buttongetresult.Visible = false;
                 buttoncloudcompare.Visible = false;
-             //   BackgroundImage = Image.FromFile("haveid.jpg");
+              BackgroundImage = Image.FromFile("image/ysf.png");
             }
             catch (Exception ex)
             {

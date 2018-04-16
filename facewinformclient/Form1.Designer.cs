@@ -63,13 +63,13 @@
             // 
             // buttoncompare
             // 
-            this.buttoncompare.BackColor = System.Drawing.Color.LightYellow;
+            this.buttoncompare.BackColor = System.Drawing.Color.Lime;
             resources.ApplyResources(this.buttoncompare, "buttoncompare");
-            this.buttoncompare.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.buttoncompare.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.buttoncompare.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.buttoncompare.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.buttoncompare.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttoncompare.FlatAppearance.BorderColor = System.Drawing.Color.Yellow;
+            this.buttoncompare.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.buttoncompare.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttoncompare.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.buttoncompare.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttoncompare.Name = "buttoncompare";
             this.buttoncompare.UseVisualStyleBackColor = false;
             this.buttoncompare.Click += new System.EventHandler(this.buttoncompare_Click);
@@ -91,7 +91,7 @@
             // buttonstopcapture
             // 
             this.buttonstopcapture.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDown;
-            this.buttonstopcapture.BackColor = System.Drawing.Color.Transparent;
+            this.buttonstopcapture.BackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.buttonstopcapture, "buttonstopcapture");
             this.buttonstopcapture.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
             this.buttonstopcapture.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
@@ -107,8 +107,9 @@
             this.buttonreadid.BackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.buttonreadid, "buttonreadid");
             this.buttonreadid.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
-            this.buttonreadid.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
-            this.buttonreadid.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonreadid.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.buttonreadid.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttonreadid.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.buttonreadid.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttonreadid.Name = "buttonreadid";
             this.buttonreadid.UseVisualStyleBackColor = false;
@@ -116,20 +117,20 @@
             // 
             // buttoncloudcompare
             // 
-            this.buttoncloudcompare.BackColor = System.Drawing.Color.LightYellow;
+            this.buttoncloudcompare.BackColor = System.Drawing.Color.Lime;
             resources.ApplyResources(this.buttoncloudcompare, "buttoncloudcompare");
-            this.buttoncloudcompare.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.buttoncloudcompare.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.buttoncloudcompare.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.buttoncloudcompare.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.buttoncloudcompare.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttoncloudcompare.FlatAppearance.BorderColor = System.Drawing.Color.Yellow;
+            this.buttoncloudcompare.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.buttoncloudcompare.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttoncloudcompare.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.buttoncloudcompare.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.buttoncloudcompare.Name = "buttoncloudcompare";
             this.buttoncloudcompare.UseVisualStyleBackColor = false;
             this.buttoncloudcompare.Click += new System.EventHandler(this.button1_Click);
             // 
             // buttonrestart
             // 
-            this.buttonrestart.BackColor = System.Drawing.Color.Transparent;
+            this.buttonrestart.BackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.buttonrestart, "buttonrestart");
             this.buttonrestart.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
             this.buttonrestart.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
@@ -170,7 +171,7 @@
             // 
             // buttongetresult
             // 
-            this.buttongetresult.BackColor = System.Drawing.Color.Transparent;
+            this.buttongetresult.BackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.buttongetresult, "buttongetresult");
             this.buttongetresult.FlatAppearance.BorderColor = System.Drawing.Color.Lime;
             this.buttongetresult.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
@@ -268,7 +269,7 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.BackColor = System.Drawing.Color.GreenYellow;
+            this.BackColor = System.Drawing.Color.White;
             this.ControlBox = false;
             this.Controls.Add(this.labeltip);
             this.Controls.Add(this.labelversion);
