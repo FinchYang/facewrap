@@ -46,10 +46,13 @@ namespace face
 
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int ReadBaseMsg(byte[] pMsg, int len);
-
+        [DllImport(@"idr210sdk\sdtapi.dll")]
+        public extern static int ReadIINSNDN(string pMsg);
+        [DllImport(@"idr210sdk\sdtapi.dll")]
+        public extern static int GetSAMIDToStr(string pMsg);
         //[DllImport(@"idr210sdk\sdtapi.dll")]
         //public extern static int ReadNewAppMsg(byte[] pMsg, out int len);
-        private Thread _tCheckSelfUpdate;
+        private Thread _tCheckSelfUpdate,_tReadId;
         private FilterInfoCollection videoDevices;
         private string sourceImage = string.Empty;
         private string currentImage = string.Empty;
@@ -101,7 +104,7 @@ namespace face
                 pictureBoxsource.BackgroundImage = _frame.Bitmap;
                 try
                 {
-                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("请让客户摆正头部位置，自动抓拍并检测照片质量。。。") });
+                  //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("请让客户摆正头部位置，自动抓拍并检测照片质量。。。") });
                     if (detectfacethread(_frame))
                     //   if (HaveFace(currentFrame))
                     {
@@ -149,12 +152,12 @@ namespace face
                 labelscore.Text = string.Empty;
                 if (FileNameId == string.Empty)
                 {
-                    UpdateStatus(string.Format("请先读取身份证信息！"));
+                    MessageBox.Show(string.Format("请先读取身份证信息！"));
                     return;
                 }
                 if (continuouscapture < 3)
                 {
-                    UpdateStatus(string.Format("请先等待人脸照片抓取成功！-{0}", continuouscapture));
+                    MessageBox.Show(string.Format("请先等待人脸照片抓取成功！-{0}", continuouscapture));
                     return;
                 }
                 labeltip.Text = "正在比对中。。。";
@@ -415,12 +418,31 @@ namespace face
             }
         }
 
-
+        private void UpdateIdPhoto(string status)
+        {
+          //  richTextBox1.Clear();
+            var FileNameIdtmp = Path.Combine(homepath, dllpath, "photo.bmp");
+            FileNameId = Path.GetTempFileName();
+            idphotofile = FileNameId;
+            using (var jpg = new Bitmap(FileNameIdtmp))
+            {
+                jpg.Save(FileNameId, ImageFormat.Jpeg);
+            }
+            pictureid.BackgroundImage = Image.FromFile(FileNameId);
+        }
+        private void UpdateIdInfo(string status)
+        {
+            richTextBox1.AppendText(Environment.NewLine + string.Format( status));
+        }
+        private void UpdateIdInfoClear(string status)
+        {
+            richTextBox1.Clear();
+        }
         private void UpdateStatus(string status)
         {
-            richTextBox1.AppendText(Environment.NewLine + string.Format("{0}--{1}", DateTime.Now, status));
-            richTextBox1.SelectionStart = richTextBox1.Text.Length;
-            richTextBox1.ScrollToCaret();
+          //  richTextBox1.AppendText(Environment.NewLine + string.Format("{0}--{1}", DateTime.Now, status));
+            //richTextBox1.SelectionStart = richTextBox1.Text.Length;
+            //richTextBox1.ScrollToCaret();
         }
         private void ReleaseData()
         {
@@ -453,6 +475,9 @@ namespace face
                 _capture.Start();
                 _tCheckSelfUpdate = new Thread(new ThreadStart(CheckUpdate));
                 _tCheckSelfUpdate.Start();
+
+                //_tReadId = new Thread(new ThreadStart(ThreadReadId));
+                //_tReadId.Start();
             }
             catch (ApplicationException aex)
             {
@@ -528,12 +553,12 @@ namespace face
         {
             try
             {
-                //Application.Idle -= new EventHandler(FrameGrabber);
-                //grabber.Dispose();
-                //  recognizer.Dispose();
+                CloseComm();
                 _capture.Dispose();
                 _frame.Dispose();
+                if(_tCheckSelfUpdate.ThreadState!= System.Threading.ThreadState.Aborted)
                 _tCheckSelfUpdate.Abort();
+              //  _tReadId.Abort();
             }
             catch (Exception)
             {
@@ -612,24 +637,27 @@ namespace face
                             ret = ReadBaseMsg(Msg, 0);
                             if (ret > 0)
                             {
+                                richTextBox1.Clear();
                                 upload.name = System.Text.Encoding.Default.GetString(Msg.Take(31).ToArray());
-                                UpdateStatus(string.Format(upload.name));
                                 upload.gender = System.Text.Encoding.Default.GetString(Msg.Skip(31).Take(3).ToArray());
-                                UpdateStatus(string.Format(upload.gender));
                                 upload.nation = System.Text.Encoding.Default.GetString(Msg.Skip(34).Take(10).ToArray());
-                                UpdateStatus(string.Format(upload.nation));
                                 upload.birthday = System.Text.Encoding.Default.GetString(Msg.Skip(44).Take(9).ToArray());
-                                UpdateStatus(string.Format(upload.birthday));
                                 upload.idaddress = Encoding.Default.GetString(Msg.Skip(53).Take(71).ToArray());
-                                UpdateStatus(string.Format(upload.idaddress));
                                 upload.id = System.Text.Encoding.Default.GetString(Msg.Skip(124).Take(19).ToArray());
-                                UpdateStatus(string.Format(upload.id));
                                 upload.issuer = System.Text.Encoding.Default.GetString(Msg.Skip(143).Take(31).ToArray());
-                                UpdateStatus(string.Format(upload.issuer));
                                 upload.startdate = System.Text.Encoding.Default.GetString(Msg.Skip(174).Take(9).ToArray());
-                                UpdateStatus(string.Format(upload.startdate));
                                 upload.enddate = Encoding.Default.GetString(Msg.Skip(183).Take(9).ToArray());
-                                UpdateStatus(string.Format(upload.enddate));
+
+                                UpdateIdInfo(string.Format("姓名："+upload.name));                               
+                                UpdateIdInfo(string.Format("性别："+upload.gender));                               
+                                UpdateIdInfo(string.Format("民族："+upload.nation));                                
+                                UpdateIdInfo(string.Format("住址：" + upload.idaddress));                               
+                                UpdateIdInfo(string.Format("出生日期：{0}",upload.birthday));                               
+                                UpdateIdInfo(string.Format("证件所属：" + upload.issuer));                                
+                                UpdateIdInfo(string.Format("公民身份号码："+upload.id)); 
+                              //  UpdateIdInfo(string.Format(upload.startdate));
+                                UpdateIdInfo(string.Format("身份证有效期：{0}-{1}",upload.startdate,upload.enddate));
+
                                 var FileNameIdtmp = Path.Combine(homepath, dllpath, "photo.bmp");
                                 FileNameId = Path.GetTempFileName();
                                 idphotofile = FileNameId;
@@ -663,18 +691,89 @@ namespace face
             }
         }
 
+        private void ThreadReadId()
+        {
+            int ret;
+            int iPort = 1;
+            try
+            {
+                ret = InitComm(iPort);
+                if (ret != 0)
+                {
+                    do
+                    {
+                        ret = Authenticate();
 
+                        if (ret != 0)
+                        {
+                            var Msg = new byte[200];
+                            var smsg = "                                                                                                   ";
+                            if (ReadIINSNDN(smsg) == 1) {
+                                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}","读卡体管理号", smsg )});
+                            }
+                            if (GetSAMIDToStr(smsg) == 1)
+                            {
+                                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", smsg.Length, smsg) });
+                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", Msg.Length, Msg.Take(2).ToArray()) });
+                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", Msg.Length, Msg.Skip(2).Take(2).ToArray()) });
+                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", Msg.Length, Msg.Skip(4).Take(8).ToArray()) });
+                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", Msg.Length, Msg.Skip(12).Take(10).ToArray()) });
+                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", Msg.Length, Msg.Skip(22).Take(10).ToArray()) });
+                            }
+
+                            //                ret = ReadBaseMsg(Msg, 0);
+                            //                if (ret > 0)
+                            //                {
+                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdPhoto), new object[] { string.Format(upload.name) });
+                            //                    upload.name = System.Text.Encoding.Default.GetString(Msg.Take(31).ToArray());
+                            //                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] {string.Format(upload.name)});
+                            //                    upload.gender = System.Text.Encoding.Default.GetString(Msg.Skip(31).Take(3).ToArray());
+                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.gender });
+                            //                    upload.nation = System.Text.Encoding.Default.GetString(Msg.Skip(34).Take(10).ToArray());
+                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.nation});
+                            //                upload.birthday = System.Text.Encoding.Default.GetString(Msg.Skip(44).Take(9).ToArray());
+                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.birthday});
+                            //            upload.idaddress = Encoding.Default.GetString(Msg.Skip(53).Take(71).ToArray());
+                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.idaddress});
+                            //        upload.id = System.Text.Encoding.Default.GetString(Msg.Skip(124).Take(19).ToArray());
+                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.id});
+                            //    upload.issuer = System.Text.Encoding.Default.GetString(Msg.Skip(143).Take(31).ToArray());
+                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.issuer});
+                            //upload.startdate = System.Text.Encoding.Default.GetString(Msg.Skip(174).Take(9).ToArray());
+                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.startdate});
+                            //                    upload.enddate = Encoding.Default.GetString(Msg.Skip(183).Take(9).ToArray());
+                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.enddate});
+
+                            //                }
+
+                            System.Threading.Thread.Sleep(1000);
+                        }
+                        else
+                        {
+                            System.Threading.Thread.Sleep(1000);
+                            continue;
+                        }
+                    } while (true);
+                }
+
+                ret = CloseComm();
+            }
+            catch (Exception ex)
+            {
+              //  UpdateStatus(string.Format("身份证读卡器操作--{0} !", ex.Message));
+            }
+        }
 
         private void button1_Click(object sender, EventArgs e)//无证件上传云端比对
         {
             if (textBoxid.Text.Length < 15)
             {
-                UpdateStatus(string.Format("请输入正确的身份证号！"));
+                MessageBox.Show(string.Format("请输入正确的身份证号！"));
                 return;
             }
             if (continuouscapture < 3)
             {
-                UpdateStatus(string.Format("请先等待人脸照片抓取成功！-{0}", continuouscapture));
+                MessageBox.Show(string.Format("请先等待人脸照片抓取成功！-{0}", continuouscapture));
                 return;
             }
             var ui = new NoidInput();
@@ -699,7 +798,7 @@ namespace face
             var url = string.Format("http://{0}/{1}", host, "NoidUpload");
             try
             {
-                //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", url) });
+                // 
 
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                 //      BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
@@ -725,6 +824,7 @@ namespace face
                         picturecapture2.BackgroundImage = null;
                     }
                 }
+                MessageBox.Show(string.Format("成功！"));
             }
             catch (Exception ex)
             {
@@ -781,7 +881,7 @@ namespace face
                 buttoncompare.Visible = false;
                 buttonreadid.Visible = false;
                 BackgroundImage = Image.FromFile("image/wsf.png");
-
+                richTextBox1.Clear();
 
             }
             catch (Exception ex)
@@ -817,9 +917,11 @@ namespace face
         {
             try
             {
+                CloseComm();
                 _capture.Dispose();
                 _frame.Dispose();
                 _tCheckSelfUpdate.Abort();
+                //_tReadId.Abort();
             }
             catch (Exception) { }
             Close();
