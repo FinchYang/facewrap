@@ -52,7 +52,7 @@ namespace face
         public extern static int GetSAMIDToStr(string pMsg);
         //[DllImport(@"idr210sdk\sdtapi.dll")]
         //public extern static int ReadNewAppMsg(byte[] pMsg, out int len);
-        private Thread _tCheckSelfUpdate,_tReadId;
+        private Thread _tCheckSelfUpdate;//,_tReadId;
         private FilterInfoCollection videoDevices;
         private string sourceImage = string.Empty;
         private string currentImage = string.Empty;
@@ -432,7 +432,12 @@ namespace face
         }
         private void UpdateIdInfo(string status)
         {
-            richTextBox1.AppendText(Environment.NewLine + string.Format( status));
+            richTextBox1.AppendText(status);
+            richTextBox1.AppendText(Environment.NewLine );
+        }
+        private void UpdateIdInfoNoNewLine(string status)
+        {
+            richTextBox1.AppendText(status);
         }
         private void UpdateIdInfoClear(string status)
         {
@@ -634,7 +639,8 @@ namespace face
                             ok = false;
 
                             var Msg = new byte[200];
-                            ret = ReadBaseMsg(Msg, 0);
+                          //  var aa = 0;
+                            ret = ReadBaseMsg(Msg,   0);
                             if (ret > 0)
                             {
                                 richTextBox1.Clear();
@@ -647,16 +653,19 @@ namespace face
                                 upload.issuer = System.Text.Encoding.Default.GetString(Msg.Skip(143).Take(31).ToArray());
                                 upload.startdate = System.Text.Encoding.Default.GetString(Msg.Skip(174).Take(9).ToArray());
                                 upload.enddate = Encoding.Default.GetString(Msg.Skip(183).Take(9).ToArray());
-
+                              //  var aaa = Encoding.Default.GetString(Msg.Skip(174).Take(18).ToArray());
                                 UpdateIdInfo(string.Format("姓名："+upload.name));                               
                                 UpdateIdInfo(string.Format("性别："+upload.gender));                               
                                 UpdateIdInfo(string.Format("民族："+upload.nation));                                
                                 UpdateIdInfo(string.Format("住址：" + upload.idaddress));                               
                                 UpdateIdInfo(string.Format("出生日期：{0}",upload.birthday));                               
                                 UpdateIdInfo(string.Format("证件所属：" + upload.issuer));                                
-                                UpdateIdInfo(string.Format("公民身份号码："+upload.id)); 
-                              //  UpdateIdInfo(string.Format(upload.startdate));
-                                UpdateIdInfo(string.Format("身份证有效期：{0}-{1}",upload.startdate,upload.enddate));
+                                UpdateIdInfo(string.Format("公民身份号码："+upload.id));
+
+                                UpdateIdInfoNoNewLine("身份证有效期：");
+                                UpdateIdInfoNoNewLine(string.Format(upload.startdate));
+                                UpdateIdInfoNoNewLine("-");
+                                UpdateIdInfo(string.Format(upload.enddate));
 
                                 var FileNameIdtmp = Path.Combine(homepath, dllpath, "photo.bmp");
                                 FileNameId = Path.GetTempFileName();
