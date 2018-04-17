@@ -184,7 +184,7 @@
     <value>33, 169</value>
   </data>
   <data name="pictureBoxsource.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 186</value>
+    <value>295, 186</value>
   </data>
   <data name="pictureBoxsource.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -340,10 +340,10 @@
     <value>NoControl</value>
   </data>
   <data name="pictureBoxcurrentimage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 399</value>
+    <value>32, 398</value>
   </data>
   <data name="pictureBoxcurrentimage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 88</value>
+    <value>145, 90</value>
   </data>
   <data name="pictureBoxcurrentimage.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -370,10 +370,10 @@
     <value>NoControl</value>
   </data>
   <data name="picturecapture2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 498</value>
+    <value>32, 497</value>
   </data>
   <data name="picturecapture2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 88</value>
+    <value>145, 90</value>
   </data>
   <data name="picturecapture2.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -400,10 +400,10 @@
     <value>NoControl</value>
   </data>
   <data name="picturecapture1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>185, 399</value>
+    <value>184, 398</value>
   </data>
   <data name="picturecapture1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 88</value>
+    <value>145, 90</value>
   </data>
   <data name="picturecapture1.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -433,7 +433,7 @@
     <value>632, 169</value>
   </data>
   <data name="pictureid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 186</value>
+    <value>295, 186</value>
   </data>
   <data name="pictureid.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -549,8 +549,8 @@
   <data name="buttonnoid.Location" type="System.Drawing.Point, System.Drawing">
     <value>160, 32</value>
   </data>
-  <data name="buttonnoid.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 20, 0, 0</value>
+  <data name="buttonnoid.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
   </data>
   <data name="buttonnoid.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 90</value>
@@ -582,8 +582,8 @@
   <data name="buttonhaveid.Location" type="System.Drawing.Point, System.Drawing">
     <value>30, 32</value>
   </data>
-  <data name="buttonhaveid.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 20, 0, 0</value>
+  <data name="buttonhaveid.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
   </data>
   <data name="buttonhaveid.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 90</value>

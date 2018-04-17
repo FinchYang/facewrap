@@ -77,13 +77,14 @@
             // richTextBox1
             // 
             this.richTextBox1.BackColor = System.Drawing.Color.White;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             resources.ApplyResources(this.richTextBox1, "richTextBox1");
             this.richTextBox1.Name = "richTextBox1";
             // 
             // pictureBoxsource
             // 
-            this.pictureBoxsource.BackColor = System.Drawing.Color.White;
+            this.pictureBoxsource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
             resources.ApplyResources(this.pictureBoxsource, "pictureBoxsource");
             this.pictureBoxsource.Name = "pictureBoxsource";
             this.pictureBoxsource.TabStop = false;
@@ -140,28 +141,28 @@
             // 
             // pictureBoxcurrentimage
             // 
-            this.pictureBoxcurrentimage.BackColor = System.Drawing.Color.White;
+            this.pictureBoxcurrentimage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
             resources.ApplyResources(this.pictureBoxcurrentimage, "pictureBoxcurrentimage");
             this.pictureBoxcurrentimage.Name = "pictureBoxcurrentimage";
             this.pictureBoxcurrentimage.TabStop = false;
             // 
             // picturecapture2
             // 
-            this.picturecapture2.BackColor = System.Drawing.Color.White;
+            this.picturecapture2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
             resources.ApplyResources(this.picturecapture2, "picturecapture2");
             this.picturecapture2.Name = "picturecapture2";
             this.picturecapture2.TabStop = false;
             // 
             // picturecapture1
             // 
-            this.picturecapture1.BackColor = System.Drawing.Color.White;
+            this.picturecapture1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
             resources.ApplyResources(this.picturecapture1, "picturecapture1");
             this.picturecapture1.Name = "picturecapture1";
             this.picturecapture1.TabStop = false;
             // 
             // pictureid
             // 
-            this.pictureid.BackColor = System.Drawing.Color.White;
+            this.pictureid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(232)))), ((int)(((byte)(232)))));
             resources.ApplyResources(this.pictureid, "pictureid");
             this.pictureid.Name = "pictureid";
             this.pictureid.TabStop = false;
@@ -191,30 +192,22 @@
             // 
             // buttonnoid
             // 
+            this.buttonnoid.AutoEllipsis = true;
             this.buttonnoid.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.buttonnoid, "buttonnoid");
-            this.buttonnoid.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.buttonnoid.FlatAppearance.BorderSize = 0;
-            this.buttonnoid.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.buttonnoid.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.buttonnoid.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.buttonnoid.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.buttonnoid.Name = "buttonnoid";
-            this.buttonnoid.UseVisualStyleBackColor = false;
+            this.buttonnoid.UseVisualStyleBackColor = true;
             this.buttonnoid.Click += new System.EventHandler(this.buttonnoid_Click);
             // 
             // buttonhaveid
             // 
+            this.buttonhaveid.AutoEllipsis = true;
             this.buttonhaveid.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.buttonhaveid, "buttonhaveid");
-            this.buttonhaveid.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.buttonhaveid.FlatAppearance.BorderSize = 0;
-            this.buttonhaveid.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.buttonhaveid.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.buttonhaveid.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.buttonhaveid.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.buttonhaveid.Name = "buttonhaveid";
-            this.buttonhaveid.UseVisualStyleBackColor = false;
+            this.buttonhaveid.UseVisualStyleBackColor = true;
             this.buttonhaveid.Click += new System.EventHandler(this.buttonhaveid_Click);
             // 
             // buttonclose
@@ -265,7 +258,6 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.BackColor = System.Drawing.Color.White;
             this.ControlBox = false;
             this.Controls.Add(this.labeltip);
             this.Controls.Add(this.labelversion);
@@ -290,7 +282,6 @@
             this.Controls.Add(this.richTextBox1);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DoubleBuffered = true;
-            this.ForeColor = System.Drawing.Color.LawnGreen;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

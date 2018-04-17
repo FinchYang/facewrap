@@ -302,7 +302,6 @@ namespace face
         }
         private void CheckUpdate()
         {
-
             var lv = long.Parse(version.Replace(".", ""));
             var url = string.Format("http://{0}/GetFaceDesktopUpdatePackage?version={1}", host, lv);
             var srcString = string.Empty;
@@ -326,7 +325,7 @@ namespace face
                             continue;
                         }
                         //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 444) });
-                        srcString = response.Result.Content.ReadAsStringAsync().Result;
+                     //   srcString = response.Result.Content.ReadAsStringAsync().Result;
                         if (response.Result.StatusCode == HttpStatusCode.OK)
                         {
                             var path = Path.GetTempFileName() + ".exe";// Path.Combine(exportPath, ui.Name);
@@ -340,40 +339,7 @@ namespace face
                                 Process.GetCurrentProcess().Kill();
                             }
                         }
-
-                        // var res = response.Result;
-                        // string ss = res.Content.ReadAsStringAsync().Result;
-                        //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", srcString) });
-                        //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新下载--{0},", res.StatusCode) });
-                        // BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", response.Status) });
-                    }
-                    //try
-                    //{
-                    //    //var ui = JsonConvert.DeserializeObject<UpdateInfo>(srcString);
-                    //    //if (ui.Name == string.Empty)
-                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 1111) });
-                    //    //   var exportPath = AppDomain.CurrentDomain.BaseDirectory;
-                    //    if (string.IsNullOrEmpty(srcString))
-                    //    {
-                    //        Thread.Sleep(1000 * 60 * 60);
-                    //        continue;
-                    //    }
-                    //    var path = Path.GetTempFileName() + ".exe";// Path.Combine(exportPath, ui.Name);
-                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 2222) });
-                    //    File.WriteAllBytes(path, Convert.FromBase64String(srcString.Substring(1,srcString.Length-2)));
-                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 3333) });
-                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新下载 {0}，{1} ok :",   version,lv) });
-                    //    if (MessageBox.Show("软件有新的版本，点击确定开始升级。", "确认", MessageBoxButtons.OKCancel,
-                    //        MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
-                    //    {
-                    //        Process.Start(path);
-                    //        Process.GetCurrentProcess().Kill();
-                    //    }
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("CheckUpdate processing :{0},url={1},{2}", version, url, ex.Message) });
-                    //}
+                    }                   
                 }
                 catch (Exception ex)
                 {
@@ -929,6 +895,7 @@ namespace face
                 CloseComm();
                 _capture.Dispose();
                 _frame.Dispose();
+                if(_tCheckSelfUpdate.ThreadState!= System.Threading.ThreadState.Aborted)
                 _tCheckSelfUpdate.Abort();
                 //_tReadId.Abort();
             }
