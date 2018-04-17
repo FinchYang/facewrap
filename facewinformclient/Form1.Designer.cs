@@ -145,6 +145,7 @@
             resources.ApplyResources(this.pictureBoxcurrentimage, "pictureBoxcurrentimage");
             this.pictureBoxcurrentimage.Name = "pictureBoxcurrentimage";
             this.pictureBoxcurrentimage.TabStop = false;
+            this.pictureBoxcurrentimage.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxcurrentimage_Paint);
             // 
             // picturecapture2
             // 
@@ -152,6 +153,7 @@
             resources.ApplyResources(this.picturecapture2, "picturecapture2");
             this.picturecapture2.Name = "picturecapture2";
             this.picturecapture2.TabStop = false;
+            this.picturecapture2.Paint += new System.Windows.Forms.PaintEventHandler(this.picturecapture2_Paint);
             // 
             // picturecapture1
             // 
@@ -159,6 +161,7 @@
             resources.ApplyResources(this.picturecapture1, "picturecapture1");
             this.picturecapture1.Name = "picturecapture1";
             this.picturecapture1.TabStop = false;
+            this.picturecapture1.Paint += new System.Windows.Forms.PaintEventHandler(this.picturecapture1_Paint);
             // 
             // pictureid
             // 
@@ -192,18 +195,19 @@
             // 
             // buttonnoid
             // 
+            this.buttonnoid.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.buttonnoid.AutoEllipsis = true;
-            this.buttonnoid.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.buttonnoid, "buttonnoid");
             this.buttonnoid.FlatAppearance.BorderSize = 0;
             this.buttonnoid.Name = "buttonnoid";
-            this.buttonnoid.UseVisualStyleBackColor = true;
+            this.buttonnoid.UseMnemonic = false;
+            this.buttonnoid.UseVisualStyleBackColor = false;
             this.buttonnoid.Click += new System.EventHandler(this.buttonnoid_Click);
+            this.buttonnoid.Paint += new System.Windows.Forms.PaintEventHandler(this.buttonnoid_Paint);
             // 
             // buttonhaveid
             // 
             this.buttonhaveid.AutoEllipsis = true;
-            this.buttonhaveid.BackColor = System.Drawing.Color.Transparent;
             resources.ApplyResources(this.buttonhaveid, "buttonhaveid");
             this.buttonhaveid.FlatAppearance.BorderSize = 0;
             this.buttonhaveid.Name = "buttonhaveid";

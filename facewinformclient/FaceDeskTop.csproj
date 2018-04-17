@@ -216,6 +216,8 @@
     <Content Include="image\noid.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="image\rlsb_wsfz.png" />
+    <Content Include="image\rlsb_ysfz.png" />
     <Content Include="image\wsf.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

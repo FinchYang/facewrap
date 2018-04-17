@@ -910,5 +910,40 @@ namespace face
             //   Hide();
             WindowState = FormWindowState.Minimized;
         }
+
+        private void pictureBoxcurrentimage_Paint(object sender, PaintEventArgs e)
+        {
+            PictureBox p = (PictureBox)sender;
+          //  Color cc = new Color();
+            Pen pp = new Pen(Color.FromArgb(216,216,216));
+            e.Graphics.DrawRectangle(pp, e.ClipRectangle.X, e.ClipRectangle.Y,
+ e.ClipRectangle.X + e.ClipRectangle.Width - 1,
+e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
+        }
+
+      
+
+        private void picturecapture1_Paint(object sender, PaintEventArgs e)
+        {
+            PictureBox p = (PictureBox)sender;
+            Pen pp = new Pen(Color.FromArgb(216, 216, 216));
+            e.Graphics.DrawRectangle(pp, e.ClipRectangle.X, e.ClipRectangle.Y,
+ e.ClipRectangle.X + e.ClipRectangle.Width - 1,
+e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
+        }
+
+        private void picturecapture2_Paint(object sender, PaintEventArgs e)
+        {
+            PictureBox p = (PictureBox)sender;
+            Pen pp = new Pen(Color.FromArgb(216, 216, 216));
+            e.Graphics.DrawRectangle(pp, e.ClipRectangle.X, e.ClipRectangle.Y,
+ e.ClipRectangle.X + e.ClipRectangle.Width - 1,
+e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
+        }
+
+        private void buttonnoid_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
