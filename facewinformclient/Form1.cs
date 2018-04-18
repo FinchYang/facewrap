@@ -666,78 +666,7 @@ namespace face
             }
         }
 
-        private void ThreadReadId()
-        {
-            int ret;
-            int iPort = 1;
-            try
-            {
-                ret = InitComm(iPort);
-                if (ret != 0)
-                {
-                    do
-                    {
-                        ret = Authenticate();
-
-                        if (ret != 0)
-                        {
-                            var Msg = new byte[200];
-                            var smsg = "                                                                                                   ";
-                            if (ReadIINSNDN(smsg) == 1) {
-                                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}","读卡体管理号", smsg )});
-                            }
-                            if (GetSAMIDToStr(smsg) == 1)
-                            {
-                                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", smsg.Length, smsg) });
-                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", Msg.Length, Msg.Take(2).ToArray()) });
-                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", Msg.Length, Msg.Skip(2).Take(2).ToArray()) });
-                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", Msg.Length, Msg.Skip(4).Take(8).ToArray()) });
-                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", Msg.Length, Msg.Skip(12).Take(10).ToArray()) });
-                                //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", Msg.Length, Msg.Skip(22).Take(10).ToArray()) });
-                            }
-
-                            //                ret = ReadBaseMsg(Msg, 0);
-                            //                if (ret > 0)
-                            //                {
-                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdPhoto), new object[] { string.Format(upload.name) });
-                            //                    upload.name = System.Text.Encoding.Default.GetString(Msg.Take(31).ToArray());
-                            //                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] {string.Format(upload.name)});
-                            //                    upload.gender = System.Text.Encoding.Default.GetString(Msg.Skip(31).Take(3).ToArray());
-                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.gender });
-                            //                    upload.nation = System.Text.Encoding.Default.GetString(Msg.Skip(34).Take(10).ToArray());
-                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.nation});
-                            //                upload.birthday = System.Text.Encoding.Default.GetString(Msg.Skip(44).Take(9).ToArray());
-                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.birthday});
-                            //            upload.idaddress = Encoding.Default.GetString(Msg.Skip(53).Take(71).ToArray());
-                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.idaddress});
-                            //        upload.id = System.Text.Encoding.Default.GetString(Msg.Skip(124).Take(19).ToArray());
-                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.id});
-                            //    upload.issuer = System.Text.Encoding.Default.GetString(Msg.Skip(143).Take(31).ToArray());
-                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.issuer});
-                            //upload.startdate = System.Text.Encoding.Default.GetString(Msg.Skip(174).Take(9).ToArray());
-                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.startdate});
-                            //                    upload.enddate = Encoding.Default.GetString(Msg.Skip(183).Take(9).ToArray());
-                            //                    BeginInvoke(new UpdateStatusDelegate(UpdateIdInfo), new object[] { upload.enddate});
-
-                            //                }
-
-                            System.Threading.Thread.Sleep(1000);
-                        }
-                        else
-                        {
-                            System.Threading.Thread.Sleep(1000);
-                            continue;
-                        }
-                    } while (true);
-                }
-
-                ret = CloseComm();
-            }
-            catch (Exception ex)
-            {
-              //  UpdateStatus(string.Format("身份证读卡器操作--{0} !", ex.Message));
-            }
-        }
+      
 
         private void button1_Click(object sender, EventArgs e)//无证件上传云端比对
         {
@@ -846,6 +775,8 @@ namespace face
             {
                buttonnoid. BackgroundImage = Image.FromFile("image/rlsb_wsfz_you.png");
                 buttonhaveid.BackgroundImage = Image.FromFile("image/rlsb_ysfz.png");
+                textBoxname.Text = string.Empty;
+                textBoxid.Text = string.Empty;
                 labeltip.Text = string.Empty;
                 labelscore.Text = string.Empty;
                 textBoxname.Visible = true;

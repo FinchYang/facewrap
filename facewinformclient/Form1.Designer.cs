@@ -184,12 +184,13 @@
             // 
             // textBoxname
             // 
-            this.textBoxname.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxname.BorderStyle = System.Windows.Forms.BorderStyle.None;
             resources.ApplyResources(this.textBoxname, "textBoxname");
             this.textBoxname.Name = "textBoxname";
             // 
             // textBoxid
             // 
+            this.textBoxid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             resources.ApplyResources(this.textBoxid, "textBoxid");
             this.textBoxid.Name = "textBoxid";
             // 

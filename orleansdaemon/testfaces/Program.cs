@@ -31,11 +31,14 @@ namespace testfaces
         }
         static void Main(string[] args)
         {
-            var param = new CompareFaceInput();
-            param.picture1 = Convert.ToBase64String(File.ReadAllBytes(args[0]));
-            param.picture2 = Convert.ToBase64String(File.ReadAllBytes(args[1]));
-            var url = string.Format("http://{0}/{1}", "192.168.0.132:5001", "api/values");
-          //  var url = string.Format("http://{0}/{1}", "localhost:801", "api/faces");
+            //var param = new CompareFaceInput();
+            //param.picture1 = Convert.ToBase64String(File.ReadAllBytes(args[0]));
+            //param.picture2 = Convert.ToBase64String(File.ReadAllBytes(args[1]));
+
+            var param = new List<CompareFaceInput>();
+          //  var url = string.Format("http://{0}/{1}", "192.168.0.132:5001", "api/values");
+            var url = string.Format("http://{0}/{1}", "localhost:5001", "api/values");
+            //  var url = string.Format("http://{0}/{1}", "localhost:801", "api/faces");
             try
             {
                 Console.WriteLine("hah 111");
