@@ -129,7 +129,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="buttoncompare.Location" type="System.Drawing.Point, System.Drawing">
-    <value>374, 394</value>
+    <value>374, 397</value>
   </data>
   <data name="buttoncompare.Size" type="System.Drawing.Size, System.Drawing">
     <value>213, 43</value>
@@ -181,10 +181,10 @@
     <value>Stretch</value>
   </data>
   <data name="pictureBoxsource.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 168</value>
+    <value>30, 169</value>
   </data>
   <data name="pictureBoxsource.Size" type="System.Drawing.Size, System.Drawing">
-    <value>295, 186</value>
+    <value>297, 186</value>
   </data>
   <data name="pictureBoxsource.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>Zoom</value>
@@ -211,10 +211,10 @@
     <value>Flat</value>
   </data>
   <data name="buttonstopcapture.Location" type="System.Drawing.Point, System.Drawing">
-    <value>180, 609</value>
+    <value>180, 610</value>
   </data>
   <data name="buttonstopcapture.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 42</value>
+    <value>150, 43</value>
   </data>
   <data name="buttonstopcapture.TabIndex" type="System.Int32, mscorlib">
     <value>34</value>
@@ -244,10 +244,10 @@
     <value>NoControl</value>
   </data>
   <data name="buttonreadid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>630, 609</value>
+    <value>632, 610</value>
   </data>
   <data name="buttonreadid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 42</value>
+    <value>150, 43</value>
   </data>
   <data name="buttonreadid.TabIndex" type="System.Int32, mscorlib">
     <value>37</value>
@@ -277,7 +277,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttoncloudcompare.Location" type="System.Drawing.Point, System.Drawing">
-    <value>373, 394</value>
+    <value>374, 397</value>
   </data>
   <data name="buttoncloudcompare.Size" type="System.Drawing.Size, System.Drawing">
     <value>213, 43</value>
@@ -310,10 +310,10 @@
     <value>NoControl</value>
   </data>
   <data name="buttonrestart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>28, 609</value>
+    <value>28, 610</value>
   </data>
   <data name="buttonrestart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 42</value>
+    <value>150, 43</value>
   </data>
   <data name="buttonrestart.TabIndex" type="System.Int32, mscorlib">
     <value>35</value>
@@ -340,7 +340,7 @@
     <value>NoControl</value>
   </data>
   <data name="pictureBoxcurrentimage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>28, 397</value>
+    <value>28, 398</value>
   </data>
   <data name="pictureBoxcurrentimage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -373,7 +373,7 @@
     <value>NoControl</value>
   </data>
   <data name="picturecapture2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>28, 496</value>
+    <value>28, 497</value>
   </data>
   <data name="picturecapture2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -406,7 +406,7 @@
     <value>NoControl</value>
   </data>
   <data name="picturecapture1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>180, 397</value>
+    <value>180, 398</value>
   </data>
   <data name="picturecapture1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -439,7 +439,7 @@
     <value>NoControl</value>
   </data>
   <data name="pictureid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>633, 169</value>
+    <value>634, 169</value>
   </data>
   <data name="pictureid.Size" type="System.Drawing.Size, System.Drawing">
     <value>297, 186</value>
@@ -472,10 +472,10 @@
     <value>NoControl</value>
   </data>
   <data name="buttongetresult.Location" type="System.Drawing.Point, System.Drawing">
-    <value>630, 609</value>
+    <value>632, 610</value>
   </data>
   <data name="buttongetresult.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 42</value>
+    <value>150, 43</value>
   </data>
   <data name="buttongetresult.TabIndex" type="System.Int32, mscorlib">
     <value>41</value>
@@ -499,7 +499,7 @@
     <value>SimSun, 18pt</value>
   </data>
   <data name="textBoxname.Location" type="System.Drawing.Point, System.Drawing">
-    <value>642, 209</value>
+    <value>644, 209</value>
   </data>
   <data name="textBoxname.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 30, 3, 30</value>
@@ -526,7 +526,7 @@
     <value>SimSun, 18pt</value>
   </data>
   <data name="textBoxid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>642, 278</value>
+    <value>644, 278</value>
   </data>
   <data name="textBoxid.Size" type="System.Drawing.Size, System.Drawing">
     <value>278, 35</value>
@@ -655,7 +655,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonnoid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 40</value>
+    <value>157, 40</value>
   </data>
   <data name="buttonnoid.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -844,7 +844,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonhaveid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>27, 40</value>
+    <value>26, 40</value>
   </data>
   <data name="buttonhaveid.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -877,7 +877,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonclose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>922, 3</value>
+    <value>924, 3</value>
   </data>
   <data name="buttonclose.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 20, 0, 0</value>
@@ -910,7 +910,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonmin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>884, 3</value>
+    <value>886, 3</value>
   </data>
   <data name="buttonmin.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 20, 0, 0</value>
@@ -2346,7 +2346,7 @@
     <value>Stretch</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>960, 716</value>
+    <value>962, 718</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
