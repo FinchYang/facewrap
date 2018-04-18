@@ -187,41 +187,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="image\App.config">
+    <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="image\32.ico" />
-    <Content Include="image\btn_bai_down.png" />
-    <Content Include="image\btn_bai_nor.png" />
-    <Content Include="image\btn_bai_sel.png" />
-    <Content Include="image\btn_lv_down.png" />
-    <Content Include="image\btn_lv_nor.png" />
-    <Content Include="image\btn_lv_sel.png" />
     <Content Include="haarcascade_eye.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="haarcascade_frontalface_default.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="image\have.jpg" />
-    <Content Include="image\haveid.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="image\newid.jpg" />
-    <Content Include="image\no.jpg">
+    <Content Include="image\rlsb_wsf.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="image\noid.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="image\rlsb_wsfz.png" />
-    <Content Include="image\rlsb_ysfz.png" />
-    <Content Include="image\wsf.png">
+    <Content Include="image\rlsb_wsfz.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="image\ysf.png">
+    <Content Include="image\rlsb_wsfz_you.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\rlsb_ysf.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\rlsb_ysfz.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\rlsb_ysfz_you.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="License-LGPL.txt" />

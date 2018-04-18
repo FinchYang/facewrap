@@ -199,6 +199,8 @@
             this.buttonnoid.AutoEllipsis = true;
             resources.ApplyResources(this.buttonnoid, "buttonnoid");
             this.buttonnoid.FlatAppearance.BorderSize = 0;
+            this.buttonnoid.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.buttonnoid.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.buttonnoid.Name = "buttonnoid";
             this.buttonnoid.UseMnemonic = false;
             this.buttonnoid.UseVisualStyleBackColor = false;
@@ -258,10 +260,11 @@
             // 
             // FormFace
             // 
-            this.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+            this.BackColor = System.Drawing.Color.White;
             this.ControlBox = false;
             this.Controls.Add(this.labeltip);
             this.Controls.Add(this.labelversion);
@@ -286,6 +289,7 @@
             this.Controls.Add(this.richTextBox1);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DoubleBuffered = true;
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -293,6 +297,8 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormFace_Paint);
+            this.Layout += new System.Windows.Forms.LayoutEventHandler(this.FormFace_Layout);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxsource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturecapture2)).EndInit();

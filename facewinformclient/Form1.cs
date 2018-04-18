@@ -522,18 +522,18 @@ namespace face
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try
-            {
-                CloseComm();
-                _capture.Dispose();
-                _frame.Dispose();
-                if(_tCheckSelfUpdate.ThreadState!= System.Threading.ThreadState.Aborted)
-                _tCheckSelfUpdate.Abort();
-              //  _tReadId.Abort();
-            }
-            catch (Exception)
-            {
-            }
+            //try
+            //{
+            //    CloseComm();
+            //    _capture.Dispose();
+            //    _frame.Dispose();
+            //    if(_tCheckSelfUpdate.ThreadState!= System.Threading.ThreadState.Aborted)
+            //    _tCheckSelfUpdate.Abort();
+            //  //  _tReadId.Abort();
+            //}
+            //catch (Exception)
+            //{
+            //}
         }
 
         private void buttonstopcapture_Click(object sender, EventArgs e)
@@ -844,6 +844,8 @@ namespace face
         {
             try
             {
+               buttonnoid. BackgroundImage = Image.FromFile("image/rlsb_wsfz_you.png");
+                buttonhaveid.BackgroundImage = Image.FromFile("image/rlsb_ysfz.png");
                 labeltip.Text = string.Empty;
                 labelscore.Text = string.Empty;
                 textBoxname.Visible = true;
@@ -855,7 +857,7 @@ namespace face
                 pictureid.Visible = false;
                 buttoncompare.Visible = false;
                 buttonreadid.Visible = false;
-                BackgroundImage = Image.FromFile("image/wsf.png");
+                BackgroundImage = Image.FromFile("image/rlsb_wsf.png");
                 richTextBox1.Clear();
 
             }
@@ -869,6 +871,9 @@ namespace face
         {
             try
             {
+                buttonnoid.BackgroundImage = Image.FromFile("image/rlsb_wsfz.png");
+                buttonhaveid.BackgroundImage = Image.FromFile("image/rlsb_ysfz_you.png");
+
                 labeltip.Text = string.Empty;
                 labelscore.Text = string.Empty;
                 pictureid.Visible = true;
@@ -880,7 +885,7 @@ namespace face
                 textBoxid.Visible = false;
                 buttongetresult.Visible = false;
                 buttoncloudcompare.Visible = false;
-              BackgroundImage = Image.FromFile("image/ysf.png");
+              BackgroundImage = Image.FromFile("image/rlsb_ysf.png");
             }
             catch (Exception ex)
             {
@@ -944,6 +949,20 @@ e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
         private void buttonnoid_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void FormFace_Layout(object sender, LayoutEventArgs e)
+        {
+
+        }
+
+        private void FormFace_Paint(object sender, PaintEventArgs e)
+        {
+//            var p = (Form)sender;
+//            Pen pp = new Pen(Color.Red);
+//            e.Graphics.DrawRectangle(pp, e.ClipRectangle.X+1, e.ClipRectangle.Y+1,
+// e.ClipRectangle.X + e.ClipRectangle.Width - 4,
+//e.ClipRectangle.Y + e.ClipRectangle.Height - 4);
         }
     }
 }

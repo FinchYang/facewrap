@@ -63,8 +63,6 @@ I:\faceoutput\desktop\x86\opencv_ffmpeg330.dll
 I:\faceoutput\desktop\x86\vcruntime140.dll
 I:\faceoutput\desktop\x64\opencv_ffmpeg341_64.dll
 I:\faceoutput\desktop\x86\opencv_ffmpeg341.dll
-I:\faceoutput\desktop\image\haveid.jpg
-I:\faceoutput\desktop\image\noid.jpg
 I:\faceoutput\desktop\FaceDeskTop.exe.config
 I:\faceoutput\desktop\FaceDeskTop.exe.manifest
 I:\faceoutput\desktop\FaceDeskTop.application
@@ -83,6 +81,9 @@ F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csproj.CopyComplete
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.exe
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.pdb
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csprojResolveAssemblyReference.cache
-I:\faceoutput\desktop\image\no.jpg
-I:\faceoutput\desktop\image\wsf.png
-I:\faceoutput\desktop\image\ysf.png
+I:\faceoutput\desktop\image\rlsb_wsfz.png
+I:\faceoutput\desktop\image\rlsb_wsfz_you.png
+I:\faceoutput\desktop\image\rlsb_ysfz.png
+I:\faceoutput\desktop\image\rlsb_ysfz_you.png
+I:\faceoutput\desktop\image\rlsb_wsf.png
+I:\faceoutput\desktop\image\rlsb_ysf.png
