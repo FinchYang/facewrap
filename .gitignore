@@ -1,4 +1,10 @@
+# sqlite3
+#
 # Compiled Object files
+orleansdaemon/.vs/
+aaa/
+.vs
+storage*
 *.slo
 *.lo
 *.o
