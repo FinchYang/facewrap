@@ -1,0 +1,10 @@
+[Add.Code]
+IdrControl.ocx=IdrControl.ocx
+
+
+[IdrControl.ocx]
+file=thiscab
+RegisterServer=yes
+FileVersion=3,3,4,0
+
+
