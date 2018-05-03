@@ -35,6 +35,11 @@ namespace face
         private delegate void LoopCallbackHandler(IntPtr pContext);
         private static LoopCallbackHandler callback = LoopCallback;
 
+        [DllImport("face_recognition.dll")]
+        private static extern string compare(string file1, string file2);
+        [DllImport("face_recognition.dll")]//, BestFitMapping = true, CallingConvention = CallingConvention.ThisCall)]
+        extern static int Addfunc(int a, int b);
+
         [DllImport("Dll1.dll")]
         private static extern void SetCallbackFunc(LoopCallbackHandler callback);
         [DllImport("Dll1.dll")]
@@ -57,9 +62,7 @@ namespace face
         [DllImport("Dll1.dll")]
         private static extern int Sub(int n1, int n2);
 
-        [DllImport( "Dll1.dll",BestFitMapping =true,CallingConvention =CallingConvention.ThisCall)]
-      //  [DllImport("Dll1.dll")]
-        extern static int Addfunc(int a, int b);
+   
 
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int InitComm(int iPort);
@@ -133,25 +136,41 @@ namespace face
                         //   if (HaveFace(currentFrame))
                         {
                         var a = Path.GetTempFileName() + "haveface.jpg";
+                        _frame.Save(a);
                         // BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", ret.face.Width, ret.face.Height) });
 
-                        Bitmap img2 = new Bitmap(ret.face.Width, ret.face.Height, PixelFormat.Format24bppRgb);
-                        // img2.SetResolution(ret.face.Height, 180.0F);
-                        using (Graphics g = Graphics.FromImage(img2))
-                        {
-                            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                            g.DrawImage(_frame.Bitmap, new Rectangle(0, 0, img2.Width, img2.Height), 0, 0, _frame.Bitmap.Width, _frame.Bitmap.Height, GraphicsUnit.Pixel);
-                           // g.Dispose();
+                        //Bitmap img2 = new Bitmap(ret.face.Width, ret.face.Height, PixelFormat.Format24bppRgb);
+                        //// img2.SetResolution(ret.face.Height, 180.0F);
+                        //using (Graphics g = Graphics.FromImage(img2))
+                        //{
+                        //    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                        //    g.DrawImage(_frame.Bitmap, new Rectangle(0, 0, img2.Width, img2.Height), 0, 0, _frame.Bitmap.Width, _frame.Bitmap.Height, GraphicsUnit.Pixel);
+                        //   // g.Dispose();
 
-                            img2.Save(a, ImageFormat.Jpeg);
-                        }
+                        //    img2.Save(a, ImageFormat.Jpeg);
+                        //}
 
                         //_frame.Bitmap.SetResolution(320, 180);
                         //  _frame.Save(FileNameCapture[continuouscapture]);
-                        if (compareone(a))
+                        FileNameId = Path.Combine(homepath, "idr210sdk", "photo.bmp");
+                        var stop = new Stopwatch();
+                        stop.Start();
+                        var rrr = compare(a, FileNameId);
+                        stop.Stop();
+                        if (rrr == string.Empty)
                         {
-
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("one person。。{0}",stop.ElapsedMilliseconds) });
                         }
+                        else
+                        {
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("no。。--{0}-{1}-",rrr, stop.ElapsedMilliseconds) });                           
+                        }
+                       
+                        //stop.Restart();
+                        //var ad = Addfunc(23423, 234234);
+                        //stop.Stop();
+                        //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("addfunc--{0}-{1}-", ad, stop.ElapsedMilliseconds) });
+                        compareone(a);
                     }
                     GC.Collect(111,GCCollectionMode.Forced);
 
@@ -296,11 +315,11 @@ namespace face
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            SetCallbackFunc(callback);
-            ctx.Form = this;
-            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(ctx));
-            Marshal.StructureToPtr(ctx, ptr, false);
-            SetCallbackContext(ptr);
+            //SetCallbackFunc(callback);
+            //ctx.Form = this;
+            //IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(ctx));
+            //Marshal.StructureToPtr(ctx, ptr, false);
+            //SetCallbackContext(ptr);
 
             try
             {
@@ -490,7 +509,7 @@ e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
        
         private void button1_Click(object sender, EventArgs e)
         {
-            Loop();
+          //  Loop();
             UpdateStatus(string.Format("{0}", Addfunc(10, 33)));
             UpdateStatus(string.Format("{0}", Add(100, 33)));
             UpdateStatus(string.Format("{0}", Sub(100, 33)));
