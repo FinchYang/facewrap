@@ -51,7 +51,7 @@ namespace face
 
         private delegate void UpdateStatusDelegate(string status);
         string FileNameId = string.Empty;
-        string[] FileNameCapture = new string[] { string.Empty, string.Empty, string.Empty };
+        string FileNameCapture = string.Empty;
         string dllpath = @"idr210sdk";
         ComparedInfo upload = new ComparedInfo { address = "temp", operatingagency = "hehe" };
         int continuouscapture = 0;
@@ -95,7 +95,12 @@ namespace face
         private VideoCapture _capture = null;
       //  private bool _captureInProgress;
         private Mat _frame;
-
+        private Memid memid = new Memid { memoid = string.Empty, checkok = false };
+        public class Memid
+        {
+            public string memoid { get; set; }
+            public bool checkok { get; set; }
+        }
         private static void LoopCallback(IntPtr pContext)
         {
             Context ctx = (Context)Marshal.PtrToStructure(pContext, typeof(Context));
@@ -118,8 +123,81 @@ namespace face
                 MessageBox.Show(excpt.Message);
             }
             _frame = new Mat();
-        }
+           // sempore.
+            ThreadPool.QueueUserWorkItem(ar =>
+            {
+                FileNameId = Path.Combine(homepath, "idr210sdk", "photo.bmp");
+                Thread.Sleep(1000);
+                for (; ; )
+                {
+                     Thread.Sleep(100);
+                    var id = "3790";
 
+                    // read id card
+                    // if no id continue;
+
+                 //   BeginInvoke(new UpdateStatusDelegate(UpdateIdPhoto), new object[] { "显示身份照片" });
+
+                    if (FileNameCapture == string.Empty)
+                    {
+                        continue;
+                    }
+                    if (memid.memoid == id && memid.checkok == true) continue;
+                    lock (lockObj) {
+                            var stop = new Stopwatch();
+                            stop.Start();
+                            
+                            var rrr = compare(FileNameCapture, FileNameId);
+                        var ok = true;
+                        
+                        BeginInvoke(new UpdateStatusDelegate(UpdateCapturePhoto), new object[] { "清空照片" });
+                        BeginInvoke(new UpdateStatusDelegate(UpdateMemId), new object[] { id });
+                        var reg = @"[\d]+";
+                        var m = Regex.Match(rrr, reg);
+                        stop.Stop();
+                        var per = double.Parse(m.Value) / 100000;
+                        BeginInvoke(new UpdateStatusDelegate(UpdateResult), new object[] {( per*100).ToString() });
+
+                        if (m.Success && per > 0.7)
+                        {
+                            MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
+                            ok = true;
+                        }
+                        else ok = false;
+                        BeginInvoke(new UpdateStatusDelegate(UpdateCheckok), new object[] { ok.ToString() });
+                       
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("similarity--{0}-{1}-", rrr, stop.ElapsedMilliseconds) });
+                           
+                       
+                    }
+                 //   EventWaitHandle.SignalAndWait(handleB, handleA);
+                 ////   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("A:开始工作ing") });
+                 //   Thread.Sleep(3000);
+                 ////   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("A:这个有点难，问下B") });
+                 //   EventWaitHandle.SignalAndWait(handleB, handleA);
+                 // //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("A:不错，今天任务搞定，我也闪人了。") });
+                }
+            });
+
+            //ThreadPool.QueueUserWorkItem(ar =>
+            //{
+            //    Thread.Sleep(1000);
+            //    for (; ; )
+            //{
+            //    handleB.WaitOne();
+            //   // BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("B:我是B,我已经顶替A开始运行了。") });
+            //    Thread.Sleep(5000);
+            //  //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("B:我的事情已经做完了，该让A搞搞了，休息一会。") });
+            //    EventWaitHandle.SignalAndWait(handleA, handleB);
+            // //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("B:hi,A我搞定了，下班了。") });
+            //    handleA.Set();
+            //    }
+            //});
+        }
+        EventWaitHandle handleA = new AutoResetEvent(false);
+        EventWaitHandle handleB = new AutoResetEvent(false);
+        Semaphore sempore = new Semaphore(0, 1);
+        private object lockObj = new object();
         private void ProcessFrame(object sender, EventArgs arg)
         {
             if (_capture != null && _capture.Ptr != IntPtr.Zero)
@@ -127,6 +205,7 @@ namespace face
                 _capture.Retrieve(_frame, 0);
                 // picturecapture1.BackgroundImage = null;
                 pictureBoxsource.BackgroundImage = _frame.Bitmap;
+                
                 try
                 {
                     //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("请让客户摆正头部位置，自动抓拍并检测照片质量。。。") });
@@ -135,8 +214,15 @@ namespace face
                         if (ret.ok)
                         //   if (HaveFace(currentFrame))
                         {
-                        var a = Path.GetTempFileName() + "haveface.jpg";
-                        _frame.Save(a);
+                        
+                      //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("捕捉一张脸。。。{0}", DateTime.Now) });
+                        lock (lockObj)
+                        {
+                            FileNameCapture = Path.GetTempFileName() + "haveface.jpg";
+                            _frame.Save(FileNameCapture);
+                            pictureBoxcapture.BackgroundImage = _frame.Bitmap;
+                        }
+
                         // BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("{0},{1}", ret.face.Width, ret.face.Height) });
 
                         //Bitmap img2 = new Bitmap(ret.face.Width, ret.face.Height, PixelFormat.Format24bppRgb);
@@ -152,25 +238,13 @@ namespace face
 
                         //_frame.Bitmap.SetResolution(320, 180);
                         //  _frame.Save(FileNameCapture[continuouscapture]);
-                        FileNameId = Path.Combine(homepath, "idr210sdk", "photo.bmp");
-                        var stop = new Stopwatch();
-                        stop.Start();
-                        var rrr = compare(a, FileNameId);
-                        stop.Stop();
-                        if (rrr == string.Empty)
-                        {
-                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("one person。。{0}",stop.ElapsedMilliseconds) });
-                        }
-                        else
-                        {
-                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("no。。--{0}-{1}-",rrr, stop.ElapsedMilliseconds) });                           
-                        }
+                       
                        
                         //stop.Restart();
                         //var ad = Addfunc(23423, 234234);
                         //stop.Stop();
                         //BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("addfunc--{0}-{1}-", ad, stop.ElapsedMilliseconds) });
-                        compareone(a);
+                       // compareone(a);
                     }
                     GC.Collect(111,GCCollectionMode.Forced);
 
@@ -207,6 +281,8 @@ namespace face
                 {
                     ret.ok = true;
                     ret.face = faces[0];
+                   // foreach (Rectangle face in faces)
+                        CvInvoke.Rectangle(frame, faces[0], new Bgr(Color.Red).MCvScalar, 2);
                     return ret;
                 }
 
@@ -257,50 +333,32 @@ namespace face
 
 
         }
-
-        bool compareone(string capturefile, int index)
+        private void UpdateCheckok(string ok)
         {
-            var stop = new Stopwatch();
-            stop.Start();
-            var a = new System.Diagnostics.Process();
-
-            a.StartInfo.UseShellExecute = false;
-            a.StartInfo.RedirectStandardOutput = true;
-            a.StartInfo.CreateNoWindow = true;
-
-            a.StartInfo.WorkingDirectory = homepath;
-            FileNameId = Path.Combine(homepath, "idr210sdk", "photo.bmp");
-            a.StartInfo.Arguments = string.Format(" {0} {1}", FileNameId, capturefile);
-            //   UpdateStatus(string.Format("files:{0}", a.StartInfo.Arguments));
-            capturephotofile = capturefile;
-            a.StartInfo.FileName = Path.Combine(homepath, "compare.exe");
-            //  a.StartInfo.FileName = Path.Combine(homepath, "compare", "ccompare.exe");
-            a.Start();
-           var output= a.StandardOutput.ReadToEnd();
-         
-            a.WaitForExit();
-            var ret = a.ExitCode;
-
-            var reg = @"(?<=terminate)0\.[\d]{4,}";
-            var m = Regex.Match(output, reg);
-              stop.Stop();
-            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { stop.ElapsedMilliseconds +"-"+m.Success+ "--" + m.Value+output });
-            if (m.Success&&double.Parse(m.Value)<0.499)
-            {
-                MessageBox.Show(stop.ElapsedMilliseconds+"比对成功，是同一个人" +m.Value);
-            //    MessageBox.Show( "比对成功，是同一个人" + m.Value);
-                FileNameId = string.Empty;
-                return true;
-            }
-            else return false;
-
-         
+            memid.checkok = bool.Parse(ok);
+            UpdateStatus(ok);
         }
-      
-
-      
-     
-        private void UpdateStatus(string status)
+        private void UpdateResult(string ok)
+        {
+            textBoxresult.Text="%"+ok+"相似度";
+            UpdateStatus(ok);
+        }
+        private void UpdateMemId(string id)
+        {
+            memid.memoid = id;
+            UpdateStatus(id);
+        }
+        private void UpdateIdPhoto(string status)
+        {
+            pictureid.BackgroundImage=Image.FromFile(FileNameId);
+            UpdateStatus(status);
+        }
+        private void UpdateCapturePhoto(string status)
+        {
+            FileNameCapture=string.Empty;
+            UpdateStatus(status);
+    }
+    private void UpdateStatus(string status)
         {
             richTextBox1.AppendText(Environment.NewLine + string.Format("{0}--{1}", DateTime.Now, status));
             richTextBox1.SelectionStart = richTextBox1.Text.Length;

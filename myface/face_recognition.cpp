@@ -122,19 +122,20 @@ char * __stdcall compare(char* file1, char* file2) try
     std::vector<matrix<float,0,1>> face_descriptors = net(faces);
 	std::vector<matrix<float, 0, 1>> face_descriptors2 = net(faces2);
 	double v = length(face_descriptors[0] - face_descriptors2[0]);
-	double similarity = 1 - v * 0.6;
-	/*if (v < 0.6) {
-		cout << "hit enter to terminate" << endl;
-	}
-	else*/
-	//	cout << "hit enter to terminate"<< similarity << endl;
-	if (similarity > 0.7)
-		return "";
-	return "not one";
+	double similarity = 1 - v * 0.5;
+	
+	char * str;
+	int  ndigits = 5; 
+	int dec = 6;
+	int sign = 9;
+								   str = fcvt(similarity, ndigits, &dec, &sign);
+	//if (similarity > 0.7)
+		return str;
+	//return "not one-------------";
 }
 catch (std::exception& e)
 {
   //  cout << e.what() << endl;
-	return "error";
+	return (char *)e.what();
 }
 
