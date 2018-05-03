@@ -41,6 +41,7 @@
             this.labelscore = new System.Windows.Forms.Label();
             this.labelversion = new System.Windows.Forms.Label();
             this.labeltip = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxsource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureid)).BeginInit();
             this.SuspendLayout();
@@ -109,6 +110,13 @@
             this.labeltip.ForeColor = System.Drawing.Color.DimGray;
             this.labeltip.Name = "labeltip";
             // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FormFace
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
@@ -117,6 +125,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.Color.White;
             this.ControlBox = false;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.labeltip);
             this.Controls.Add(this.labelversion);
             this.Controls.Add(this.labelscore);
@@ -152,6 +161,7 @@
         private System.Windows.Forms.Label labelscore;
         private System.Windows.Forms.Label labelversion;
         private System.Windows.Forms.Label labeltip;
+        private System.Windows.Forms.Button button1;
     }
 }
 

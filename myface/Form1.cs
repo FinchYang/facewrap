@@ -26,6 +26,24 @@ namespace face
 
     public partial class FormFace : Form
     {
+        [StructLayout(LayoutKind.Sequential)]
+        private class Context
+        {
+            public FormFace Form { get; set; }
+        }
+
+        private delegate void LoopCallbackHandler(IntPtr pContext);
+        private static LoopCallbackHandler callback = LoopCallback;
+
+        [DllImport("Dll1.dll")]
+        private static extern void SetCallbackFunc(LoopCallbackHandler callback);
+        [DllImport("Dll1.dll")]
+        private static extern void SetCallbackContext(IntPtr pContext);
+        [DllImport("Dll1.dll")]
+        private static extern void Loop();
+
+        private Context ctx = new Context();
+
         private delegate void UpdateStatusDelegate(string status);
         string FileNameId = string.Empty;
         string[] FileNameCapture = new string[] { string.Empty, string.Empty, string.Empty };
@@ -34,19 +52,28 @@ namespace face
         int continuouscapture = 0;
         string version = string.Empty;
 
-        //[DllImport(@"idr210sdk\sdtapi.dll")]
-        //public extern static int InitComm(int iPort);
-        //[DllImport(@"idr210sdk\sdtapi.dll")]
-        //public extern static int CloseComm();
-        //[DllImport(@"idr210sdk\sdtapi.dll")]
-        //public extern static int Authenticate();
+        [DllImport("Dll1.dll")]
+        private static extern int Add(int n1, int n2);
+        [DllImport("Dll1.dll")]
+        private static extern int Sub(int n1, int n2);
 
-        //[DllImport(@"idr210sdk\sdtapi.dll")]
-        //public extern static int ReadBaseMsg(byte[] pMsg, int len);
-        //[DllImport(@"idr210sdk\sdtapi.dll")]
-        //public extern static int ReadIINSNDN(string pMsg);
-        //[DllImport(@"idr210sdk\sdtapi.dll")]
-        //public extern static int GetSAMIDToStr(string pMsg);
+        [DllImport( "Dll1.dll",BestFitMapping =true,CallingConvention =CallingConvention.ThisCall)]
+      //  [DllImport("Dll1.dll")]
+        extern static int Addfunc(int a, int b);
+
+        [DllImport(@"idr210sdk\sdtapi.dll")]
+        public extern static int InitComm(int iPort);
+        [DllImport(@"idr210sdk\sdtapi.dll")]
+        public extern static int CloseComm();
+        [DllImport(@"idr210sdk\sdtapi.dll")]
+        public extern static int Authenticate();
+
+        [DllImport(@"idr210sdk\sdtapi.dll")]
+        public extern static int ReadBaseMsg(byte[] pMsg, int len);
+        [DllImport(@"idr210sdk\sdtapi.dll")]
+        public extern static int ReadIINSNDN(string pMsg);
+        [DllImport(@"idr210sdk\sdtapi.dll")]
+        public extern static int GetSAMIDToStr(string pMsg);
         private FilterInfoCollection videoDevices;
         private string sourceImage = string.Empty;
         private string currentImage = string.Empty;
@@ -65,6 +92,12 @@ namespace face
         private VideoCapture _capture = null;
       //  private bool _captureInProgress;
         private Mat _frame;
+
+        private static void LoopCallback(IntPtr pContext)
+        {
+            Context ctx = (Context)Marshal.PtrToStructure(pContext, typeof(Context));
+            ctx.Form.richTextBox1.Text += "callback" + Environment.NewLine;
+        }
         public FormFace()
         {
             InitializeComponent();
@@ -263,7 +296,12 @@ namespace face
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-         
+            SetCallbackFunc(callback);
+            ctx.Form = this;
+            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(ctx));
+            Marshal.StructureToPtr(ctx, ptr, false);
+            SetCallbackContext(ptr);
+
             try
             {
                 version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -448,6 +486,14 @@ e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
 //            e.Graphics.DrawRectangle(pp, e.ClipRectangle.X+1, e.ClipRectangle.Y+1,
 // e.ClipRectangle.X + e.ClipRectangle.Width - 4,
 //e.ClipRectangle.Y + e.ClipRectangle.Height - 4);
+        }
+       
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Loop();
+            UpdateStatus(string.Format("{0}", Addfunc(10, 33)));
+            UpdateStatus(string.Format("{0}", Add(100, 33)));
+            UpdateStatus(string.Format("{0}", Sub(100, 33)));
         }
     }
 }
