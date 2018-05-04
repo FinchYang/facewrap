@@ -26,28 +26,14 @@ namespace face
 
     public partial class FormFace : Form
     {
-        [StructLayout(LayoutKind.Sequential)]
-        private class Context
-        {
-            public FormFace Form { get; set; }
-        }
-
-        private delegate void LoopCallbackHandler(IntPtr pContext);
-        private static LoopCallbackHandler callback = LoopCallback;
+      
 
         [DllImport("face_recognition.dll")]
         private static extern string compare(string file1, string file2);
         [DllImport("face_recognition.dll")]//, BestFitMapping = true, CallingConvention = CallingConvention.ThisCall)]
         extern static int Addfunc(int a, int b);
 
-        [DllImport("Dll1.dll")]
-        private static extern void SetCallbackFunc(LoopCallbackHandler callback);
-        [DllImport("Dll1.dll")]
-        private static extern void SetCallbackContext(IntPtr pContext);
-        [DllImport("Dll1.dll")]
-        private static extern void Loop();
-
-        private Context ctx = new Context();
+       
 
         private delegate void UpdateStatusDelegate(string status);
         string FileNameId = string.Empty;
@@ -57,26 +43,8 @@ namespace face
         int continuouscapture = 0;
         string version = string.Empty;
 
-        [DllImport("Dll1.dll")]
-        private static extern int Add(int n1, int n2);
-        [DllImport("Dll1.dll")]
-        private static extern int Sub(int n1, int n2);
+        
 
-   
-
-        [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int InitComm(int iPort);
-        [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int CloseComm();
-        [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int Authenticate();
-
-        [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int ReadBaseMsg(byte[] pMsg, int len);
-        [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int ReadIINSNDN(string pMsg);
-        [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int GetSAMIDToStr(string pMsg);
         private FilterInfoCollection videoDevices;
         private string sourceImage = string.Empty;
         private string currentImage = string.Empty;
@@ -101,10 +69,16 @@ namespace face
             public string memoid { get; set; }
             public bool checkok { get; set; }
         }
-        private static void LoopCallback(IntPtr pContext)
+        private void button1_Click111(object sender, EventArgs e)
         {
-            Context ctx = (Context)Marshal.PtrToStructure(pContext, typeof(Context));
-            ctx.Form.richTextBox1.Text += "callback" + Environment.NewLine;
+
+          
+
+          
+            //idInfo = comm.ParaseIDBuff(txtBuff);
+
+          
+           
         }
         public FormFace()
         {
@@ -123,61 +97,9 @@ namespace face
                 MessageBox.Show(excpt.Message);
             }
             _frame = new Mat();
-           // sempore.
-            ThreadPool.QueueUserWorkItem(ar =>
-            {
-                FileNameId = Path.Combine(homepath, "idr210sdk", "photo.bmp");
-                Thread.Sleep(1000);
-                for (; ; )
-                {
-                     Thread.Sleep(100);
-                    var id = "3790";
 
-                    // read id card
-                    // if no id continue;
-
-                 //   BeginInvoke(new UpdateStatusDelegate(UpdateIdPhoto), new object[] { "显示身份照片" });
-
-                    if (FileNameCapture == string.Empty)
-                    {
-                        continue;
-                    }
-                    if (memid.memoid == id && memid.checkok == true) continue;
-                    lock (lockObj) {
-                            var stop = new Stopwatch();
-                            stop.Start();
-                            
-                            var rrr = compare(FileNameCapture, FileNameId);
-                        var ok = true;
-                        
-                        BeginInvoke(new UpdateStatusDelegate(UpdateCapturePhoto), new object[] { "清空照片" });
-                        BeginInvoke(new UpdateStatusDelegate(UpdateMemId), new object[] { id });
-                        var reg = @"[\d]+";
-                        var m = Regex.Match(rrr, reg);
-                        stop.Stop();
-                        var per = double.Parse(m.Value) / 100000;
-                        BeginInvoke(new UpdateStatusDelegate(UpdateResult), new object[] {( per*100).ToString() });
-
-                        if (m.Success && per > 0.7)
-                        {
-                            MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
-                            ok = true;
-                        }
-                        else ok = false;
-                        BeginInvoke(new UpdateStatusDelegate(UpdateCheckok), new object[] { ok.ToString() });
-                       
-                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("similarity--{0}-{1}-", rrr, stop.ElapsedMilliseconds) });
-                           
-                       
-                    }
-                 //   EventWaitHandle.SignalAndWait(handleB, handleA);
-                 ////   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("A:开始工作ing") });
-                 //   Thread.Sleep(3000);
-                 ////   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("A:这个有点难，问下B") });
-                 //   EventWaitHandle.SignalAndWait(handleB, handleA);
-                 // //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("A:不错，今天任务搞定，我也闪人了。") });
-                }
-            });
+           
+        
 
             //ThreadPool.QueueUserWorkItem(ar =>
             //{
@@ -194,9 +116,9 @@ namespace face
             //    }
             //});
         }
-        EventWaitHandle handleA = new AutoResetEvent(false);
-        EventWaitHandle handleB = new AutoResetEvent(false);
-        Semaphore sempore = new Semaphore(0, 1);
+        //EventWaitHandle handleA = new AutoResetEvent(false);
+        //EventWaitHandle handleB = new AutoResetEvent(false);
+        //Semaphore sempore = new Semaphore(0, 1);
         private object lockObj = new object();
         private void ProcessFrame(object sender, EventArgs arg)
         {
@@ -343,14 +265,38 @@ namespace face
             textBoxresult.Text="%"+ok+"相似度";
             UpdateStatus(ok);
         }
+        private void UpdateId(string ok)
+        {
+            textBoxid.Text = ok;
+            UpdateStatus(ok);
+        }
+        private void UpdateNation(string ok)
+        {
+            textBoxnation.Text = ok;
+            UpdateStatus(ok);
+        }
+        private void UpdateGender(string ok)
+        {
+            textBoxgender.Text = ok;
+            UpdateStatus(ok);
+        }
+        private void UpdateName(string ok)
+        {
+            textBoxname.Text = ok;
+            UpdateStatus(ok);
+        }
         private void UpdateMemId(string id)
         {
             memid.memoid = id;
             UpdateStatus(id);
         }
+        private void UpdateCaputureFile(string id)
+        {
+            FileNameCapture = string.Empty;
+        }
         private void UpdateIdPhoto(string status)
         {
-            pictureid.BackgroundImage=Image.FromFile(FileNameId);
+            pictureid.BackgroundImage=Image.FromFile(status);
             UpdateStatus(status);
         }
         private void UpdateCapturePhoto(string status)
@@ -395,7 +341,97 @@ namespace face
 
                 //Application.Idle += new EventHandler(FrameGrabber);
                 _capture.Start();
-              
+                ThreadPool.QueueUserWorkItem(ar =>
+                {
+                   
+                    Thread.Sleep(1000);
+                    
+
+                    for (; ; )
+                    {
+                        Thread.Sleep(100);
+                        // if (memid.memoid !=string.Empty && memid.checkok == true) continue;
+                        var comm = new common();
+                        int port = 0;  //自动搜索端口          
+                        bool ret = comm.connectDev(port);
+                        if (!ret)
+                        {
+                            comm.closeDev();
+                            MessageBox.Show("连接设备失败", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            continue;
+                        }
+                        ret = comm.findIDCard();
+                        if (!ret)
+                        {
+                            comm.closeDev();
+                            // BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("请把二代证放在读卡区 ")});
+                            continue;
+                        }
+
+                        byte[] txtBuff = new byte[256];
+
+                        ret = comm.readIDInfo(out txtBuff);//默认生成zp.bmp照片
+                        if (!ret)
+                        {
+                            comm.closeDev();
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("读取二代证信息失败  ") });
+                            continue;
+                        }
+                       
+                        var idInfo = comm.ParaseIdInfo();
+                        comm.closeDev();
+
+                        var name = idInfo.getName();
+                        var id = idInfo.getId();
+                        var gender = idInfo.getSex();
+                        var folk = idInfo.getFolk();
+                        BeginInvoke(new UpdateStatusDelegate(UpdateId), new object[] { id });
+                        BeginInvoke(new UpdateStatusDelegate(UpdateNation), new object[] { folk });
+                        BeginInvoke(new UpdateStatusDelegate(UpdateGender), new object[] { gender });
+                        BeginInvoke(new UpdateStatusDelegate(UpdateName), new object[] { name });
+
+                      
+                        BeginInvoke(new UpdateStatusDelegate(UpdateIdPhoto), new object[] { "zp.bmp" });
+                        while (FileNameCapture == string.Empty)
+                        {
+                            Thread.Sleep(100);
+                        }
+
+
+                        //lock (lockObj)
+                        //{
+                        //    var stop = new Stopwatch();
+                        //    stop.Start();
+
+                        //    var rrr = compare(FileNameCapture, "zp.bmp");
+                        //    var ok = true;
+
+                        //    BeginInvoke(new UpdateStatusDelegate(UpdateCapturePhoto), new object[] { "清空照片" });
+                        //    BeginInvoke(new UpdateStatusDelegate(UpdateMemId), new object[] { id });
+                        //    var reg = @"[\d]+";
+                        //    var m = Regex.Match(rrr, reg);
+                        //    stop.Stop();
+                        //    var per = double.Parse(m.Value) / 100000;
+                        //    BeginInvoke(new UpdateStatusDelegate(UpdateResult), new object[] { (per * 100).ToString() });
+
+                        //    if (m.Success && per > 0.7)
+                        //    {
+                        //        BeginInvoke(new UpdateStatusDelegate(UpdateCaputureFile), new object[] { string.Empty });
+                        //        BeginInvoke(new UpdateStatusDelegate(UpdateMemId), new object[] { string.Empty });
+                        //        MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
+                        //        ok = true;
+                        //    }
+                        //    else ok = false;
+                        //    BeginInvoke(new UpdateStatusDelegate(UpdateCheckok), new object[] { ok.ToString() });
+
+                        //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("similarity--{0}-{1}-", rrr, stop.ElapsedMilliseconds) });
+
+
+                        //}
+                       
+                    }
+                   
+                });
             }
             catch (ApplicationException aex)
             {
@@ -413,49 +449,6 @@ namespace face
         {
            
         }
-
-        private void buttonstopcapture_Click(object sender, EventArgs e)
-        {
-            //   UpdateStatus(string.Format("stop click"));
-            try
-            {
-                if (_capture != null)
-                {
-                    _capture.Pause();
-                }
-                capturing = false;
-                //Application.Idle -= new EventHandler(FrameGrabber);
-                //grabber.Dispose();
-            }
-            catch (Exception ex)
-            {
-                UpdateStatus(string.Format("stopcapture:{0}", ex));
-            }
-        }
-        private void buttonrestart_Click(object sender, EventArgs e)
-        {
-
-            try
-            {
-                if (_capture != null)
-                {
-                    _capture.Start();
-                }
-                if (capturing) return;
-                //  UpdateStatus(string.Format("restart click"));
-                continuouscapture = 0;
-
-           
-                capturing = true;
-
-            }
-            catch (Exception ex)
-            {
-                UpdateStatus(string.Format("restart:{0}", ex));
-            }
-        }
-      
-      
 
      
         private void buttongetresult_Click(object sender, EventArgs e)
@@ -503,6 +496,7 @@ namespace face
               //  CloseComm();
                 _capture.Dispose();
                 _frame.Dispose();
+                Process.GetCurrentProcess().Kill();//终止当前正在运行的线程
             }
             catch (Exception) { }
             Close();
@@ -516,40 +510,9 @@ namespace face
             WindowState = FormWindowState.Minimized;
         }
 
-        private void pictureBoxcurrentimage_Paint(object sender, PaintEventArgs e)
-        {
-            PictureBox p = (PictureBox)sender;
-          //  Color cc = new Color();
-            Pen pp = new Pen(Color.FromArgb(216,216,216));
-            e.Graphics.DrawRectangle(pp, e.ClipRectangle.X, e.ClipRectangle.Y,
- e.ClipRectangle.X + e.ClipRectangle.Width - 1,
-e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
-        }
+     
 
-      
 
-        private void picturecapture1_Paint(object sender, PaintEventArgs e)
-        {
-            PictureBox p = (PictureBox)sender;
-            Pen pp = new Pen(Color.FromArgb(216, 216, 216));
-            e.Graphics.DrawRectangle(pp, e.ClipRectangle.X, e.ClipRectangle.Y,
- e.ClipRectangle.X + e.ClipRectangle.Width - 1,
-e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
-        }
-
-        private void picturecapture2_Paint(object sender, PaintEventArgs e)
-        {
-            PictureBox p = (PictureBox)sender;
-            Pen pp = new Pen(Color.FromArgb(216, 216, 216));
-            e.Graphics.DrawRectangle(pp, e.ClipRectangle.X, e.ClipRectangle.Y,
- e.ClipRectangle.X + e.ClipRectangle.Width - 1,
-e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
-        }
-
-        private void buttonnoid_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void FormFace_Layout(object sender, LayoutEventArgs e)
         {
@@ -569,8 +532,7 @@ e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
         {
           //  Loop();
             UpdateStatus(string.Format("{0}", Addfunc(10, 33)));
-            UpdateStatus(string.Format("{0}", Add(100, 33)));
-            UpdateStatus(string.Format("{0}", Sub(100, 33)));
+            UpdateStatus(string.Format("UCommand1,{0}-", ClassComminterface.UCommand1(0x41, 0, "", "")));
         }
     }
 }

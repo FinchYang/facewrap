@@ -296,10 +296,7 @@
             this.MinimizeBox = false;
             this.Name = "FormFace";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormFace_Paint);
-            this.Layout += new System.Windows.Forms.LayoutEventHandler(this.FormFace_Layout);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxsource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxcurrentimage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picturecapture2)).EndInit();

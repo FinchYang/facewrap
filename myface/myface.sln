@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dll1", "..\Dll1\Dll1.vcxproj", "{88DBAFCD-EEE3-4458-A29C-52BCBE80B364}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "..\WindowsFormsApp1\WindowsFormsApp1.csproj", "{066559CC-07EA-4964-A2C7-3D1FF0B4509C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,30 @@ Global
 		{88DBAFCD-EEE3-4458-A29C-52BCBE80B364}.Release|x64.Build.0 = Release|x64
 		{88DBAFCD-EEE3-4458-A29C-52BCBE80B364}.Release|x86.ActiveCfg = Release|Win32
 		{88DBAFCD-EEE3-4458-A29C-52BCBE80B364}.Release|x86.Build.0 = Release|Win32
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|ARM.Build.0 = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|Win32.Build.0 = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|x64.Build.0 = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Debug|x86.Build.0 = Debug|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|ARM.Build.0 = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|Win32.ActiveCfg = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|Win32.Build.0 = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|x64.ActiveCfg = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|x64.Build.0 = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|x86.ActiveCfg = Release|Any CPU
+		{066559CC-07EA-4964-A2C7-3D1FF0B4509C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -19,6 +19,7 @@ using System.Reflection;
 using face.model;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System.Text.RegularExpressions;
 
 namespace face
 {
@@ -32,10 +33,12 @@ namespace face
         ComparedInfo upload = new ComparedInfo { address = "temp", operatingagency = "hehe" };
         int continuouscapture = 0;
         string version = string.Empty;
-        //[DllImport(@"idr210sdk\sdtapi.dll")]
-        //public extern static int Routon_IC_HL_ReadCardSN(StringBuilder SN);
-        //[DllImport(@"idr210sdk\sdtapi.dll")]
-        // extern static int Routon_IC_HL_ReadCard(int SID, int BID, int KeyType, byte[] Key, byte[] data);
+
+        //[DllImport("face_recognition.dll")]
+        //private static extern string compare(string file1, string file2);
+        //[DllImport("face_recognition.dll")]//, BestFitMapping = true, CallingConvention = CallingConvention.ThisCall)]
+        //extern static int Addfunc(int a, int b);
+        //private object lockObj = new object();
 
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int InitComm(int iPort);
@@ -43,25 +46,24 @@ namespace face
         public extern static int CloseComm();
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int Authenticate();
-
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int ReadBaseMsg(byte[] pMsg, int len);
-        [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int ReadIINSNDN(string pMsg);
-        [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int GetSAMIDToStr(string pMsg);
+        //[DllImport(@"idr210sdk\sdtapi.dll")]
+        //public extern static int ReadIINSNDN(string pMsg);
+        //[DllImport(@"idr210sdk\sdtapi.dll")]
+        //public extern static int GetSAMIDToStr(string pMsg);
         //[DllImport(@"idr210sdk\sdtapi.dll")]
         //public extern static int ReadNewAppMsg(byte[] pMsg, out int len);
         private Thread _tCheckSelfUpdate;//,_tReadId;
-        private FilterInfoCollection videoDevices;
-        private string sourceImage = string.Empty;
-        private string currentImage = string.Empty;
+      //  private FilterInfoCollection videoDevices;
+      //  private string sourceImage = string.Empty;
+      //  private string currentImage = string.Empty;
         //   FisherFaceRecognizer recognizer = new FisherFaceRecognizer(10, 10.0);
-        List<Image<Gray, byte>> trainingImages = new List<Image<Gray, byte>>();//Images
-        List<string> Names_List = new List<string>(); //labels
-        List<int> Names_List_ID = new List<int>();
-        private string playpath = string.Empty;
-        private string directory = string.Empty;
+        //List<Image<Gray, byte>> trainingImages = new List<Image<Gray, byte>>();//Images
+        //List<string> Names_List = new List<string>(); //labels
+       // List<int> Names_List_ID = new List<int>();
+      //  private string playpath = string.Empty;
+      //  private string directory = string.Empty;
         //   VideoCapture grabber;
         //   Image<Bgr, Byte> currentFrame; //current image aquired from webcam for display
         //  Image<Gray, byte> result, TrainedFace = null; //used to store the result image and trained face
@@ -72,7 +74,7 @@ namespace face
         string action = string.Empty;
         string idphotofile = string.Empty;
         string capturephotofile = string.Empty;
-        bool capturing = true;
+        bool capturing = true;//抓拍标志
         private VideoCapture _capture = null;
       //  private bool _captureInProgress;
         private Mat _frame;
@@ -82,7 +84,9 @@ namespace face
             homepath = Environment.CurrentDirectory;
             host = ConfigurationManager.AppSettings["host"];
             action = ConfigurationManager.AppSettings["action"];
-            CvInvoke.UseOpenCL = false;
+            CvInvoke.UseOpenCL = false;//不适用GPU
+
+            _frame = new Mat();
             try
             {
                 _capture = new VideoCapture();
@@ -92,88 +96,90 @@ namespace face
             {
                 MessageBox.Show(excpt.Message);
             }
-            _frame = new Mat();
         }
 
         private void ProcessFrame(object sender, EventArgs arg)
         {
-            if (_capture != null && _capture.Ptr != IntPtr.Zero)
-            {
-                _capture.Retrieve(_frame, 0);
-                // picturecapture1.BackgroundImage = null;
-                pictureBoxsource.BackgroundImage = _frame.Bitmap;
-                try
+            //lock (lockObj)
+            //{
+                if (_capture != null && _capture.Ptr != IntPtr.Zero)
                 {
-                  //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("请让客户摆正头部位置，自动抓拍并检测照片质量。。。") });
-                    if (detectfacethread(_frame))
-                    //   if (HaveFace(currentFrame))
+                    _capture.Retrieve(_frame, 0);
+                    pictureBoxsource.BackgroundImage = _frame.Bitmap;
+                    try
                     {
-                        FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
-                        _frame.Save(FileNameCapture[continuouscapture]);
-                        switch (continuouscapture)
+                        //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("请让客户摆正头部位置，自动抓拍并检测照片质量。。。") });
+                        if (continuouscapture <3 &&detectfacethread(_frame))
                         {
-                            case 0:
-                                pictureBoxcurrentimage.BackgroundImage = _frame.Bitmap;
-                                break;
-                            case 1:
-                                picturecapture1.BackgroundImage = _frame.Bitmap;
-                                break;
-                            default:
-                                picturecapture2.BackgroundImage = _frame.Bitmap;
-                                break;
+                            FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
+                            _frame.Save(FileNameCapture[continuouscapture]);
+                            switch (continuouscapture)
+                            {
+                                case 0:
+                                    pictureBoxcurrentimage.BackgroundImage = _frame.Bitmap;
+                                    break;
+                                case 1:
+                                    picturecapture1.BackgroundImage = _frame.Bitmap;
+                                    break;
+                                default:
+                                    picturecapture2.BackgroundImage = _frame.Bitmap;
+                                    break;
+                            }
+                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("照片抓取成功,{0}", continuouscapture) });
+                            continuouscapture++;
+                            if (continuouscapture > 2)
+                            {
+                                _capture.Pause();
+                                capturing = false;                                
+                                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("3张照片抓取完成") });
+                            }
                         }
-                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("照片抓取成功,{0}", continuouscapture) });
-                        // UpdateStatus(string.Format("照片抓取成功,{0}", continuouscapture));
-                        continuouscapture++;
-                        if (continuouscapture > 2)
-                        {
-                            capturing = false;
-                            _capture.Pause();
-                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("3张照片抓取完成") });
-                            //UpdateStatus(string.Format("3张照片抓取完成"));
-                        }
+                        GC.Collect(111, GCCollectionMode.Forced);
                     }
-                    GC.Collect(111,GCCollectionMode.Forced);
-
+                    catch (Exception ex)
+                    {
+                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in ProcessFrame,{0}", ex.Message) });
+                    }
                 }
-                catch (Exception ex)
-                {
-                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in ProcessFrame,{0}", ex.Message) });
-                }
-            }
+           // }
         }
 
-
-
+        
         private void buttoncompare_Click(object sender, EventArgs e)
         {
             try
             {
                 labelscore.Text = string.Empty;
-                if (FileNameId == string.Empty)
-                {
-                    MessageBox.Show(string.Format("请先读取身份证信息！"));
-                    return;
-                }
+                FileNameId = Path.Combine(homepath, dllpath, "photo.bmp");//临时没有读卡器时候测试用，正式必须注释，并反注释下面5行
+                //if (FileNameId == string.Empty)
+                //{
+                //    MessageBox.Show(string.Format("请先读取身份证信息！"));
+                //    return;
+                //}
                 if (continuouscapture < 3)
                 {
                     MessageBox.Show(string.Format("请先等待人脸照片抓取成功！-{0}", continuouscapture));
                     return;
                 }
                 labeltip.Text = "正在比对中。。。";
+                var result = false;
                 for (int i = 0; i < 3; i++)
                 {
-                    if (compareone(FileNameCapture[i], i + 1))
-                    {
+                    if (compareone(FileNameCapture[i],i+1))
+                       // if (compareonex(FileNameCapture[i], i + 1))
+                        {
+                        result = true;
                         break;
                     }
                 }
                 labeltip.Text = "比对完成 ！";
+                if (!result)
+                {
+                    UpdateStatus(string.Format("相似度低于74%，不能确定是同一人！"));
+                }
                 continuouscapture = 0;
                 pictureBoxcurrentimage.BackgroundImage = null;
-
                 picturecapture1.BackgroundImage = null;
-
                 picturecapture2.BackgroundImage = null;
                 pictureid.BackgroundImage = null;
                 GC.Collect(111, GCCollectionMode.Forced);
@@ -187,8 +193,6 @@ namespace face
         {
             try
             {
-                //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in detectfaceex,{0}", 111) });
-
                 long detectionTime;
                 List<Rectangle> faces = new List<Rectangle>();
                 List<Rectangle> eyes = new List<Rectangle>();
@@ -206,111 +210,159 @@ namespace face
             }
             return false;
         }
-        private bool detectfaceex(Mat frame)
-        {
-            try
-            {
-                //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in detectfaceex,{0}", 111) });
+     
 
-                var capturefile = Path.GetTempFileName() + ".jpg";
-                frame.Save(capturefile);
+        //bool compareonex(string capturefile, int index)
+        //{
+        //    var stop = new Stopwatch();
+        //    stop.Start();
+        //    var rrr = string.Empty;
+        //    //lock (lockObj)
+        //    //{
+        //         rrr = compare(capturefile, FileNameId);
+        //    //}
 
-                var a = new System.Diagnostics.Process();
-                a.StartInfo.UseShellExecute = false;
-                a.StartInfo.RedirectStandardOutput = true;
-                a.StartInfo.CreateNoWindow = true;
-                a.StartInfo.Arguments = capturefile;
-                a.StartInfo.FileName = "detectFace.exe";
-                a.Start();
-                a.WaitForExit();
-                var ret = a.ExitCode;
-                if (ret == 1234)
-                {
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in detectfaceex,{0}", ex.Message) });
-            }
-            return false;
-        }
-        bool compareone(string capturefile, int index)
+        //    stop.Stop();
+        //    var ok = true;
+
+        //    var reg = @"[\d]+";
+        //    var m = Regex.Match(rrr, reg);
+        //    var per = double.Parse(m.Value) / 100000;           
+        //    if (m.Success && per > 0.74)
+        //    {
+        //        UpdateStatus(string.Format("第{1}张照片对比是同一个人，WARNING_VALUE={0}", 74, index));
+        //        var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
+        //        th.Start(upload);
+        //        labeltip.Text = "比对完成 ！";
+        //       // MessageBox.Show("比对成功，是同一个人");
+        //        FileNameId = string.Empty;
+        //        MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
+        //        ok = true;
+        //    }
+        //    else ok = false;         
+
+        //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("similarity：{0}，用时：{1}，第{2}张比对，抓拍文件名：{3}，身份证照片文件：{4}", rrr, stop.ElapsedMilliseconds, index, capturefile, FileNameId) });
+        //    return ok;
+        //}
+
+        bool compareone(string capturefile,int index)
         {
-            //var stop = new Stopwatch();
-            //stop.Start();
+            var stop = new Stopwatch();
+            stop.Start();
             var a = new System.Diagnostics.Process();
 
             a.StartInfo.UseShellExecute = false;
             a.StartInfo.RedirectStandardOutput = true;
             a.StartInfo.CreateNoWindow = true;
 
-            a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
-            a.StartInfo.Arguments = string.Format(" {0} {1}", capturefile, FileNameId);
+            a.StartInfo.WorkingDirectory = homepath;
+            FileNameId = Path.Combine(homepath, "idr210sdk", "photo.bmp");
+            a.StartInfo.Arguments = string.Format(" {0} {1}", FileNameId, capturefile);
             //   UpdateStatus(string.Format("files:{0}", a.StartInfo.Arguments));
             capturephotofile = capturefile;
-            a.StartInfo.FileName = Path.Combine(homepath, "compare", "FaceCompareCon.exe");
+            a.StartInfo.FileName = Path.Combine(homepath, "compare.exe");
             //  a.StartInfo.FileName = Path.Combine(homepath, "compare", "ccompare.exe");
             a.Start();
+            var output = a.StandardOutput.ReadToEnd();
+
             a.WaitForExit();
             var ret = a.ExitCode;
-            //  stop.Stop();
-            //  UpdateStatus(string.Format("time elapsed:{0},exitcode={1}", stop.ElapsedMilliseconds, ret));
-            //if (ret == 1)
-            //{
-            //    MessageBox.Show("比对成功，是同一个人");
-            //               FileNameId = string.Empty;
-            //    return true;
-            //}
-            //else return false;
-            var resultfile = Path.Combine(homepath, "compare", "compareresult.txt");
-            var result = JsonConvert.DeserializeObject<result>(File.ReadAllText(resultfile));
-            UpdateStatus(string.Format("result score:{0}", result.score));
-            labelscore.Text = ((int)(result.score)).ToString() + "%";
-            if (result.ok)
+
+            var reg = @"(?<=terminate)0\.[\d]{4,}";
+            var m = Regex.Match(output, reg);
+            stop.Stop();
+            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] {string.Format("第{0}张照片比对用时{1}秒，相似度{2}",index, stop.ElapsedMilliseconds/1000, m.Value ) });
+           
+            if (m.Success) 
             {
-                switch (result.status)
-                {
-                    case CompareStatus.unkown:
-                        break;
-                    case CompareStatus.success:
-                        UpdateStatus(string.Format("第{1}张照片对比是同一个人，WARNING_VALUE={0}", 73, index));
-                        var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
-                        th.Start(upload);
-                        File.Delete(resultfile);
-                        labeltip.Text = "比对完成 ！";
-                        MessageBox.Show("比对成功，是同一个人");
-                        FileNameId = string.Empty;
-                        break;
-                    case CompareStatus.failure:
-                        UpdateStatus(string.Format("第{1}张照片对比不是同一个人，WARNING_VALUE={0}", 73, index));
-                        break;
-                    case CompareStatus.uncertainty:
-                        UpdateStatus(string.Format("第{1}张照片不确定是否同一人，WARNING_VALUE={0}", 73, index));
-                        break;
-                    default:
-                        break;
+                var score = double.Parse(m.Value);
+                labelscore.Text = ((int)(score * 100)).ToString() + "%";
+                if (score > 0.74)
+                {                    
+                    MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
+                    //    MessageBox.Show( "比对成功，是同一个人" + m.Value);
+                    FileNameId = string.Empty;
+                    return true;
                 }
             }
-            else
-            {
-                UpdateStatus(string.Format("第{1}张照片比对出错，{0}", result.errcode, index));
-            }
-
-            if (result.ok && result.status == CompareStatus.success) return true;
-            else return false;
+             return false;
         }
+        //bool compareone(string capturefile, int index)
+        //{
+        //    //var stop = new Stopwatch();
+        //    //stop.Start();
+        //    var a = new System.Diagnostics.Process();
+
+        //    a.StartInfo.UseShellExecute = false;
+        //    a.StartInfo.RedirectStandardOutput = true;
+        //    a.StartInfo.CreateNoWindow = true;
+
+        //    a.StartInfo.WorkingDirectory = Path.Combine(homepath, "compare");
+        //    a.StartInfo.Arguments = string.Format(" {0} {1}", capturefile, FileNameId);
+        //    //   UpdateStatus(string.Format("files:{0}", a.StartInfo.Arguments));
+        //    capturephotofile = capturefile;
+        //    a.StartInfo.FileName = Path.Combine(homepath, "compare", "FaceCompareCon.exe");
+        //    //  a.StartInfo.FileName = Path.Combine(homepath, "compare", "ccompare.exe");
+        //    a.Start();
+        //    a.WaitForExit();
+        //    var ret = a.ExitCode;
+        //    //  stop.Stop();
+        //    //  UpdateStatus(string.Format("time elapsed:{0},exitcode={1}", stop.ElapsedMilliseconds, ret));
+        //    //if (ret == 1)
+        //    //{
+        //    //    MessageBox.Show("比对成功，是同一个人");
+        //    //               FileNameId = string.Empty;
+        //    //    return true;
+        //    //}
+        //    //else return false;
+        //    var resultfile = Path.Combine(homepath, "compare", "compareresult.txt");
+        //    var result = JsonConvert.DeserializeObject<result>(File.ReadAllText(resultfile));
+        //    UpdateStatus(string.Format("result score:{0}", result.score));
+        //    labelscore.Text = ((int)(result.score)).ToString() + "%";
+        //    if (result.ok)
+        //    {
+        //        switch (result.status)
+        //        {
+        //            case CompareStatus.unkown:
+        //                break;
+        //            case CompareStatus.success:
+        //                UpdateStatus(string.Format("第{1}张照片对比是同一个人，WARNING_VALUE={0}", 73, index));
+        //                var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
+        //                th.Start(upload);
+        //                File.Delete(resultfile);
+        //                labeltip.Text = "比对完成 ！";
+        //                MessageBox.Show("比对成功，是同一个人");
+        //                FileNameId = string.Empty;
+        //                break;
+        //            case CompareStatus.failure:
+        //                UpdateStatus(string.Format("第{1}张照片对比不是同一个人，WARNING_VALUE={0}", 73, index));
+        //                break;
+        //            case CompareStatus.uncertainty:
+        //                UpdateStatus(string.Format("第{1}张照片不确定是否同一人，WARNING_VALUE={0}", 73, index));
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        UpdateStatus(string.Format("第{1}张照片比对出错，{0}", result.errcode, index));
+        //    }
+
+        //    if (result.ok && result.status == CompareStatus.success) return true;
+        //    else return false;
+        //}
         private void CheckUpdate()
         {
             var lv = long.Parse(version.Replace(".", ""));
             var url = string.Format("http://{0}/GetFaceDesktopUpdatePackage?version={1}", host, lv);
             var srcString = string.Empty;
             var update = true;
-            do
-            {
+            //do
+            //{
                 try
                 {
-                    Thread.Sleep(1000 * 60 );
+                    //Thread.Sleep(1000 * 60 );
                     //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 111) });
                     using (var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip })
                     using (var http = new HttpClient(handler))
@@ -321,8 +373,9 @@ namespace face
                         if (!response.Result.IsSuccessStatusCode)
                         {
                             //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("no update") });
-                            Thread.Sleep(1000 * 60 * 60);
-                            continue;
+                           // Thread.Sleep(1000 * 60 * 60);
+                        return;
+                           // continue;
                         }
                         //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 444) });
                      //   srcString = response.Result.Content.ReadAsStringAsync().Result;
@@ -348,8 +401,8 @@ namespace face
                     //else
                     //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新查询 error:{0},url={1},{2}", version, url, ex.Message) });
                 }
-                Thread.Sleep(1000 * 60 * 60);
-            } while (update);
+              //  Thread.Sleep(1000 * 60 * 60);
+          //  } while (update);
         }
         private void uploadinfo(object obj)
         {
@@ -384,18 +437,7 @@ namespace face
             }
         }
 
-        private void UpdateIdPhoto(string status)
-        {
-          //  richTextBox1.Clear();
-            var FileNameIdtmp = Path.Combine(homepath, dllpath, "photo.bmp");
-            FileNameId = Path.GetTempFileName();
-            idphotofile = FileNameId;
-            using (var jpg = new Bitmap(FileNameIdtmp))
-            {
-                jpg.Save(FileNameId, ImageFormat.Jpeg);
-            }
-            pictureid.BackgroundImage = Image.FromFile(FileNameId);
-        }
+    
         private void UpdateIdInfo(string status)
         {
             richTextBox1.AppendText(status);
@@ -405,15 +447,15 @@ namespace face
         {
             richTextBox1.AppendText(status);
         }
-        private void UpdateIdInfoClear(string status)
-        {
-            richTextBox1.Clear();
-        }
+        //private void UpdateIdInfoClear(string status)
+        //{
+        //    richTextBox1.Clear();
+        //}
         private void UpdateStatus(string status)
         {
-          //  richTextBox1.AppendText(Environment.NewLine + string.Format("{0}--{1}", DateTime.Now, status));
-            //richTextBox1.SelectionStart = richTextBox1.Text.Length;
-            //richTextBox1.ScrollToCaret();
+            richTextBox1.AppendText(Environment.NewLine + string.Format("{0}--{1}", DateTime.Now, status));
+            richTextBox1.SelectionStart = richTextBox1.Text.Length;
+            richTextBox1.ScrollToCaret();
         }
         private void ReleaseData()
         {
@@ -432,13 +474,13 @@ namespace face
             {
                 version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 labelversion.Text = " 版本 ： " + version;
-                videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                //videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
 
-                if (videoDevices.Count == 0)
-                {
-                    UpdateStatus("没有摄像头，无法开始拍照，请连接摄像头！");
-                    return;
-                }
+                //if (videoDevices.Count == 0)
+                //{
+                //    UpdateStatus("没有摄像头，无法开始拍照，请连接摄像头！");
+                //    return;
+                //}
                 //grabber = new VideoCapture();
                 //grabber.QueryFrame();
 
@@ -446,9 +488,6 @@ namespace face
                 _capture.Start();
                 _tCheckSelfUpdate = new Thread(new ThreadStart(CheckUpdate));
                 _tCheckSelfUpdate.Start();
-
-                //_tReadId = new Thread(new ThreadStart(ThreadReadId));
-                //_tReadId.Start();
             }
             catch (ApplicationException aex)
             {
@@ -520,21 +559,6 @@ namespace face
         //    return false;
         //}
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //try
-            //{
-            //    CloseComm();
-            //    _capture.Dispose();
-            //    _frame.Dispose();
-            //    if(_tCheckSelfUpdate.ThreadState!= System.Threading.ThreadState.Aborted)
-            //    _tCheckSelfUpdate.Abort();
-            //  //  _tReadId.Abort();
-            //}
-            //catch (Exception)
-            //{
-            //}
-        }
 
         private void buttonstopcapture_Click(object sender, EventArgs e)
         {
@@ -566,20 +590,10 @@ namespace face
                 if (capturing) return;
                 //  UpdateStatus(string.Format("restart click"));
                 continuouscapture = 0;
-
                 pictureBoxcurrentimage.BackgroundImage = null;
-
                 picturecapture1.BackgroundImage = null;
-
                 picturecapture2.BackgroundImage = null;
-
-
-
-                //grabber = new VideoCapture();
-                //grabber.QueryFrame();
-                //Application.Idle += new EventHandler(FrameGrabber);
                 capturing = true;
-
             }
             catch (Exception ex)
             {
@@ -591,22 +605,22 @@ namespace face
             int ret;
             int iPort = 1;
             try
-            {
-                // var nm=new NativeMethods();
+            {              
                 ret = InitComm(iPort);
+                UpdateStatus(string.Format("InitComm --{0}",ret));
                 if (ret != 0)
                 {
                     var ok = true;
                     do
                     {
                         ret = Authenticate();
+                        UpdateStatus(string.Format("Authenticate --{0}", ret));
                         if (ret != 0)
                         {
                             ok = false;
-
                             var Msg = new byte[200];
-                          //  var aa = 0;
                             ret = ReadBaseMsg(Msg,   0);
+                            UpdateStatus(string.Format("ReadBaseMsg --{0}", ret));
                             if (ret > 0)
                             {
                                 richTextBox1.Clear();
@@ -633,17 +647,13 @@ namespace face
                                 UpdateIdInfoNoNewLine("-");
                                 UpdateIdInfo(string.Format(upload.enddate));
 
-                                var FileNameIdtmp = Path.Combine(homepath, dllpath, "photo.bmp");
-                                FileNameId = Path.GetTempFileName();
+                                //var FileNameIdtmp = Path.Combine(homepath, dllpath, "photo.bmp");
+                                //FileNameId = Path.GetTempFileName();
+                                FileNameId = Path.Combine(homepath, dllpath, "photo.bmp");
                                 idphotofile = FileNameId;
-                                using (var jpg = new Bitmap(FileNameIdtmp))
-                                {
-                                    jpg.Save(FileNameId, ImageFormat.Jpeg);
-                                }
-                                //  Image.FromFile(FileNameIdtmp).Save(FileNameId, ImageFormat.Jpeg);
-                                //using (var img = image.fromfile(filenameid))
+                                //using (var jpg = new Bitmap(FileNameIdtmp))
                                 //{
-                                //    pictureid.backgroundimage = img;
+                                //    jpg.Save(FileNameId, ImageFormat.Jpeg);
                                 //}
                                 pictureid.BackgroundImage = Image.FromFile(FileNameId);
                                 UpdateStatus(string.Format("身份证信息读取成功"));
@@ -665,7 +675,6 @@ namespace face
                 UpdateStatus(string.Format("身份证读卡器操作--{0} !", ex.Message));
             }
         }
-
       
 
         private void button1_Click(object sender, EventArgs e)//无证件上传云端比对
@@ -702,8 +711,6 @@ namespace face
             var url = string.Format("http://{0}/{1}", host, "NoidUpload");
             try
             {
-                // 
-
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                 //      BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", 222) });
                 using (var http = new HttpClient(handler))
@@ -722,9 +729,7 @@ namespace face
                     {
                         continuouscapture = 0;
                         pictureBoxcurrentimage.BackgroundImage = null;
-
                         picturecapture1.BackgroundImage = null;
-
                         picturecapture2.BackgroundImage = null;
                     }
                 }
@@ -784,13 +789,11 @@ namespace face
                 buttongetresult.Visible = true;
                 buttoncloudcompare.Visible = true;
 
-
                 pictureid.Visible = false;
                 buttoncompare.Visible = false;
                 buttonreadid.Visible = false;
                 BackgroundImage = Image.FromFile("image/rlsb_wsf.png");
                 richTextBox1.Clear();
-
             }
             catch (Exception ex)
             {
@@ -811,7 +814,6 @@ namespace face
                 buttoncompare.Visible = true;
                 buttonreadid.Visible = true;
 
-
                 textBoxname.Visible = false;
                 textBoxid.Visible = false;
                 buttongetresult.Visible = false;
@@ -828,7 +830,6 @@ namespace face
         {
             try
             {
-                CloseComm();
                 _capture.Dispose();
                 _frame.Dispose();
                 if(_tCheckSelfUpdate.ThreadState!= System.Threading.ThreadState.Aborted)
@@ -856,8 +857,7 @@ namespace face
  e.ClipRectangle.X + e.ClipRectangle.Width - 1,
 e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
         }
-
-      
+              
 
         private void picturecapture1_Paint(object sender, PaintEventArgs e)
         {
@@ -882,18 +882,6 @@ e.ClipRectangle.Y + e.ClipRectangle.Height - 1);
 
         }
 
-        private void FormFace_Layout(object sender, LayoutEventArgs e)
-        {
-
-        }
-
-        private void FormFace_Paint(object sender, PaintEventArgs e)
-        {
-//            var p = (Form)sender;
-//            Pen pp = new Pen(Color.Red);
-//            e.Graphics.DrawRectangle(pp, e.ClipRectangle.X+1, e.ClipRectangle.Y+1,
-// e.ClipRectangle.X + e.ClipRectangle.Width - 4,
-//e.ClipRectangle.Y + e.ClipRectangle.Height - 4);
-        }
+  
     }
 }
