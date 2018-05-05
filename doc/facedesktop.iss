@@ -2,7 +2,7 @@
 ; Demonstrates copying 3 files and creating an icon.
 
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
-#define MyAppVersion "1.0.0.18"
+#define MyAppVersion "1.0.0.20"
 #define sourcedir "I:\faceoutput\desktop"
 
 ; *** Inno Setup version 5.5.0+ Chinese messages ***
@@ -353,17 +353,17 @@ OutputBaseFilename=FaceDesktop{#MyAppVersion}
 [Files]
 ;Source: "FaceDesktop.exe"; DestDir: "{app}"
 ;Source: "{#sourcedir}\Readme.txt"; DestDir: "{app}"; Flags: isreadme
-Source: "{#sourcedir}\compare\*"; DestDir: "{app}\compare"; Flags: ignoreversion 
+;Source: "{#sourcedir}\compare\*"; DestDir: "{app}\compare"; Flags: ignoreversion 
 Source: "{#sourcedir}\zh-cn\*"; DestDir: "{app}\zh-cn"; Flags: ignoreversion 
 Source: "{#sourcedir}\x86\*"; DestDir: "{app}\x86"; Flags: ignoreversion 
 Source: "{#sourcedir}\x64\*"; DestDir: "{app}\x64"; Flags: ignoreversion 
 Source: "{#sourcedir}\image\*"; DestDir: "{app}\image"; Flags: ignoreversion 
-Source: "{#sourcedir}\compare\asset\*"; DestDir: "{app}\compare\asset"; Flags: ignoreversion 
-Source: "{#sourcedir}\compare\asset\models\*"; DestDir: "{app}\compare\asset\models"; Flags: ignoreversion 
-Source: "{#sourcedir}\compare\iconengines\*"; DestDir: "{app}\compare\iconengines"; Flags: ignoreversion 
-Source: "{#sourcedir}\compare\imageformats\*"; DestDir: "{app}\compare\imageformats"; Flags: ignoreversion 
-Source: "{#sourcedir}\compare\platforms\*"; DestDir: "{app}\compare\platforms"; Flags: ignoreversion 
-Source: "{#sourcedir}\compare\translations\*"; DestDir: "{app}\compare\translations"; Flags: ignoreversion 
+;Source: "{#sourcedir}\compare\asset\*"; DestDir: "{app}\compare\asset"; Flags: ignoreversion 
+;Source: "{#sourcedir}\compare\asset\models\*"; DestDir: "{app}\compare\asset\models"; Flags: ignoreversion 
+;Source: "{#sourcedir}\compare\iconengines\*"; DestDir: "{app}\compare\iconengines"; Flags: ignoreversion 
+;Source: "{#sourcedir}\compare\imageformats\*"; DestDir: "{app}\compare\imageformats"; Flags: ignoreversion 
+;Source: "{#sourcedir}\compare\platforms\*"; DestDir: "{app}\compare\platforms"; Flags: ignoreversion 
+;Source: "{#sourcedir}\compare\translations\*"; DestDir: "{app}\compare\translations"; Flags: ignoreversion 
 Source: "{#sourcedir}\idr210sdk\*"; DestDir: "{app}\idr210sdk"; Flags: ignoreversion
 Source: "{#sourcedir}\*"; DestDir: "{app}"; Flags: ignoreversion
 [Tasks]

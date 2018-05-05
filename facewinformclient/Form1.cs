@@ -316,12 +316,8 @@ namespace face
             a.StartInfo.UseShellExecute = false;
             a.StartInfo.RedirectStandardOutput = true;
             a.StartInfo.CreateNoWindow = true;
-            UpdateStatus(string.Format("---{0}", 111));
             a.StartInfo.WorkingDirectory = homepath;
-            UpdateStatus(string.Format("---{0}", 777));
-
             var localimage = Path.Combine(lipath, id) + ".jpg";
-            UpdateStatus(string.Format("---{0}", 222));
             //if (_okFolks.Contains(id))
             //{
             //    a.StartInfo.Arguments = string.Format(" {0} {1}", localimage, capturefile);
@@ -331,24 +327,21 @@ namespace face
             //{
             if (File.Exists(localimage))
             {
-                a.StartInfo.Arguments = string.Format(" {0} {1}", localimage, capturefile);
+                a.StartInfo.Arguments = string.Format(" \"{0}\"  \"{1}\"", localimage, capturefile);
                 _score = 0.8;
             }
             else
             {
                 _score = 0.74;
-                a.StartInfo.Arguments = string.Format(" {0} {1}", FileNameId, capturefile);
+                a.StartInfo.Arguments = string.Format(" \"{0}\"  \"{1}\"", FileNameId, capturefile);
             }
             // }
 
             UpdateStatus(string.Format("files:{0}", a.StartInfo.Arguments));
             capturephotofile = capturefile;
             a.StartInfo.FileName = Path.Combine(homepath, "compare.exe");
-            UpdateStatus(string.Format("---{0}", 333));
             a.Start();
-            UpdateStatus(string.Format("---{0}", 444));
             var output = a.StandardOutput.ReadToEnd();
-
             a.WaitForExit();
             var ret = a.ExitCode;
 
@@ -551,10 +544,10 @@ namespace face
         }
         private void ReleaseData()
         {
-            if (_frame != null)
-                _frame.Dispose();
             if (_capture != null)
                 _capture.Dispose();
+            if (_frame != null)
+                _frame.Dispose();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -953,11 +946,9 @@ namespace face
         {
             try
             {
-                _capture.Dispose();
-                _frame.Dispose();
+                ReleaseData();
                 if (_tCheckSelfUpdate.ThreadState != System.Threading.ThreadState.Aborted)
                     _tCheckSelfUpdate.Abort();
-                //_tReadId.Abort();
             }
             catch (Exception) { }
             Close();
