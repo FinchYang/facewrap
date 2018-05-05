@@ -991,16 +991,16 @@
     <value>1</value>
   </data>
   <data name="labeltip.Font" type="System.Drawing.Font, System.Drawing">
-    <value>SimSun, 13pt, style=Bold</value>
+    <value>SimSun, 11pt, style=Bold</value>
   </data>
   <data name="labeltip.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="labeltip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>393, 326</value>
+    <value>333, 326</value>
   </data>
   <data name="labeltip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="labeltip.TabIndex" type="System.Int32, mscorlib">
     <value>50</value>
