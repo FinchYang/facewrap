@@ -300,7 +300,7 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
             if (m.Success)
             {
                 var score = double.Parse(m.Value);
-                labelscore.Text = ((int)(score * 100)).ToString() + "%";
+               // labelscore.Text = ((int)(score * 100)).ToString() + "%";
                 if (score > 0.74)
                 {
                     var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
@@ -360,7 +360,7 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
             if (m.Success)
             {
                 var score = double.Parse(m.Value);
-                labelscore.Text = ((int)(score * 100)).ToString() + "%";
+               // labelscore.Text = ((int)(score * 100)).ToString() + "%";
                 if (score > _score)
                 {
                     File.Copy(capturefile, localimage, true);
