@@ -36,13 +36,17 @@ namespace face
         private double _score = 0.74;
         private bool needReadId = true;
         [DllImport(@"idr210sdk\sdtapi.dll")]
+        public extern static int ReadBaseInfos(byte[] Name, byte[] Gender, byte[] Folk,
+byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart, byte[] ExpireEnd);
+
+        [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int InitComm(int iPort);
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int CloseComm();
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int Authenticate();
         [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int ReadBaseMsg(byte[] pMsg, int len);
+        public extern static int ReadBaseMsg(byte[] pMsg, ref int len);
         //[DllImport(@"idr210sdk\sdtapi.dll")]
         //public extern static int ReadIINSNDN(string pMsg);
         //[DllImport(@"idr210sdk\sdtapi.dll")]
@@ -108,9 +112,11 @@ namespace face
             {
                 _capture.Retrieve(_frame, 0);
                 pictureBoxsource.BackgroundImage = _frame.Bitmap;
+                
+                BeginInvoke(new UpdateStatusDelegate(UpdateLabeltip), new object[] { string.Format("扫描中。。。") });
                 try
                 {
-                    //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("请让客户摆正头部位置，自动抓拍并检测照片质量。。。") });
+                    // 
                     if (continuouscapture < 3 && detectfacethread(_frame))
                     {
                         FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
@@ -134,6 +140,7 @@ namespace face
                             _capture.Pause();
                             capturing = false;
                             BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("3张照片抓取完成") });
+                            BeginInvoke(new UpdateStatusDelegate(UpdateLabeltip), new object[] { string.Format("照片抓取完成") });
                         }
                     }
                     GC.Collect(111, GCCollectionMode.Forced);
@@ -164,7 +171,7 @@ namespace face
             }
             if (continuouscapture < 3)
             {
-                MessageBox.Show(string.Format("请先等待人脸照片抓取成功！-{0}", continuouscapture));
+                MessageBox.Show(string.Format("请先等待人脸照片抓取成功！"));//, continuouscapture));
                 buttoncompare.Enabled = true;
                 return;
             }
@@ -532,10 +539,10 @@ namespace face
         {
             richTextBox1.AppendText(status);
         }
-        //private void UpdateIdInfoClear(string status)
-        //{
-        //    richTextBox1.Clear();
-        //}
+        private void UpdateLabeltip(string status)
+        {
+            labeltip.Text = status;
+        }
         private void UpdateStatus(string status)
         {
             //richTextBox1.AppendText(Environment.NewLine + string.Format("{0}--{1}", DateTime.Now, status));
@@ -686,72 +693,82 @@ namespace face
                 UpdateStatus(string.Format("restart:{0}", ex));
             }
         }
+
         private void buttonreadid_Click(object sender, EventArgs e)
         {
             int ret;
-            int iPort = 1;
-            try
+            int iPort = 1001;
+            //try
+            //{
+            ret = InitComm(iPort);
+            if (ret ==1)
             {
-                ret = InitComm(iPort);
-                UpdateStatus(string.Format("InitComm --{0}", ret));
-                if (ret != 0)
+                for (int i = 0; ; i++)
                 {
-                    var ok = true;
-                    do
+                    ret = Authenticate();
+                    if (ret ==1)
                     {
-                        ret = Authenticate();
-                        UpdateStatus(string.Format("Authenticate --{0}", ret));
-                        if (ret != 0)
+                        var outlen = 280;
+                        var Msg = new byte[300];
+                      //  MessageBox.Show("before read");
+                        ret = ReadBaseMsg(Msg, ref outlen);
+                      //  MessageBox.Show("after read");
+                        if (ret ==1)
                         {
-                            ok = false;
-                            var Msg = new byte[300];
-                            ret = ReadBaseMsg(Msg, 0);
-                            UpdateStatus(string.Format("ReadBaseMsg --{0}", ret));
-                            if (ret > 0)
-                            {
-                                richTextBox1.Clear();
-                                upload.name = System.Text.Encoding.Default.GetString(Msg.Take(30).ToArray());
-                                upload.gender = System.Text.Encoding.Default.GetString(Msg.Skip(31).Take(2).ToArray());
-                                upload.nation = System.Text.Encoding.Default.GetString(Msg.Skip(34).Take(9).ToArray());
-                                upload.birthday = System.Text.Encoding.Default.GetString(Msg.Skip(44).Take(8).ToArray());
-                                upload.idaddress = Encoding.Default.GetString(Msg.Skip(53).Take(70).ToArray());
-                                upload.id = System.Text.Encoding.Default.GetString(Msg.Skip(124).Take(18).ToArray());
-                                upload.issuer = System.Text.Encoding.Default.GetString(Msg.Skip(143).Take(30).ToArray());
-                                upload.startdate = System.Text.Encoding.Default.GetString(Msg.Skip(174).Take(8).ToArray());
-                                upload.enddate = Encoding.Default.GetString(Msg.Skip(183).Take(8).ToArray());
-                                //  var aaa = Encoding.Default.GetString(Msg.Skip(174).Take(18).ToArray());
-                                UpdateIdInfo(string.Format("姓名：" + upload.name));
-                                UpdateIdInfo(string.Format("性别：" + upload.gender));
-                                UpdateIdInfo(string.Format("民族：" + upload.nation));
-                                UpdateIdInfo(string.Format("住址：" + upload.idaddress));
-                                UpdateIdInfo(string.Format("出生日期：{0}", upload.birthday));
-                                UpdateIdInfo(string.Format("证件所属：" + upload.issuer));
-                                UpdateIdInfo(string.Format("公民身份号码：" + upload.id));
+                             richTextBox1.Clear();
+                            upload.name = System.Text.Encoding.Default.GetString(Msg.Take(30).ToArray());
+                            upload.gender = System.Text.Encoding.Default.GetString(Msg.Skip(31).Take(2).ToArray());
+                            upload.nation = System.Text.Encoding.Default.GetString(Msg.Skip(34).Take(9).ToArray());
+                            upload.birthday = System.Text.Encoding.Default.GetString(Msg.Skip(44).Take(8).ToArray());
+                            upload.idaddress = Encoding.Default.GetString(Msg.Skip(53).Take(70).ToArray());
+                            upload.id = System.Text.Encoding.Default.GetString(Msg.Skip(124).Take(18).ToArray());
+                            upload.issuer = System.Text.Encoding.Default.GetString(Msg.Skip(143).Take(30).ToArray());
+                            upload.startdate = System.Text.Encoding.Default.GetString(Msg.Skip(174).Take(8).ToArray());
+                            upload.enddate = Encoding.Default.GetString(Msg.Skip(183).Take(8).ToArray());
+                            //  var aaa = Encoding.Default.GetString(Msg.Skip(174).Take(18).ToArray());
+                            UpdateIdInfo(string.Format("姓名：" + upload.name));
+                            UpdateIdInfo(string.Format("性别：" + upload.gender));
+                            UpdateIdInfo(string.Format("民族：" + upload.nation));
+                            UpdateIdInfo(string.Format("住址：" + upload.idaddress));
+                            UpdateIdInfo(string.Format("出生日期：{0}", upload.birthday));
+                            UpdateIdInfo(string.Format("证件所属：" + upload.issuer));
+                            UpdateIdInfo(string.Format("公民身份号码：" + upload.id));
 
-                                UpdateIdInfoNoNewLine("身份证有效期：");
-                                UpdateIdInfoNoNewLine(string.Format(upload.startdate));
-                                UpdateIdInfoNoNewLine("-");
-                                UpdateIdInfo(string.Format(upload.enddate));
+                            UpdateIdInfoNoNewLine("身份证有效期：");
+                            UpdateIdInfoNoNewLine(string.Format(upload.startdate));
+                            UpdateIdInfoNoNewLine("-");
+                            UpdateIdInfo(string.Format(upload.enddate));
 
-                                needReadId = false;
-                                pictureid.BackgroundImage = Image.FromFile(FileNameId);
-                                UpdateStatus(string.Format("身份证信息读取成功"));
-                            }
+                            needReadId = false;
+                            pictureid.BackgroundImage = Image.FromFile(FileNameId);
+                            UpdateStatus(string.Format("身份证信息读取成功"));
+                            break;
                         }
                         else
                         {
-                            UpdateStatus(string.Format("请将身份证放在读卡器上 !"));
-                            System.Threading.Thread.Sleep(500);
-                            continue;
+                            UpdateStatus(string.Format("ReadBaseMsg --{0},{1},{2}", ret, outlen, Msg.ToString()));
+                            MessageBox.Show("读卡器读卡错误");
+                            break;
                         }
-                    } while (ok);
+                    }
+                    else
+                    {
+                        UpdateStatus(string.Format("Authenticate -第{1}次-{0}", ret, i));
+                        UpdateStatus(string.Format("请将身份证放在读卡器上 !"));
+                        System.Threading.Thread.Sleep(500);
+                    }
                 }
                 ret = CloseComm();
+                UpdateStatus(string.Format("关闭读卡器接口并退出"));
             }
-            catch (Exception ex)
-            {
-                UpdateStatus(string.Format("身份证读卡器操作--{0} !", ex.Message));
-            }
+            else
+                UpdateStatus(string.Format("InitComm -error-{0}", ret));
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    UpdateStatus(string.Format("身份证读卡器操作--{0} !", ex.Message));
+            //}
         }
         // 身份证验证函数(标准18位验证)
         private bool CheckIDCard18(string idNumber)
