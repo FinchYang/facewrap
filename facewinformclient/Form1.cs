@@ -35,14 +35,14 @@ namespace face
         private double _score = 0.74;
         private bool needReadId = true;
         [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int ReadBaseMsgPhoto(byte[] pMsg, ref int len, string directory);
+        private extern static int ReadBaseMsgPhoto(byte[] pMsg, ref int len, string directory);
 
         [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int InitComm(int iPort);
+        private extern static int InitComm(int iPort);
         [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int CloseComm();
+        private extern static int CloseComm();
         [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int Authenticate();
+        private extern static int Authenticate();
         //[DllImport(@"idr210sdk\sdtapi.dll")]
         //public extern static int ReadBaseMsg(byte[] pMsg, ref int len);
         //[DllImport(@"idr210sdk\sdtapi.dll")]
@@ -91,8 +91,8 @@ namespace face
             _frame = new Mat();
             try
             {
-                _capture = new VideoCapture(1);
-             //   richTextBox1.AppendText(_capture.CaptureSource.ToString());
+                _capture = new VideoCapture();
+                //    _capture = new VideoCapture(1);
                 _capture.ImageGrabbed += ProcessFrame;
             }
             catch (NullReferenceException excpt)
@@ -368,7 +368,7 @@ namespace face
             var lv = long.Parse(version.Replace(".", ""));
             var url = string.Format("http://{0}/GetFaceDesktopUpdatePackage?version={1}", host, lv);
             var srcString = string.Empty;
-            var update = true;
+           // var update = true;
             //do
             //{
             try
@@ -407,7 +407,7 @@ namespace face
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 //if (ex.Message.Contains("发送请求时出错"))
                 //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("软件更新查询:{0},url={1},{2}", version, url, "网站可能在更新，下次启动再查。") });
@@ -441,7 +441,7 @@ namespace face
                     // BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("capturefile.{0},{1}", capturephotofile, ui.capturephoto) });
                     string srcString = response.Content.ReadAsStringAsync().Result;
                     //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", srcString) });
-                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},{1}", response.StatusCode, "", input) });
+                    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},{1}", response.StatusCode, "") });
                     //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("upload.{0},", hrm.Status) });
                 }
             }

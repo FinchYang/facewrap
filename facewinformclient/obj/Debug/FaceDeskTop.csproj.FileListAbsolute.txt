@@ -87,3 +87,4 @@ I:\faceoutput\desktop\image\rlsb_ysfz_you.png
 I:\faceoutput\desktop\image\rlsb_wsf.png
 I:\faceoutput\desktop\image\rlsb_ysf.png
 I:\faceoutput\desktop\App.config
+F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csprojResolveAssemblyReference.cache

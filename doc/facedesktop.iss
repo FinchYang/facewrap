@@ -2,7 +2,7 @@
 ; Demonstrates copying 3 files and creating an icon.
 
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
-#define MyAppVersion "1.0.0.24"
+#define MyAppVersion "1.0.0.25"
 #define sourcedir "I:\faceoutput\desktop"
 
 ; *** Inno Setup version 5.5.0+ Chinese messages ***

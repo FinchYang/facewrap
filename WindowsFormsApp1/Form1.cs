@@ -481,7 +481,7 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
 
                     return idInfo;
                 }
-                catch (Exception ex)
+                catch (Exception )
                 {
 
                     return null;
