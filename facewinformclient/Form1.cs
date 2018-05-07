@@ -29,15 +29,13 @@ namespace face
         private delegate void UpdateStatusDelegate(string status);
         private string FileNameId = string.Empty;
         private string[] FileNameCapture = new string[] { string.Empty, string.Empty, string.Empty };
-        private string dllpath = @"idr210sdk";
         private ComparedInfo upload = new ComparedInfo { address = "temp", operatingagency = "hehe" };
         private int continuouscapture = 0;
         private string version = string.Empty;
         private double _score = 0.74;
         private bool needReadId = true;
         [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int ReadBaseInfos(byte[] Name, byte[] Gender, byte[] Folk,
-byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart, byte[] ExpireEnd);
+        public extern static int ReadBaseMsgPhoto(byte[] pMsg, ref int len, string directory);
 
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int InitComm(int iPort);
@@ -45,8 +43,8 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
         public extern static int CloseComm();
         [DllImport(@"idr210sdk\sdtapi.dll")]
         public extern static int Authenticate();
-        [DllImport(@"idr210sdk\sdtapi.dll")]
-        public extern static int ReadBaseMsg(byte[] pMsg, ref int len);
+        //[DllImport(@"idr210sdk\sdtapi.dll")]
+        //public extern static int ReadBaseMsg(byte[] pMsg, ref int len);
         //[DllImport(@"idr210sdk\sdtapi.dll")]
         //public extern static int ReadIINSNDN(string pMsg);
         //[DllImport(@"idr210sdk\sdtapi.dll")]
@@ -79,23 +77,22 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
         private string lipath = string.Empty;
         public FormFace()
         {
+            host = ConfigurationManager.AppSettings["host"];
             InitializeComponent();
             homepath = Environment.CurrentDirectory;
-            FileNameId = Path.Combine(homepath, dllpath, "photo.bmp");
 
             lipath = Path.Combine(homepath, "what");
-            //  UpdateStatus(string.Format("-{1}--{0}", 888, lipath));
             if (!Directory.Exists(lipath)) Directory.CreateDirectory(lipath);
-            //  UpdateStatus(string.Format("-{1}--{0}", 999, id));
 
-            host = ConfigurationManager.AppSettings["host"];
+           
             action = ConfigurationManager.AppSettings["action"];
             CvInvoke.UseOpenCL = false;//不适用GPU
 
             _frame = new Mat();
             try
             {
-                _capture = new VideoCapture();
+                _capture = new VideoCapture(1);
+             //   richTextBox1.AppendText(_capture.CaptureSource.ToString());
                 _capture.ImageGrabbed += ProcessFrame;
             }
             catch (NullReferenceException excpt)
@@ -218,6 +215,7 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
         {
             try
             {
+                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in detectfacethread,{0}", 111) });
                 long detectionTime;
                 List<Rectangle> faces = new List<Rectangle>();
                 List<Rectangle> eyes = new List<Rectangle>();
@@ -236,83 +234,7 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
             return false;
         }
 
-
-        //bool compareonex(string capturefile, int index)
-        //{
-        //    var stop = new Stopwatch();
-        //    stop.Start();
-        //    var rrr = string.Empty;
-        //    //lock (lockObj)
-        //    //{
-        //         rrr = compare(capturefile, FileNameId);
-        //    //}
-
-        //    stop.Stop();
-        //    var ok = true;
-
-        //    var reg = @"[\d]+";
-        //    var m = Regex.Match(rrr, reg);
-        //    var per = double.Parse(m.Value) / 100000;           
-        //    if (m.Success && per > 0.74)
-        //    {
-        //        UpdateStatus(string.Format("第{1}张照片对比是同一个人，WARNING_VALUE={0}", 74, index));
-        //        var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
-        //        th.Start(upload);
-        //        labeltip.Text = "比对完成 ！";
-        //       // MessageBox.Show("比对成功，是同一个人");
-        //        FileNameId = string.Empty;
-        //        MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
-        //        ok = true;
-        //    }
-        //    else ok = false;         
-
-        //    BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("similarity：{0}，用时：{1}，第{2}张比对，抓拍文件名：{3}，身份证照片文件：{4}", rrr, stop.ElapsedMilliseconds, index, capturefile, FileNameId) });
-        //    return ok;
-        //}
-
-        bool compareone(string capturefile, int index)
-        {
-            var stop = new Stopwatch();
-            stop.Start();
-            var a = new System.Diagnostics.Process();
-
-            a.StartInfo.UseShellExecute = false;
-            a.StartInfo.RedirectStandardOutput = true;
-            a.StartInfo.CreateNoWindow = true;
-
-            a.StartInfo.WorkingDirectory = homepath;
-            a.StartInfo.Arguments = string.Format(" {0} {1}", FileNameId, capturefile);
-            //   UpdateStatus(string.Format("files:{0}", a.StartInfo.Arguments));
-            capturephotofile = capturefile;
-            a.StartInfo.FileName = Path.Combine(homepath, "compare.exe");
-            //  a.StartInfo.FileName = Path.Combine(homepath, "compare", "ccompare.exe");
-            a.Start();
-            var output = a.StandardOutput.ReadToEnd();
-
-            a.WaitForExit();
-            var ret = a.ExitCode;
-
-            var reg = @"(?<=terminate)0\.[\d]{4,}";
-            var m = Regex.Match(output, reg);
-            stop.Stop();
-            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("第{0}张照片比对用时{1}秒，相似度{2}", index, stop.ElapsedMilliseconds / 1000.0, m.Value) });
-
-            if (m.Success)
-            {
-                var score = double.Parse(m.Value);
-               // labelscore.Text = ((int)(score * 100)).ToString() + "%";
-                if (score > 0.74)
-                {
-                    var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
-                    th.Start(upload);
-                    //  MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
-                    MessageBox.Show("比对成功，是同一个人！");
-                    needReadId = true;
-                    return true;
-                }
-            }
-            return false;
-        }
+            
 
         bool SmartCompare(string capturefile, int index, string id)
         {
@@ -335,11 +257,11 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
             if (File.Exists(localimage))
             {
                 a.StartInfo.Arguments = string.Format(" \"{0}\"  \"{1}\"", localimage, capturefile);
-                _score = 0.8;
+                _score = 0.83;
             }
             else
             {
-                _score = 0.74;
+                _score = 0.75;
                 a.StartInfo.Arguments = string.Format(" \"{0}\"  \"{1}\"", FileNameId, capturefile);
             }
             // }
@@ -698,6 +620,8 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
         {
             int ret;
             int iPort = 1001;
+            pictureid.BackgroundImage = null;
+            pictureid.Refresh();
             //try
             //{
             ret = InitComm(iPort);
@@ -710,8 +634,12 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
                     {
                         var outlen = 280;
                         var Msg = new byte[300];
-                      //  MessageBox.Show("before read");
-                        ret = ReadBaseMsg(Msg, ref outlen);
+                        //  MessageBox.Show("before read");
+                        // ret = ReadBaseMsg(Msg, ref outlen);
+                        var idpath = Path.GetTempFileName()+"cache";
+                        Directory.CreateDirectory(idpath);
+                        ret = ReadBaseMsgPhoto(Msg, ref outlen, idpath);
+                        
                       //  MessageBox.Show("after read");
                         if (ret ==1)
                         {
@@ -740,6 +668,8 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
                             UpdateIdInfo(string.Format(upload.enddate));
 
                             needReadId = false;
+
+                            FileNameId = Path.Combine(homepath, idpath, "photo.bmp");
                             pictureid.BackgroundImage = Image.FromFile(FileNameId);
                             UpdateStatus(string.Format("身份证信息读取成功"));
                             break;
@@ -881,7 +811,7 @@ byte[] BirthDay, byte[] Code, byte[] Address, byte[] Agency, byte[] ExpireStart,
             var url = string.Format("http://{0}/{1}?businessnumber={2}", host, "GetNoidResult", "demo");
             try
             {
-                //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("GetNoidResult--11.{0},", url) });
+                  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("GetNoidResult--11.{0},", url) });
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                 using (var http = new HttpClient(handler))
                 {

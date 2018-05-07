@@ -80,10 +80,10 @@ F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.application
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csproj.CopyComplete
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.exe
 F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.pdb
-F:\dev\FaceServer\facewinformclient\obj\Debug\FaceDeskTop.csprojResolveAssemblyReference.cache
 I:\faceoutput\desktop\image\rlsb_wsfz.png
 I:\faceoutput\desktop\image\rlsb_wsfz_you.png
 I:\faceoutput\desktop\image\rlsb_ysfz.png
 I:\faceoutput\desktop\image\rlsb_ysfz_you.png
 I:\faceoutput\desktop\image\rlsb_wsf.png
 I:\faceoutput\desktop\image\rlsb_ysf.png
+I:\faceoutput\desktop\App.config
