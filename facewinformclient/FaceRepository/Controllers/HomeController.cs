@@ -9,18 +9,19 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Runtime.InteropServices;
 
 namespace FaceRepository.Controllers
 {
     public class HomeController : Controller
     {
         public readonly ILogger<HomeController> _log;
-
+      
         public HomeController(ILogger<HomeController> log)
         {
             _log = log;
         }
-     
+       
         public IActionResult GetNoticeUpdatePackage(long version)
         {
            // var ret = string.Empty;// new UpdateInfo { Name = string.Empty, Date = string.Empty };

@@ -257,11 +257,11 @@ namespace face
             if (File.Exists(localimage))
             {
                 a.StartInfo.Arguments = string.Format(" \"{0}\"  \"{1}\"", localimage, capturefile);
-                _score = 0.83;
+                _score = 0.80;
             }
             else
             {
-                _score = 0.75;
+                _score = 0.73;
                 a.StartInfo.Arguments = string.Format(" \"{0}\"  \"{1}\"", FileNameId, capturefile);
             }
             // }
