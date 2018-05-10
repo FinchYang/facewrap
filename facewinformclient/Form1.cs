@@ -132,7 +132,7 @@ namespace face
                                 picturecapture2.BackgroundImage = _frame.Bitmap;
                                 break;
                         }
-                        BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("照片抓取成功,{0},{1}", continuouscapture, FileNameCapture[continuouscapture]) });
+                     //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("照片抓取成功,{0},{1}", continuouscapture, FileNameCapture[continuouscapture]) });
                         continuouscapture++;
                         if (continuouscapture > 2)
                         {
@@ -142,7 +142,7 @@ namespace face
                             BeginInvoke(new UpdateStatusDelegate(UpdateLabeltip), new object[] { string.Format("照片抓取完成") });
                         }
                     }
-                    GC.Collect(111, GCCollectionMode.Forced);
+                  //  GC.Collect(111, GCCollectionMode.Forced);
                 }
                 catch (Exception ex)
                 {
@@ -162,7 +162,7 @@ namespace face
             public int code { get; set; }
             public string explanition { get; set; }
         }
-        bool cloudc(string idimage,string capture,string id)
+        int cloudc(string idimage,string capture,string id)
         {
             var param = new SmartCompareFaceInput { id = id };
             param.idimage = Convert.ToBase64String(File.ReadAllBytes(idimage));
@@ -180,23 +180,28 @@ namespace face
                     string srcString = response.Content.ReadAsStringAsync().Result;
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        
+
                         var ret = JsonConvert.DeserializeObject<screturn>(srcString);
                         UpdateStatus(srcString);
                         if (ret.code == 1)
                         {
                             capturephotofile = capture;
-                            return true;
+                            return 1;
                         }
+                        else return 0;
                     }
-                    else UpdateStatus(srcString);
+                    else
+                    {
+                        UpdateStatus(response.StatusCode+srcString);
+                        return -1;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                UpdateStatus( ex.Message );
+                UpdateStatus("exception:"+ ex.Message );
             }
-            return false;
+            return -2;
         }
         private void buttoncompare_Click(object sender, EventArgs e)
         {
@@ -229,8 +234,28 @@ namespace face
                 var id = "37900919750819723X";
                 if (!string.IsNullOrEmpty(upload.id)) id = upload.id;
 
-                UpdateStatus(string.Format("before smart,{0}！{1}-", FileNameCapture[i], id));
-                if (cloudc(FileNameId, FileNameCapture[i], id))
+              //  UpdateStatus(string.Format("before smart,{0}！{1}-", FileNameCapture[i], id));
+                var cloud = cloudc(FileNameId, FileNameCapture[i], id);
+                if(cloud==1)
+                {                   
+                    MessageBox.Show("云端比对成功，是同一个人！");
+                    needReadId = true;
+                    result = true;
+                    break;
+                }
+                 else if(cloud== 0)
+                {
+                    UpdateStatus(string.Format("第{0}张照片比对不是同一人-{1}", i+1, id));
+                    continue;
+                }
+                 else{
+                    if(SmartCompare(FileNameCapture[i], i + 1, id))
+                        {
+                          
+                            result = true;
+                            break;
+                        }
+                }
                 //{
 
                 //}
@@ -239,15 +264,15 @@ namespace face
 
                 //}
                 //if (SmartCompare(FileNameCapture[i], i + 1, id))
-                {
-                    var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
-                    th.Start(upload);
-                    //  MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
-                    MessageBox.Show("比对成功，是同一个人！");
-                    needReadId = true;
-                    result = true;
-                    break;
-                }
+                //{
+                //    var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
+                //    th.Start(upload);
+                //    //  MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
+                //    MessageBox.Show("比对成功，是同一个人！");
+                //    needReadId = true;
+                //    result = true;
+                //    break;
+                //}
             }
             labeltip.Text = "比对完成 ！";
             if (!result)
@@ -276,7 +301,7 @@ namespace face
         {
             try
             {
-                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in detectfacethread,{0}", 111) });
+              //  BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("in detectfacethread,{0}", 111) });
                 long detectionTime;
                 List<Rectangle> faces = new List<Rectangle>();
                 List<Rectangle> eyes = new List<Rectangle>();
@@ -351,7 +376,7 @@ namespace face
                     var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
                     th.Start(upload);
                     //  MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
-                    MessageBox.Show("比对成功，是同一个人！");
+                    MessageBox.Show("本地比对成功，是同一个人！");
                     needReadId = true;
                     return true;
                 }
@@ -528,9 +553,9 @@ namespace face
         }
         private void UpdateStatus(string status)
         {
-            richTextBox1.AppendText(Environment.NewLine + string.Format("{0}--{1}", DateTime.Now, status));
-            richTextBox1.SelectionStart = richTextBox1.Text.Length;
-            richTextBox1.ScrollToCaret();
+            //richTextBox1.AppendText(Environment.NewLine + string.Format("{0}--{1}", DateTime.Now, status));
+            //richTextBox1.SelectionStart = richTextBox1.Text.Length;
+            //richTextBox1.ScrollToCaret();
         }
         private void ReleaseData()
         {
