@@ -37,6 +37,12 @@ namespace testfaces
             public string picture1 { get; set; }
             public string picture2 { get; set; }
         }
+        public class SmartCompareFaceInput
+        {
+            public string id { get; set; }
+            public string idimage { get; set; }
+            public string capture { get; set; }
+        }
         public class ReturnCode
         {
             public int code { get; set; }
@@ -66,13 +72,13 @@ namespace testfaces
         static void Main(string[] args)
         {
             //  Console.WriteLine(cloudCompare(args[0], args[1]).code);
-            var param = new CompareFaceInput();
-            param.picture1 = Convert.ToBase64String(File.ReadAllBytes(args[0]));
-            param.picture2 = Convert.ToBase64String(File.ReadAllBytes(args[1]));
+            var param = new SmartCompareFaceInput { id = "37900919750819723X" };
+            param.idimage = Convert.ToBase64String(File.ReadAllBytes(args[0]));
+            param.capture = Convert.ToBase64String(File.ReadAllBytes(args[1]));
 
             // var param = new List<CompareFaceInput>();
             //  var url = string.Format("http://{0}/{1}", "192.168.0.132:5001", "api/values");
-            var url = string.Format("http://{0}/{1}", "localhost:5001", "cloudCompare");
+            var url = string.Format("http://{0}/{1}", "192.168.0.127:5001", "smartfacesCompare");
             //  var url = string.Format("http://{0}/{1}", "localhost:801", "api/faces");
             try
             {
@@ -96,7 +102,7 @@ namespace testfaces
             {
                 Console.WriteLine(new { StatusCode = "000001", Result = ex.Message });
             }
-            Console.ReadLine();
+           // Console.ReadLine();
         }
       
     }

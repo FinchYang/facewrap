@@ -68,6 +68,7 @@ namespace face
                                          //   private int facenum = 0;
         private string homepath = string.Empty;
         private string host = string.Empty;
+        private string cloudcompare = string.Empty;
         private string action = string.Empty;
         private string capturephotofile = string.Empty;
         private bool capturing = true;//抓拍标志
@@ -78,6 +79,7 @@ namespace face
         public FormFace()
         {
             host = ConfigurationManager.AppSettings["host"];
+            cloudcompare = ConfigurationManager.AppSettings["cloudcompare"];
             InitializeComponent();
             homepath = Environment.CurrentDirectory;
 
@@ -149,8 +151,53 @@ namespace face
             }
             // }
         }
+        public class SmartCompareFaceInput
+        {
+            public string id { get; set; }
+            public string idimage { get; set; }
+            public string capture { get; set; }
+        }
+        public class screturn
+        {
+            public int code { get; set; }
+            public string explanition { get; set; }
+        }
+        bool cloudc(string idimage,string capture,string id)
+        {
+            var param = new SmartCompareFaceInput { id = id };
+            param.idimage = Convert.ToBase64String(File.ReadAllBytes(idimage));
+            param.capture = Convert.ToBase64String(File.ReadAllBytes(capture));
 
-
+            var url = string.Format("http://{0}/{1}", host, cloudcompare);
+            try
+            {
+                var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
+                using (var http = new HttpClient(handler))
+                {
+                    var content = new StringContent(JsonConvert.SerializeObject(param));
+                    content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                    var response = http.PostAsync(url, content).Result;
+                    string srcString = response.Content.ReadAsStringAsync().Result;
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        
+                        var ret = JsonConvert.DeserializeObject<screturn>(srcString);
+                        UpdateStatus(srcString);
+                        if (ret.code == 1)
+                        {
+                            capturephotofile = capture;
+                            return true;
+                        }
+                    }
+                    else UpdateStatus(srcString);
+                }
+            }
+            catch (Exception ex)
+            {
+                UpdateStatus( ex.Message );
+            }
+            return false;
+        }
         private void buttoncompare_Click(object sender, EventArgs e)
         {
             buttoncompare.Enabled = false;
@@ -173,6 +220,8 @@ namespace face
                 return;
             }
             labeltip.Text = "正在比对中。。。";
+           
+           
             var result = false;
             for (int i = 0; i < 3; i++)
             {
@@ -181,9 +230,21 @@ namespace face
                 if (!string.IsNullOrEmpty(upload.id)) id = upload.id;
 
                 UpdateStatus(string.Format("before smart,{0}！{1}-", FileNameCapture[i], id));
+                if (cloudc(FileNameId, FileNameCapture[i], id))
+                //{
 
-                if (SmartCompare(FileNameCapture[i], i + 1, id))
+                //}
+                //else
+                //{
+
+                //}
+                //if (SmartCompare(FileNameCapture[i], i + 1, id))
                 {
+                    var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
+                    th.Start(upload);
+                    //  MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
+                    MessageBox.Show("比对成功，是同一个人！");
+                    needReadId = true;
                     result = true;
                     break;
                 }
@@ -467,9 +528,9 @@ namespace face
         }
         private void UpdateStatus(string status)
         {
-            //richTextBox1.AppendText(Environment.NewLine + string.Format("{0}--{1}", DateTime.Now, status));
-            //richTextBox1.SelectionStart = richTextBox1.Text.Length;
-            //richTextBox1.ScrollToCaret();
+            richTextBox1.AppendText(Environment.NewLine + string.Format("{0}--{1}", DateTime.Now, status));
+            richTextBox1.SelectionStart = richTextBox1.Text.Length;
+            richTextBox1.ScrollToCaret();
         }
         private void ReleaseData()
         {
