@@ -9,4 +9,12 @@
     <OutputPath>F:\dev\FaceServer\face2faceV4\</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>f:\dev\faceserver\facedata</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+
 </Project>
