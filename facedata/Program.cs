@@ -16,6 +16,7 @@ namespace facedata
             int count77 = 0;
             double count = 0;
             int errorcount = 0;
+            if (!System.IO.Directory.Exists("errfile")) System.IO.Directory.CreateDirectory("errfile");
           var files=  System.IO.Directory.GetFiles(args[0]);
             foreach(var f in files)
             {
@@ -26,14 +27,16 @@ namespace facedata
                     a.StartInfo.RedirectStandardOutput = true;
                     a.StartInfo.CreateNoWindow = true;
                     a.StartInfo.FileName = "compare.exe";
-                    a.StartInfo.Arguments = string.Format(" \"{0}\"  \"{1}\"", f, f.Replace("_1.jpg", "_2.jpg"));
+                    var f2 = f.Replace("_1.jpg", "_2.jpg");
+                 //   Console.WriteLine(f + "-error:" + f2);
+                    a.StartInfo.Arguments = string.Format(" \"{0}\"  \"{1}\"", f, f2);
                     a.Start();
                     var output = a.StandardOutput.ReadToEnd();
                     a.WaitForExit();
                     var ret = a.ExitCode;
                     var reg = @"(?<=terminate)0\.[\d]{4,}";
                     var m = Regex.Match(output, reg);
-                    Console.WriteLine(output);
+                  
                     count++;
                     if (m.Success)
                     {
@@ -44,13 +47,16 @@ namespace facedata
                         if (score > 0.68) count68++;
                         if (score > 0.65) count65++;
                         if (score > 0.62) count62++;
-                        Console.WriteLine("score={0},file={1},{2},77={3},74={4},71={5},68={6},65={7},62={8},count={9},error={10}",
-                             score, f, "", count77, count74, count71, count68, count65, count62, count,errorcount);
+                        //Console.WriteLine("score={0},file={1},{2},77={3},74={4},71={5},68={6},65={7},62={8},count={9},error={10}",
+                        //     score, f, "", count77, count74, count71, count68, count65, count62, count,errorcount);
                     }
                     else
                     {
                         errorcount++;
-                        Console.WriteLine("error:"+f);
+                   //     Console.WriteLine(output);
+                        Console.WriteLine(f+"-error:"+ output);
+                        System.IO.File.Copy(f, "errfile/" + f.Substring(18),true);
+                        System.IO.File.Copy(f2, "errfile/" + f2.Substring(18),true);
                     }
                 }
             }

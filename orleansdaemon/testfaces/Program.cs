@@ -72,13 +72,15 @@ namespace testfaces
         static void Main(string[] args)
         {
             //  Console.WriteLine(cloudCompare(args[0], args[1]).code);
-            var param = new SmartCompareFaceInput { id = "37900919750819723X" };
+            var param = new SmartCompareFaceInput { id = args[2] };
             param.idimage = Convert.ToBase64String(File.ReadAllBytes(args[0]));
             param.capture = Convert.ToBase64String(File.ReadAllBytes(args[1]));
 
             // var param = new List<CompareFaceInput>();
             //  var url = string.Format("http://{0}/{1}", "192.168.0.132:5001", "api/values");
-            var url = string.Format("http://{0}/{1}", "192.168.0.127:5001", "smartfacesCompare");
+           // var url = string.Format("http://{0}/{1}", "192.168.0.161:5001", "smartfacesCompare");
+           // var url = string.Format("http://{0}/{1}", "app.ytjj.gov.cn/ZDY_LDKSRLSB", "smartfacesCompare");
+            var url = string.Format("http://{0}/{1}", args[3], "smartfacesCompare");
             //  var url = string.Format("http://{0}/{1}", "localhost:801", "api/faces");
             try
             {

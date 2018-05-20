@@ -1,0 +1,8 @@
+I:\faceoutput\testfaces.exe.config
+I:\faceoutput\testfaces.exe
+I:\faceoutput\testfaces.pdb
+F:\dev\FaceServer\orleansdaemon\testfaces\obj\Release\testfaces.csprojAssemblyReference.cache
+F:\dev\FaceServer\orleansdaemon\testfaces\obj\Release\testfaces.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\orleansdaemon\testfaces\obj\Release\testfaces.csproj.CopyComplete
+F:\dev\FaceServer\orleansdaemon\testfaces\obj\Release\testfaces.exe
+F:\dev\FaceServer\orleansdaemon\testfaces\obj\Release\testfaces.pdb
