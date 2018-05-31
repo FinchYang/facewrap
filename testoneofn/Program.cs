@@ -11,6 +11,11 @@ namespace testoneofn
     {
         static void Main(string[] args)
         {
+            if (args.Length < 2)
+            {
+                Console.WriteLine("usage: cmd picpath host");
+                return;
+            }
             var samecout = 0;
             var all = 0;
            // var dimension = 10;
@@ -20,7 +25,8 @@ namespace testoneofn
             {
                 var param = Convert.ToBase64String(File.ReadAllBytes(f.FullName));
                 var cbase = f.Name.Substring(0, f.Name.IndexOf('_'));
-                var url = string.Format("http://{0}/{1}", "192.168.0.161:5000", "oneofn");
+               // var url = string.Format("http://{0}/{1}", "192.168.0.176:5000", "oneofn");
+                var url = string.Format("http://{0}/{1}", args[1], "oneofn");
                 try
                 {
                     all++;

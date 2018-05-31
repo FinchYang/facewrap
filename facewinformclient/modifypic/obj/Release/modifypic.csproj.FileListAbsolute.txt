@@ -1,0 +1,6 @@
+F:\dev\FaceServer\facewinformclient\modifypic\bin\Release\modifypic.exe
+F:\dev\FaceServer\facewinformclient\modifypic\bin\Release\modifypic.pdb
+F:\dev\FaceServer\facewinformclient\modifypic\obj\Release\modifypic.csprojAssemblyReference.cache
+F:\dev\FaceServer\facewinformclient\modifypic\obj\Release\modifypic.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\facewinformclient\modifypic\obj\Release\modifypic.exe
+F:\dev\FaceServer\facewinformclient\modifypic\obj\Release\modifypic.pdb
