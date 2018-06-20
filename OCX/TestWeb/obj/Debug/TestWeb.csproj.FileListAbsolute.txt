@@ -15,7 +15,6 @@ G:\dev\ocx\TestOCX\TestWeb\obj\Debug\TestWeb.pdb
 F:\dev\FaceServer\OCX\TestWeb\bin\TestWeb.dll.config
 F:\dev\FaceServer\OCX\TestWeb\bin\TestWeb.dll
 F:\dev\FaceServer\OCX\TestWeb\bin\TestWeb.pdb
-F:\dev\FaceServer\OCX\TestWeb\obj\Debug\TestWeb.csprojResolveAssemblyReference.cache
 F:\dev\FaceServer\OCX\TestWeb\obj\Debug\TestWeb.csproj.CoreCompileInputs.cache
 F:\dev\FaceServer\OCX\TestWeb\obj\Debug\TestWeb.dll
 F:\dev\FaceServer\OCX\TestWeb\obj\Debug\TestWeb.pdb

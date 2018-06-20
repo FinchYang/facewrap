@@ -92,9 +92,9 @@ namespace face
 
             _frame = new Mat();
             try
-            {
-                _capture = new VideoCapture();
-                //    _capture = new VideoCapture(1);
+            {//Capture _capture = new Capture(fileName); //rtsp://user:password@192.168.1.66:554/  :554/h264/ch1/main/av_stream
+             // _capture = new VideoCapture();
+                _capture = new VideoCapture("rtsp://blue:bluedon1@192.168.0.198");
                 _capture.ImageGrabbed += ProcessFrame;
             }
             catch (NullReferenceException excpt)
@@ -102,7 +102,7 @@ namespace face
                 MessageBox.Show(excpt.Message);
             }
         }
-
+        public int iii = 0;
         private void ProcessFrame(object sender, EventArgs arg)
         {
             //lock (lockObj)
@@ -115,34 +115,41 @@ namespace face
                 BeginInvoke(new UpdateStatusDelegate(UpdateLabeltip), new object[] { string.Format("扫描中。。。") });
                 try
                 {
-                    // 
-                    if (continuouscapture < 3 && detectfacethread(_frame))
+                    if (iii++ > 10000)
                     {
-                        FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
-                        _frame.Save(FileNameCapture[continuouscapture]);
-                        switch (continuouscapture)
+                        iii = 0;
+                    }
+                    if (iii % 13 == 0)
+                    {
+                        // 
+                        if (continuouscapture < 3 && detectfacethread(_frame))
                         {
-                            case 0:
-                                pictureBoxcurrentimage.BackgroundImage = _frame.Bitmap;
-                                break;
-                            case 1:
-                                picturecapture1.BackgroundImage = _frame.Bitmap;
-                                break;
-                            default:
-                                picturecapture2.BackgroundImage = _frame.Bitmap;
-                                break;
-                        }
-                     //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("照片抓取成功,{0},{1}", continuouscapture, FileNameCapture[continuouscapture]) });
-                        continuouscapture++;
-                        if (continuouscapture > 2)
-                        {
-                            _capture.Pause();
-                            capturing = false;
-                            BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("3张照片抓取完成") });
-                            BeginInvoke(new UpdateStatusDelegate(UpdateLabeltip), new object[] { string.Format("照片抓取完成") });
+                            FileNameCapture[continuouscapture] = Path.GetTempFileName() + "haveface.jpg";
+                            _frame.Save(FileNameCapture[continuouscapture]);
+                            switch (continuouscapture)
+                            {
+                                case 0:
+                                    pictureBoxcurrentimage.BackgroundImage = _frame.Bitmap;
+                                    break;
+                                case 1:
+                                    picturecapture1.BackgroundImage = _frame.Bitmap;
+                                    break;
+                                default:
+                                    picturecapture2.BackgroundImage = _frame.Bitmap;
+                                    break;
+                            }
+                            //   BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("照片抓取成功,{0},{1}", continuouscapture, FileNameCapture[continuouscapture]) });
+                            continuouscapture++;
+                            if (continuouscapture > 2)
+                            {
+                                _capture.Pause();
+                                capturing = false;
+                                BeginInvoke(new UpdateStatusDelegate(UpdateStatus), new object[] { string.Format("3张照片抓取完成") });
+                                BeginInvoke(new UpdateStatusDelegate(UpdateLabeltip), new object[] { string.Format("照片抓取完成") });
+                            }
                         }
                     }
-                  //  GC.Collect(111, GCCollectionMode.Forced);
+                    //  GC.Collect(111, GCCollectionMode.Forced);
                 }
                 catch (Exception ex)
                 {

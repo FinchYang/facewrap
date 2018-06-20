@@ -32,4 +32,4 @@ c:\ccompare\TestOCX.tlb
 c:\ccompare\reg.bat
 c:\ccompare\unreg.bat
 F:\dev\FaceServer\OCX\TestOCX\obj\Debug\TestOCX.csproj.CopyComplete
-F:\dev\FaceServer\OCX\TestOCX\obj\Debug\TestOCX.csprojResolveAssemblyReference.cache
+F:\dev\FaceServer\OCX\TestOCX\obj\Debug\TestOCX.csprojAssemblyReference.cache

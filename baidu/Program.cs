@@ -115,6 +115,57 @@ namespace baidu
                     FaceAdd.add(to.access_token, JsonConvert.SerializeObject(faceregreq));
                     return;
                 }
+
+                if (args[0] == "purify")
+                {
+                    var files2 = new DirectoryInfo(args[1]).GetFiles("*_2.jpg");
+                    foreach(var f in files2)
+                    {
+                        var f2 = Path.Combine(args[2], f.Name.Replace("_2.jpg", "_1.jpg"));
+                        if (File.Exists(f2))
+                        {
+                            var rreq = new List<matchreq>();
+                            rreq.Add(new matchreq
+                            {
+                                image = Convert.ToBase64String(File.ReadAllBytes(f2)),
+                                face_type = "IDCARD",
+                                image_type = "BASE64",
+                                quality_control = "NONE",
+                                liveness_control = "NONE",
+                            });
+                            rreq.Add(new matchreq
+                            {
+                                image = Convert.ToBase64String(File.ReadAllBytes(f.FullName)),
+                                face_type = "LIVE",
+                                image_type = "BASE64",
+                                quality_control = "NONE",
+                                liveness_control = "NONE",
+                            });
+                            var rm = FaceMatch.match(to.access_token, JsonConvert.SerializeObject(rreq));
+                            var rret = JsonConvert.DeserializeObject<matchresponse>(rm);
+                            if (rret.error_code == 0)
+                            {
+                                if (rret.result.score > 80)
+                                {
+                                    Console.WriteLine("ok" + rret.result.score);
+                                }
+                                else
+                                {
+                                  //  Console.WriteLine();
+                                    Console.Error.WriteLine(f.Name + "--" + rret.result.score + "--");
+                                   // File.AppendText("")
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine(f.Name+rret.error_code + rret.error_msg);
+                                Console.Error.WriteLine(f.Name + rret.error_code + rret.error_msg);
+                            }
+                        }
+                    }
+                   
+                }
+
                 var req = new List<matchreq>();
                 req.Add(new matchreq
                 {

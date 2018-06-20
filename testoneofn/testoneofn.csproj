@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>F:\dev\FaceServer\face2faceV4\face2faceV4\20171002</OutputPath>
+    <OutputPath>i:\faceout</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
