@@ -26,11 +26,24 @@ namespace com.baidu.ai
         // 返回token示例
         public static String TOKEN = "24.adda70c11b9786206253ddb70affdc46.2592000.1493524354.282335-1234567";
 
+        // 百度云中开通对应服务应用的 API Key 建议开通应用的时候多选服务///18521561581
+      //  private static String clientId = "ZvrDVb6ndf478tEGEsn6seWu";
+        // 百度云中开通对应服务应用的 Secret Key
+      //  private static String clientSecret = "Y0SGApzLOFbyLPEoTqVWBNtSpPUfCAvW";
+
+        // 13345158191
+      // 百度云中开通对应服务应用的 API Key 建议开通应用的时候多选服务
+      private static String clientId = "MT094ThGMBcu0P2MUGidm81X";
+      // 百度云中开通对应服务应用的 Secret Key
+      private static String clientSecret = "QQmRQggCRYYW5UVhXMN6iQrtChdVaGdo";
+      //
+
+        /* 2849978760,15921124834
         // 百度云中开通对应服务应用的 API Key 建议开通应用的时候多选服务
         private static String clientId = "rcCArR8S4zWdbz7fSGqocFeB";
         // 百度云中开通对应服务应用的 Secret Key
         private static String clientSecret = "1MZAYFpx8QhdNFap8PbPM3q9WOwwIiVq";
-
+        */
         public static tokenret getAccessToken()
         {
             String authHost = "https://aip.baidubce.com/oauth/2.0/token";
