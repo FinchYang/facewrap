@@ -1,0 +1,11 @@
+F:\dev\FaceServer\facewinformclient\boxface\obj\Release\boxface.csprojAssemblyReference.cache
+F:\dev\FaceServer\facewinformclient\boxface\obj\Release\boxface.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\facewinformclient\boxface\bin\Release\boxface.exe.config
+F:\dev\FaceServer\facewinformclient\boxface\bin\Release\boxface.exe
+F:\dev\FaceServer\facewinformclient\boxface\bin\Release\boxface.pdb
+F:\dev\FaceServer\facewinformclient\boxface\bin\Release\AipSdk.dll
+F:\dev\FaceServer\facewinformclient\boxface\bin\Release\Newtonsoft.Json.dll
+F:\dev\FaceServer\facewinformclient\boxface\bin\Release\Newtonsoft.Json.xml
+F:\dev\FaceServer\facewinformclient\boxface\obj\Release\boxface.csproj.CopyComplete
+F:\dev\FaceServer\facewinformclient\boxface\obj\Release\boxface.exe
+F:\dev\FaceServer\facewinformclient\boxface\obj\Release\boxface.pdb

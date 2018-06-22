@@ -13,7 +13,7 @@ namespace modifypic
         {
             if (args.Length < 3)
             {
-                Console.WriteLine("usage1 : sourcepath destpath pixels");
+                Console.WriteLine("usage : sourcepath destpath pixels");
                 return;
             }
             var pixels = int.Parse(args[2]);

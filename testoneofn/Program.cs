@@ -13,7 +13,7 @@ namespace testoneofn
         {
             if (args.Length < 2)
             {
-                Console.WriteLine("usage: cmd picpath host11");
+                Console.WriteLine("usage1: cmd picpath host11");
                 return;
             }
             var samecout = 0;
