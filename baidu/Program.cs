@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
@@ -119,7 +120,9 @@ namespace baidu
                 if (args[0] == "purify")
                 {
                     var files2 = new DirectoryInfo(args[1]).GetFiles("*_2.jpg");
-                    foreach(var f in files2)
+                    var stop = new Stopwatch();
+                    var timeindex = 0;
+                    foreach (var f in files2)
                     {
                         var f2 = Path.Combine(args[2], f.Name.Replace("_2.jpg", "_1.jpg"));
                         if (File.Exists(f2))
@@ -141,26 +144,64 @@ namespace baidu
                                 quality_control = "NONE",
                                 liveness_control = "NONE",
                             });
-                            var rm = FaceMatch.match(to.access_token, JsonConvert.SerializeObject(rreq));
-                            var rret = JsonConvert.DeserializeObject<matchresponse>(rm);
-                            if (rret.error_code == 0)
+                            if (timeindex < 1)
                             {
-                                if (rret.result.score > 80)
-                                {
-                                    Console.WriteLine("ok" + rret.result.score);
-                                }
-                                else
-                                {
-                                  //  Console.WriteLine();
-                                    Console.Error.WriteLine(f.Name + "--" + rret.result.score + "--");
-                                   // File.AppendText("")
-                                }
+                                stop.Restart();
+                                timeindex++;
                             }
                             else
                             {
-                                Console.WriteLine(f.Name+rret.error_code + rret.error_msg);
-                                Console.Error.WriteLine(f.Name + rret.error_code + rret.error_msg);
+                                if (timeindex > 1)
+                                {
+                                    stop.Stop();
+                                    if (stop.ElapsedMilliseconds < 1100)
+                                    {
+                                        Console.WriteLine("sleep! {0}", 1100 - stop.ElapsedMilliseconds);
+                                        Thread.Sleep(1100 - (int)stop.ElapsedMilliseconds);
+                                    }
+                                    else Console.WriteLine("elapsed! {0}", stop.ElapsedMilliseconds);
+                                    timeindex = 1;
+                                    stop.Restart();
+                                }
+                                else
+                                {
+                                    timeindex++;
+                                }
                             }
+                            haha: try
+                            {
+                               var rm = FaceMatch.match(to.access_token, JsonConvert.SerializeObject(rreq));
+                                var rret = JsonConvert.DeserializeObject<matchresponse>(rm);
+                                if (rret.error_code == 0)
+                                {
+                                    if (rret.result.score > 80)
+                                    {
+                                        Console.WriteLine("ok" + rret.result.score);
+                                    }
+                                    else
+                                    {
+                                        //  Console.WriteLine();
+                                        Console.Error.WriteLine(f.Name + "--" + rret.result.score + "-");
+                                        // File.AppendText("")
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine(f.Name + rret.error_code + rret.error_msg);
+                                    Console.Error.WriteLine(f.Name + "--" + rret.error_code + rret.error_msg);
+                                }
+                            }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(f.Name + ex.Message);
+                                Thread.Sleep(1100 );
+                                goto haha;
+                            }
+                        }
+                        else
+                        {
+                         //   Console.WriteLine(f.Name + rret.error_code + rret.error_msg);
+                            Console.Error.WriteLine(f.Name + "--no 1.jpg" );
                         }
                     }
                     return;
