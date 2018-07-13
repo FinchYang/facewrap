@@ -11,11 +11,21 @@ namespace modifypic
     {
         static void Main(string[] args)
         {
-            if (args.Length < 3)
+            if (args[0] == "prefix")
             {
-                Console.WriteLine("usage : sourcepath destpath pixels");
+                var source = args[1];
+                var files = new DirectoryInfo(source).GetFiles("*.jpg");
+                foreach(var f in files)
+                {
+                    File.Move(f.FullName, f.FullName.Replace(".jpg", args[2] + ".jpg"));
+                }
                 return;
             }
+            //if (args.Length < 3)
+            //{
+            //    Console.WriteLine("usage : sourcepath destpath pixels");
+            //    return;
+            //}
             var pixels = int.Parse(args[2]);
             var subp = new DirectoryInfo(args[0]).GetDirectories();
             Console.WriteLine("subdir={0}", subp.Count());

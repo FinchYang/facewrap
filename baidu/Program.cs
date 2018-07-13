@@ -22,40 +22,54 @@ namespace baidu
                 }
                 if (args[0] == "oneofnbatch")
                 {
-                    var files = new DirectoryInfo(args[2]).GetFiles("*_2.jpg");
                     var allsear = 0;
                     var oksear = 0;
                     var exp = 0;
-                    foreach (var f in files)
+                    foreach (var ond in new DirectoryInfo(args[2]).GetDirectories())
                     {
-                        allsear++;
-                        try
+                        var files = new DirectoryInfo(ond.FullName).GetFiles("*_2.jpg");
+                        
+                        foreach (var f in files)
                         {
-                            var oneofnreq = new oneofnreq
+                            allsear++;
+                            onsafe: try
                             {
-                                image = Convert.ToBase64String(File.ReadAllBytes(f.FullName)),
-                                image_type = "BASE64",
-                                group_id_list = args[1],
-                            };
-                            var retsear = FaceSearch.search(to.access_token, JsonConvert.SerializeObject(oneofnreq));
-                           
-                            if (retsear.Contains(f.Name.Replace("_2.jpg", "_1")))
-                            {
-                                oksear++;
-                                Console.WriteLine("true---{0},{1},{2}", oksear, allsear, f.Name);
+                                var oneofnreq = new oneofnreq
+                                {
+                                    image = Convert.ToBase64String(File.ReadAllBytes(f.FullName)),
+                                    image_type = "BASE64",
+                                    group_id_list = args[1],
+                                };
+                                var retsear = FaceSearch.search(to.access_token, JsonConvert.SerializeObject(oneofnreq));
+                                var onres = JsonConvert.DeserializeObject<faceregres>(retsear);
+                                if (onres.error_code != 0)
+                                {
+                                    Console.WriteLine(f.FullName + "onbatch error" + retsear);
+                                    Thread.Sleep(500);
+                                    goto onsafe;
+                                }
+                                if (retsear.Contains(f.Name.Replace("_2.jpg", "_1")))
+                                {
+                                    oksear++;
+                                    Console.WriteLine("true---{0},{1},{2}", oksear, allsear, f.Name);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("false---{0},{1},{2}", oksear, allsear, f.Name);
+                                    Console.Error.WriteLine("{0}--not one-,return={1}", f.Name, retsear);
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                Console.WriteLine("false---{0},{1},{2}", oksear, allsear, f.Name);
+                                exp++;
+                                Console.WriteLine("exeption---{0},{1},{2}", f.Name, exp, ex.Message);
+                                Thread.Sleep(500);
+                                goto onsafe;
                             }
+                            //   Thread.Sleep(500);
                         }
-                        catch(Exception ex)
-                        {
-                            exp++;
-                            Console.WriteLine("exeption---{0},{1},{2}", f.Name, exp, ex.Message);
-                        }
-                     //   Thread.Sleep(500);
                     }
+                    Console.WriteLine("result---all:{0},ok:{1},exp:{2}", allsear,oksear, exp);
                     return;
                 }
                 if (args[0] == "oneofn")
@@ -81,27 +95,43 @@ namespace baidu
                 }
                 if (args[0] == "faceregbatch")
                 {
-                    var files = new DirectoryInfo(args[2]).GetFiles("*_1.jpg");
-                    foreach (var f in files)
+                    foreach (var d in new DirectoryInfo(args[2]).GetDirectories())
                     {
-                        try
+                        var files = new DirectoryInfo(d.FullName).GetFiles("*_1.jpg");
+                        foreach (var f in files)
                         {
-                            var faceregreq = new faceregreq
-                        {
-                            image = Convert.ToBase64String(File.ReadAllBytes(f.FullName)),
-                            image_type = "BASE64",
-                            group_id = args[1],
-                            user_id = f.Name.Replace(".jpg", ""),
-                        };
-                        FaceAdd.add(to.access_token, JsonConvert.SerializeObject(faceregreq));
+                            safeadd: try
+                            {
+                                var faceregreq = new faceregreq
+                                {
+                                    image = Convert.ToBase64String(File.ReadAllBytes(f.FullName)),
+                                    image_type = "BASE64",
+                                    group_id = args[1],
+                                    user_id = f.Name.Replace(".jpg", ""),
+                                };
+                                var fret = FaceAdd.add(to.access_token, JsonConvert.SerializeObject(faceregreq));
+                                var res = JsonConvert.DeserializeObject<faceregres>(fret);
+                                if (res.error_code != 0)
+                                {
+                                    if (res.error_code == 223105)
+                                    {
+                                        Console.Error.WriteLine(f.Name + "--exist error" + fret);
+                                        continue;
+                                    }
+                                    Console.WriteLine(f.Name + "reg error" + fret);
+                                    Thread.Sleep(100);
+                                    goto safeadd;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("{0}--exeption-{1},", f.Name, ex.Message);
+                                Thread.Sleep(100);
+                                goto safeadd;
+                            }
+                            // Thread.Sleep(200);
                         }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("exeption---{0},{1},", f.Name,  ex.Message);
-                        }
-                        Thread.Sleep(200);
                     }
-
                     return;
                 }
                 if (args[0] == "facereg")
@@ -116,7 +146,48 @@ namespace baidu
                     FaceAdd.add(to.access_token, JsonConvert.SerializeObject(faceregreq));
                     return;
                 }
-
+                //if (args[0] == "compbatch")
+                //{
+                //    foreach(var f in File.ReadAllLines(args[1]))
+                //    {
+                //        var reg=
+                //        var creq = new List<matchreq>();
+                //        creq.Add(new matchreq
+                //        {
+                //            image = Convert.ToBase64String(File.ReadAllBytes(args[0])),
+                //            face_type = "IDCARD",
+                //            image_type = "BASE64",
+                //            quality_control = "NONE",
+                //            liveness_control = "NONE",
+                //        });
+                //        creq.Add(new matchreq
+                //        {
+                //            image = Convert.ToBase64String(File.ReadAllBytes(args[1])),
+                //            face_type = "LIVE",
+                //            image_type = "BASE64",
+                //            quality_control = "NONE",
+                //            liveness_control = "NONE",
+                //        });
+                //        var cm = FaceMatch.match(to.access_token, JsonConvert.SerializeObject(creq));
+                //        var cret = JsonConvert.DeserializeObject<matchresponse>(cm);
+                //        if (cret.error_code == 0)
+                //        {
+                //            if (cret.result.score > 80)
+                //            {
+                //                Console.WriteLine("ok" + cret.result.score);
+                //            }
+                //            else
+                //            {
+                //                Console.WriteLine("not ok-" + cret.result.score);
+                //            }
+                //        }
+                //        else
+                //        {
+                //            Console.WriteLine(cret.error_code +cret.error_msg);
+                //        }
+                //    }
+                //    return;
+                //}
                 if (args[0] == "purify")
                 {
                     var files2 = new DirectoryInfo(args[1]).GetFiles("*_2.jpg");

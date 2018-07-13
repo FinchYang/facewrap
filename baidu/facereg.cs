@@ -13,6 +13,11 @@ namespace com.baidu.ai
         public string group_id { get; set; }
         public string user_id { get; set; }
     }
+    public class faceregres
+    {
+        public int error_code { get; set; }
+        public string error_msg { get; set; }
+    }
     public class FaceAdd
     {
         // 人脸注册

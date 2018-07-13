@@ -93,8 +93,8 @@ namespace face
             _frame = new Mat();
             try
             {//Capture _capture = new Capture(fileName); //rtsp://user:password@192.168.1.66:554/  :554/h264/ch1/main/av_stream
-             // _capture = new VideoCapture();
-                _capture = new VideoCapture("rtsp://blue:bluedon1@192.168.0.198");
+              _capture = new VideoCapture();
+              //  _capture = new VideoCapture("rtsp://blue:bluedon1@192.168.0.198");
                 _capture.ImageGrabbed += ProcessFrame;
             }
             catch (NullReferenceException excpt)
@@ -171,6 +171,69 @@ namespace face
         }
         int cloudc(string idimage,string capture,string id)
         {
+            try
+            {
+                if (expiretime.CompareTo(DateTime.Now) <= 0)
+                {
+                    var to = getAccessToken();
+                    if (!to.ok)
+                    {
+                        // goto localc;
+                        return -2;
+                    }
+                }
+                var req = new List<matchreq>();
+                req.Add(new matchreq
+                {
+                    image = Convert.ToBase64String(File.ReadAllBytes(idimage)),
+                    face_type = "IDCARD",
+                    image_type = "BASE64",
+                    quality_control = "NONE",
+                    liveness_control = "NONE",
+                });
+                req.Add(new matchreq
+                {
+                    image = Convert.ToBase64String(File.ReadAllBytes(capture)),
+                    face_type = "LIVE",
+                    image_type = "BASE64",
+                    quality_control = "NONE",
+                    liveness_control = "NONE",
+                });
+
+                var bm = match(access_token, JsonConvert.SerializeObject(req));
+                var bret = JsonConvert.DeserializeObject<matchresponse>(bm);
+                if (bret.error_code == 0)
+                {
+                    if (bret.result.score > 80)
+                    {
+                        var localimage = Path.Combine(lipath, id) + ".jpg";
+                        File.Copy(capture, localimage, true);
+                        capturephotofile = capture;
+                        var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
+                        th.Start(upload);
+                        //  MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
+                        //  MessageBox.Show("比对成功，是同一个人！");
+                        // needReadId = true;
+                        return 1;
+                    }
+                    else
+                    {
+                        // Console.WriteLine("not ok-" + ret.result.score);
+                        return 0;
+                    }
+                }
+                else // byun error ,local compare
+                {
+                    //  Console.WriteLine(ret.error_code + ret.error_msg);
+                    return -1;
+                }
+            }
+            catch(Exception ex)
+            {
+                return -3;
+            }
+
+          //  localc:
             var param = new SmartCompareFaceInput { id = id };
             param.idimage = Convert.ToBase64String(File.ReadAllBytes(idimage));
             param.capture = Convert.ToBase64String(File.ReadAllBytes(capture));
@@ -327,10 +390,192 @@ namespace face
             return false;
         }
 
-            
+        public class matchreq
+        {
+            public string image { get; set; }
+            public string image_type { get; set; }
+            public string face_type { get; set; }
+            public string quality_control { get; set; }
+            public string liveness_control { get; set; }
+        }
 
+        public static string match(string token, string req)
+        {
+            //  var re = new matchresponse();
+            string host = "https://aip.baidubce.com/rest/2.0/face/v3/match?access_token=" + token;
+            Encoding encoding = Encoding.Default;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(host);
+            request.Method = "post";
+            request.KeepAlive = true;
+            //   String str = "[{\"image\":\"sfasq35sadvsvqwr5q...\",\"image_type\":\"BASE64\",\"face_type\":\"LIVE\",\"quality_control\":\"LOW\",\"liveness_control\":\"HIGH\"},{\"image\":\"sfasq35sadvsvqwr5q...\",\"image_type\":\"BASE64\",\"face_type\":\"IDCARD\",\"quality_control\":\"LOW\",\"liveness_control\":\"HIGH\"}]";
+            byte[] buffer = encoding.GetBytes(req);
+            request.ContentLength = buffer.Length;
+            request.GetRequestStream().Write(buffer, 0, buffer.Length);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.Default);
+            string result = reader.ReadToEnd();
+
+            Console.WriteLine("人脸对比:");
+            Console.WriteLine(result);
+            return result;
+        }
+        public class matchresponse
+        {
+            public int error_code { get; set; }
+            public scoreret result { get; set; }
+            public string error_msg { get; set; }
+        }
+        public class scoreret
+        {
+            public float score { get; set; }
+        }
+        /* 2849978760,15921124834*/
+        // 百度云中开通对应服务应用的 API Key 建议开通应用的时候多选服务
+          private static String clientId = "rcCArR8S4zWdbz7fSGqocFeB";
+        // 百度云中开通对应服务应用的 Secret Key
+         private static String clientSecret = "1MZAYFpx8QhdNFap8PbPM3q9WOwwIiVq";
+        public class tokenret
+        {
+            public string access_token { get; set; }
+            public bool ok { get; set; }
+        }
+        public class tokenreponse
+        {
+            public string access_token { get; set; }
+            public string session_key { get; set; }
+            public string scope { get; set; }
+            public string refresh_token { get; set; }
+            public string session_secret { get; set; }
+            public string expires_in { get; set; }
+        }
+        DateTime expiretime = DateTime.Now;
+        string access_token = string.Empty;
+        public  tokenret getAccessToken()
+        {
+            String authHost = "https://aip.baidubce.com/oauth/2.0/token";
+            HttpClient client = new HttpClient();
+            List<KeyValuePair<String, String>> paraList = new List<KeyValuePair<string, string>>();
+            paraList.Add(new KeyValuePair<string, string>("grant_type", "client_credentials"));
+            paraList.Add(new KeyValuePair<string, string>("client_id", clientId));
+            paraList.Add(new KeyValuePair<string, string>("client_secret", clientSecret));
+
+            HttpResponseMessage response = client.PostAsync(authHost, new FormUrlEncodedContent(paraList)).Result;
+            String result = response.Content.ReadAsStringAsync().Result;
+
+            var re = new tokenret { ok = false, access_token = result };
+            if (result.Contains("access_token"))
+            {
+                var ret = JsonConvert.DeserializeObject<tokenreponse>(result);
+                re.ok = true;
+                re.access_token = ret.access_token;
+                access_token = ret.access_token;
+                expiretime = DateTime.Now.AddSeconds(long.Parse(ret.expires_in)-10);
+            }
+         //   Console.WriteLine(result);
+            return re;
+        }
+        private bool bcomp(string idfile,string capfile)
+        {
+            var req = new List<matchreq>();
+            req.Add(new matchreq
+            {
+                image = Convert.ToBase64String(File.ReadAllBytes(idfile)),
+                face_type = "IDCARD",
+                image_type = "BASE64",
+                quality_control = "NONE",
+                liveness_control = "NONE",
+            });
+            req.Add(new matchreq
+            {
+                image = Convert.ToBase64String(File.ReadAllBytes(capfile)),
+                face_type = "LIVE",
+                image_type = "BASE64",
+                quality_control = "NONE",
+                liveness_control = "NONE",
+            });
+          
+                var m = match(access_token, JsonConvert.SerializeObject(req));
+            var ret = JsonConvert.DeserializeObject<matchresponse>(m);
+            if (ret.error_code == 0)
+            {
+                if (ret.result.score > 80)
+                {
+                  //  Console.WriteLine("ok" + ret.result.score);
+                    return true;
+                }
+                else
+                {
+                   // Console.WriteLine("not ok-" + ret.result.score);
+                }
+            }
+            else
+            {
+
+              //  Console.WriteLine(ret.error_code + ret.error_msg);
+            }
+            return false;
+        }
         bool SmartCompare(string capturefile, int index, string id)
         {
+            var localimage = Path.Combine(lipath, id) + ".jpg";
+          //  if (expiretime.CompareTo(DateTime.Now) <= 0)
+          //  {
+          //      var to = getAccessToken();
+          //      if (!to.ok)
+          //      {
+          //          goto localc;
+          //      }
+          //  }
+
+          /////  var bret = bcomp(FileNameId, capturefile);
+          ////  if (!bret) return false;
+          //  var req = new List<matchreq>();
+          //  req.Add(new matchreq
+          //  {
+          //      image = Convert.ToBase64String(File.ReadAllBytes(FileNameId)),
+          //      face_type = "IDCARD",
+          //      image_type = "BASE64",
+          //      quality_control = "NONE",
+          //      liveness_control = "NONE",
+          //  });
+          //  req.Add(new matchreq
+          //  {
+          //      image = Convert.ToBase64String(File.ReadAllBytes(capturefile)),
+          //      face_type = "LIVE",
+          //      image_type = "BASE64",
+          //      quality_control = "NONE",
+          //      liveness_control = "NONE",
+          //  });
+
+          //  var bm = match(access_token, JsonConvert.SerializeObject(req));
+          //  var bret = JsonConvert.DeserializeObject<matchresponse>(bm);
+          //  if (bret.error_code == 0)
+          //  {
+          //      if (bret.result.score > 80)
+          //      {
+          //          //  Console.WriteLine("ok" + ret.result.score);
+          //          File.Copy(capturefile, localimage, true);
+          //          //  _okFolks.Add(id);
+          //          var th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(uploadinfo));
+          //          th.Start(upload);
+          //          //  MessageBox.Show(stop.ElapsedMilliseconds + "比对成功，是同一个人" + m.Value);
+          //          MessageBox.Show("比对成功，是同一个人！");
+          //          needReadId = true;
+          //          return true;
+          //      }
+          //      else
+          //      {
+          //          // Console.WriteLine("not ok-" + ret.result.score);
+          //          return false;
+          //      }
+          //  }
+          //  else // byun error ,local compare
+          //  {
+          //      //  Console.WriteLine(ret.error_code + ret.error_msg);
+          //  }           
+          
+
+          //  localc:
             var stop = new Stopwatch();
             stop.Start();
             var a = new System.Diagnostics.Process();
@@ -339,7 +584,7 @@ namespace face
             a.StartInfo.RedirectStandardOutput = true;
             a.StartInfo.CreateNoWindow = true;
             a.StartInfo.WorkingDirectory = homepath;
-            var localimage = Path.Combine(lipath, id) + ".jpg";
+          //  var localimage = Path.Combine(lipath, id) + ".jpg";
             //if (_okFolks.Contains(id))
             //{
             //    a.StartInfo.Arguments = string.Format(" {0} {1}", localimage, capturefile);

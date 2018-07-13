@@ -1,0 +1,11 @@
+F:\dev\FaceServer\facewinformclient\pickpics\bin\Release\netcoreapp2.0\pickpics.deps.json
+F:\dev\FaceServer\facewinformclient\pickpics\bin\Release\netcoreapp2.0\pickpics.runtimeconfig.json
+F:\dev\FaceServer\facewinformclient\pickpics\bin\Release\netcoreapp2.0\pickpics.runtimeconfig.dev.json
+F:\dev\FaceServer\facewinformclient\pickpics\bin\Release\netcoreapp2.0\pickpics.dll
+F:\dev\FaceServer\facewinformclient\pickpics\bin\Release\netcoreapp2.0\pickpics.pdb
+F:\dev\FaceServer\facewinformclient\pickpics\obj\Release\netcoreapp2.0\pickpics.csprojAssemblyReference.cache
+F:\dev\FaceServer\facewinformclient\pickpics\obj\Release\netcoreapp2.0\pickpics.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\facewinformclient\pickpics\obj\Release\netcoreapp2.0\pickpics.AssemblyInfoInputs.cache
+F:\dev\FaceServer\facewinformclient\pickpics\obj\Release\netcoreapp2.0\pickpics.AssemblyInfo.cs
+F:\dev\FaceServer\facewinformclient\pickpics\obj\Release\netcoreapp2.0\pickpics.dll
+F:\dev\FaceServer\facewinformclient\pickpics\obj\Release\netcoreapp2.0\pickpics.pdb

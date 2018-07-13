@@ -34,6 +34,7 @@ namespace boxface
         }
         public static void GenerateHighThumbnail(string oldImagePath, string newImagePath, int width, int height)
         {
+            try { 
             System.Drawing.Image oldImage = System.Drawing.Image.FromFile(oldImagePath);//oldImage.Save();
             //int newWidth = AdjustSize(width, height, oldImage.Width, oldImage.Height).Width;
             //int newHeight = AdjustSize(width, height, oldImage.Width, oldImage.Height).Height;
@@ -61,16 +62,22 @@ namespace boxface
             thumbnailImage = null;
             oldImage.Dispose();
             oldImage = null;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("exception in GenerateHighThumbnail:" + ex.Message);
+                Console.WriteLine("exception in GenerateHighThumbnail:" + ex.Message);
+            }
         }
         // 设置APPID/AK/SK
         static string APP_ID = "11425770-";
-      //  static string API_KEY = "MT094ThGMBcu0P2MUGidm81X"; // 13345158191
-      //  static string SECRET_KEY = "QQmRQggCRYYW5UVhXMN6iQrtChdVaGdo"; // 13345158191
-         static string API_KEY = "ZvrDVb6ndf478tEGEsn6seWu"; // 18521561581
-        static string SECRET_KEY = "Y0SGApzLOFbyLPEoTqVWBNtSpPUfCAvW"; // 18521561581
-     //  static string API_KEY = "rcCArR8S4zWdbz7fSGqocFeB"; // 15921124834
-     //   static string SECRET_KEY = "1MZAYFpx8QhdNFap8PbPM3q9WOwwIiVq"; // 15921124834
-      //  static string API_KEY = "HjdLAeGmhlIxweeSCOggjqBk"; // 18106385083
+        static string API_KEY = "MT094ThGMBcu0P2MUGidm81X"; // 13345158191
+        static string SECRET_KEY = "QQmRQggCRYYW5UVhXMN6iQrtChdVaGdo"; // 13345158191
+     //    static string API_KEY = "ZvrDVb6ndf478tEGEsn6seWu"; // 18521561581
+     //   static string SECRET_KEY = "Y0SGApzLOFbyLPEoTqVWBNtSpPUfCAvW"; // 18521561581
+      // static string API_KEY = "rcCArR8S4zWdbz7fSGqocFeB"; // 15921124834
+      //  static string SECRET_KEY = "1MZAYFpx8QhdNFap8PbPM3q9WOwwIiVq"; // 15921124834
+       // static string API_KEY = "HjdLAeGmhlIxweeSCOggjqBk"; // 18106385083
       //  static string SECRET_KEY = "64aYytEj8V2FkqQ2cPnGF8fwh2XDRNyF"; // 18106385083
      //   static string API_KEY = "5GoFKjiWGDYo4WyCGZZHA8l6"; // 13708919431
       // static string SECRET_KEY = "pPUD4YoQZLGYhFcBN8ahwyeUaF4GDLQw"; // 13708919431
@@ -104,36 +111,44 @@ namespace boxface
         //  private static String clientSecret = "pPUD4YoQZLGYhFcBN8ahwyeUaF4GDLQw";
         public static void CaptureImage(string fromImagePath, int offsetX, int offsetY, string toImagePath, int width, int height)
         {
-            //原图片文件
-            Image fromImage = Image.FromFile(fromImagePath);
-            var tempx = offsetX - 10;
-            var x = tempx > 0 ? tempx : 0;
-            var tempy = offsetY - 15;
-            var y = tempy > 0 ? tempy : 0;
+            try
+            {
+                //原图片文件
+                Image fromImage = Image.FromFile(fromImagePath);
+                var tempx = offsetX - 10;
+                var x = tempx > 0 ? tempx : 0;
+                var tempy = offsetY - 15;
+                var y = tempy > 0 ? tempy : 0;
 
-            var tempw = width + 20 + x;
-            var w = tempw < fromImage.Width ? width + 20 : fromImage.Width - x;
+                var tempw = width + 20 + x;
+                var w = tempw < fromImage.Width ? width + 20 : fromImage.Width - x;
 
-            var temph = height + 30 + y;
-            var h = temph < fromImage.Height ? height + 30 : fromImage.Height - y;
+                var temph = height + 30 + y;
+                var h = temph < fromImage.Height ? height + 30 : fromImage.Height - y;
 
-            //创建新图位图
-            Bitmap bitmap = new Bitmap(w, h);
-            //创建作图区域
-            Graphics graphic = Graphics.FromImage(bitmap);
-            //截取原图相应区域写入作图区
-          
+                //创建新图位图
+                Bitmap bitmap = new Bitmap(w, h);
+                //创建作图区域
+                Graphics graphic = Graphics.FromImage(bitmap);
+                //截取原图相应区域写入作图区
 
-            graphic.DrawImage(fromImage, 0, 0, new Rectangle(x, y, w, h), GraphicsUnit.Pixel);
-            //从作图区生成新图
-            Image saveImage = Image.FromHbitmap(bitmap.GetHbitmap());
-            //保存图片
-            saveImage.Save(toImagePath, ImageFormat.Png);
-            //释放资源   
-            saveImage.Dispose();
-            graphic.Dispose();
-            bitmap.Dispose();
-            fromImage.Dispose();
+
+                graphic.DrawImage(fromImage, 0, 0, new Rectangle(x, y, w, h), GraphicsUnit.Pixel);
+                //从作图区生成新图
+                Image saveImage = Image.FromHbitmap(bitmap.GetHbitmap());
+                //保存图片
+                saveImage.Save(toImagePath, ImageFormat.Png);
+                //释放资源   
+                saveImage.Dispose();
+                graphic.Dispose();
+                bitmap.Dispose();
+                fromImage.Dispose();
+            }
+            catch(Exception ex)
+            {
+                Console.Error.WriteLine("exception in capture:" + ex.Message);
+                Console.WriteLine("exception in capture:" + ex.Message);
+            }
         }
         public static void DetectDemo(Face client, string file, string newfile,int pix)
         {
@@ -183,7 +198,7 @@ namespace boxface
             catch(Exception ex)
             {
                 Console.WriteLine(ex);
-                Console.Error.WriteLine(ex);
+                Console.Error.WriteLine("exception in main:"+ex);
                 Thread.Sleep(400);
                 DetectDemo(client, file, newfile, pix);
             }
@@ -216,45 +231,68 @@ namespace boxface
             var pixels = int.Parse(args[2]);
             var last = args[3];
           //  var end = args[4];
-            var stop = new Stopwatch();
+          //  var stop = new Stopwatch();
             var client = new Baidu.Aip.Face.Face(API_KEY, SECRET_KEY);
             client.Timeout = 6000;  // 修改超时时间
-          //  var sublist = new DirectoryInfo(source).GetDirectories();
-          ////  var first = true;
-          //  foreach(var s in sublist)
-          //  {
-                
-          //      if (s.Name.CompareTo( last)<0 )//|| s.Name.CompareTo(end) > 0)
-          //      {
-          //          continue;
-          //      }
-          //      stop.Restart();
-          //      var files = s.GetFiles("*.jpg");
-          //      foreach (var f in files)
-          //      {
-          //          var p = Path.Combine(target, s.Name);
-          //          if (!Directory.Exists(p)) Directory.CreateDirectory(p);
-          //          var newf = Path.Combine(p, f.Name);
-          //          DetectDemo(client, f.FullName, newf,pixels);
-          //          Console.WriteLine("ok! {0},{1}",newf,f.Name);
-          //          //if(first)
-          //          //{
-          //          //    first = false;
-          //          //    Thread.Sleep(400);
-          //          //}
-          //      }
-          //      stop.Stop();
-          //      if (stop.ElapsedMilliseconds < 1010)
-          //      {
-          //          Console.WriteLine("sleep! {0}", stop.ElapsedMilliseconds);
-          //          Thread.Sleep(1000 -(int) stop.ElapsedMilliseconds);
-          //      }
-          //      else Console.WriteLine("elapsed! {0}", stop.ElapsedMilliseconds);
-          //  }
+            var index = 0;
+            //var sublist = new DirectoryInfo(source).GetDirectories();
+            //foreach (var s in sublist)
+            //{              
+            //  //  stop.Restart();
+            //    var files = s.GetFiles("*_2.jpg");
+            //    foreach (var f in files)
+            //    {
+            //        if (f.Name.Replace("_2.jpg", "").CompareTo(last) < 0)//|| s.Name.CompareTo(end) > 0)
+            //        {
+            //            continue;
+            //        }
+            //        var f2 = f.FullName.Replace("_2.jpg", "_1.jpg");
+            //       // Path.Combine(args[2], f.Name.Replace("_2.jpg", "_1.jpg"));
+            //        if (File.Exists(f2))
+            //        {
+            //            var p = Path.Combine(target, f.Name.Replace("_2.jpg", ""));
+            //            if (!Directory.Exists(p)) Directory.CreateDirectory(p);
+            //            var newf = Path.Combine(p, f.Name);
+            //            DetectDemo(client, f.FullName, newf, pixels);
+            //            Console.WriteLine("ok! {0},{1}", newf, f.Name);
+
+            //            var newf2 = Path.Combine(p, f.Name.Replace("_2.jpg", "_1.jpg"));
+            //            DetectDemo(client, f2, newf2, pixels);
+            //            Console.WriteLine("ok! {0},{1}", newf2, f.Name.Replace("_2.jpg", "_1.jpg"));
+            //            index++;
+            //            GC.Collect(3, GCCollectionMode.Forced);
+            //        }
+            //        else
+            //        {
+            //            //   Console.WriteLine(f.Name + rret.error_code + rret.error_msg);
+            //            Console.Error.WriteLine(f.Name + "--no 1.jpg");
+            //        }
+            //        if (index > 4800) {
+            //            Console.WriteLine("I want to rest.");
+            //            break; }
+            //        //var p = Path.Combine(target, s.Name);
+            //        //if (!Directory.Exists(p)) Directory.CreateDirectory(p);
+            //        //var newf = Path.Combine(p, f.Name);
+            //        //DetectDemo(client, f.FullName, newf, pixels);
+            //        //Console.WriteLine("ok! {0},{1}", newf, f.Name);
+            //        //if(first)
+            //        //{
+            //        //    first = false;
+            //        //    Thread.Sleep(400);
+            //        //}
+            //    }
+            //    //stop.Stop();
+            //    //if (stop.ElapsedMilliseconds < 1010)
+            //    //{
+            //    //    Console.WriteLine("sleep! {0}", stop.ElapsedMilliseconds);
+            //    //    Thread.Sleep(1000 - (int)stop.ElapsedMilliseconds);
+            //    //}
+            //    //else Console.WriteLine("elapsed! {0}", stop.ElapsedMilliseconds);
+            //}
 
             var files2 = new DirectoryInfo(source).GetFiles("*_2.jpg");
-          //  var stop = new Stopwatch();
-           // var timeindex = 0;
+            //  var stop = new Stopwatch();
+            // var timeindex = 0;
             foreach (var f in files2)
             {
                 if (f.Name.Replace("_2.jpg", "").CompareTo(last) < 0)//|| s.Name.CompareTo(end) > 0)
@@ -267,33 +305,8 @@ namespace boxface
                     var f2 = f.FullName.Replace("_2.jpg", "_1.jpg");// Path.Combine(args[2], f.Name.Replace("_2.jpg", "_1.jpg"));
                     if (File.Exists(f2))
                     {
-                        //if (timeindex < 1)
-                        //{
-                        //    stop.Restart();
-                        //    timeindex++;
-                        //}
-                        //else
-                        //{
-                        //    if (timeindex > 1)
-                        //    {
-                        //        stop.Stop();
-                        //        if (stop.ElapsedMilliseconds < 1100)
-                        //        {
-                        //            Console.WriteLine("sleep! {0}", 1100 - stop.ElapsedMilliseconds);
-                        //            Thread.Sleep(1100 - (int)stop.ElapsedMilliseconds);
-                        //        }
-                        //        else Console.WriteLine("elapsed! {0}", stop.ElapsedMilliseconds);
-                        //        timeindex = 1;
-                        //        stop.Restart();
-                        //    }
-                        //    else
-                        //    {
-                        //        timeindex++;
-                        //    }
-                        //}
-                        //haha: try
-                        //{
-                        stop.Restart();
+
+                        // stop.Restart();
                         var p = Path.Combine(target, f.Name.Replace("_2.jpg", ""));
                         if (!Directory.Exists(p)) Directory.CreateDirectory(p);
                         var newf = Path.Combine(p, f.Name);
@@ -303,28 +316,27 @@ namespace boxface
                         var newf2 = Path.Combine(p, f.Name.Replace("_2.jpg", "_1.jpg"));
                         DetectDemo(client, f2, newf2, pixels);
                         Console.WriteLine("ok! {0},{1}", newf2, f.Name.Replace("_2.jpg", "_1.jpg"));
-                        stop.Stop();
-                        if (stop.ElapsedMilliseconds < 1010)
-                        {
-                            Console.WriteLine("sleep! {0}", stop.ElapsedMilliseconds);
-                            Thread.Sleep(1010 - (int)stop.ElapsedMilliseconds);
-                        }
-                        else Console.WriteLine("elapsed! {0}", stop.ElapsedMilliseconds);
-                        //}
-                        //catch (Exception ex)
+                        //stop.Stop();
+                        //if (stop.ElapsedMilliseconds < 1010)
                         //{
-                        //    Console.WriteLine(f.Name + ex.Message);
-                        //    Thread.Sleep(1100);
-                        //    goto haha;
+                        //    Console.WriteLine("sleep! {0}", stop.ElapsedMilliseconds);
+                        //    Thread.Sleep(1010 - (int)stop.ElapsedMilliseconds);
                         //}
+                        //else Console.WriteLine("elapsed! {0}", stop.ElapsedMilliseconds);
+                        index++;
                     }
                     else
                     {
                         //   Console.WriteLine(f.Name + rret.error_code + rret.error_msg);
                         Console.Error.WriteLine(f.Name + "--no 1.jpg");
                     }
+                    if (index > 4800)
+                    {
+                        Console.WriteLine(f.Name+"---I want to rest.");
+                        break;
+                    }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.Error.WriteLine(ex);
                     Console.WriteLine(ex);
