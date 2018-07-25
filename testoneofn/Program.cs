@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
-
+using System.Threading;
 namespace testoneofn
 {
     class Program
@@ -14,6 +14,7 @@ namespace testoneofn
             if (args.Length < 2)
             {
                 Console.WriteLine("usage: cmd picpath host11");
+                Thread.Sleep(100);
                 return;
             }
             var samecout = 0;

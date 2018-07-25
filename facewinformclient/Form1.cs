@@ -234,44 +234,44 @@ namespace face
             }
 
           //  localc:
-            var param = new SmartCompareFaceInput { id = id };
-            param.idimage = Convert.ToBase64String(File.ReadAllBytes(idimage));
-            param.capture = Convert.ToBase64String(File.ReadAllBytes(capture));
+            //var param = new SmartCompareFaceInput { id = id };
+            //param.idimage = Convert.ToBase64String(File.ReadAllBytes(idimage));
+            //param.capture = Convert.ToBase64String(File.ReadAllBytes(capture));
 
-            var url = string.Format("http://{0}/{1}", host, cloudcompare);
-            try
-            {
-                var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
-                using (var http = new HttpClient(handler))
-                {
-                    var content = new StringContent(JsonConvert.SerializeObject(param));
-                    content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                    var response = http.PostAsync(url, content).Result;
-                    string srcString = response.Content.ReadAsStringAsync().Result;
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
+            //var url = string.Format("http://{0}/{1}", host, cloudcompare);
+            //try
+            //{
+            //    var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
+            //    using (var http = new HttpClient(handler))
+            //    {
+            //        var content = new StringContent(JsonConvert.SerializeObject(param));
+            //        content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            //        var response = http.PostAsync(url, content).Result;
+            //        string srcString = response.Content.ReadAsStringAsync().Result;
+            //        if (response.StatusCode == HttpStatusCode.OK)
+            //        {
 
-                        var ret = JsonConvert.DeserializeObject<screturn>(srcString);
-                        UpdateStatus(srcString);
-                        if (ret.code == 1)
-                        {
-                            capturephotofile = capture;
-                            return 1;
-                        }
-                        else return 0;
-                    }
-                    else
-                    {
-                        UpdateStatus(response.StatusCode+srcString);
-                        return -1;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                UpdateStatus("exception:"+ ex.Message );
-            }
-            return -2;
+            //            var ret = JsonConvert.DeserializeObject<screturn>(srcString);
+            //            UpdateStatus(srcString);
+            //            if (ret.code == 1)
+            //            {
+            //                capturephotofile = capture;
+            //                return 1;
+            //            }
+            //            else return 0;
+            //        }
+            //        else
+            //        {
+            //            UpdateStatus(response.StatusCode+srcString);
+            //            return -1;
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    UpdateStatus("exception:"+ ex.Message );
+            //}
+            //return -2;
         }
         private void buttoncompare_Click(object sender, EventArgs e)
         {
@@ -473,6 +473,30 @@ namespace face
             }
          //   Console.WriteLine(result);
             return re;
+        }
+        public string GaodeAccessToken()
+        {
+            String authHost = "https://restapi.amap.com/v3/ip?key=29fdf0108650f76853f7f058c44a251a";
+            HttpClient client = new HttpClient();
+            //List<KeyValuePair<String, String>> paraList = new List<KeyValuePair<string, string>>();
+            //paraList.Add(new KeyValuePair<string, string>("grant_type", "client_credentials"));
+            //paraList.Add(new KeyValuePair<string, string>("client_id", clientId));
+            //paraList.Add(new KeyValuePair<string, string>("client_secret", clientSecret));
+
+            HttpResponseMessage response = client.GetAsync(authHost).Result;
+            String result = response.Content.ReadAsStringAsync().Result;
+
+            //var re = new tokenret { ok = false, access_token = result };
+            //if (result.Contains("access_token"))
+            //{
+            //    var ret = JsonConvert.DeserializeObject<tokenreponse>(result);
+            //    re.ok = true;
+            //    re.access_token = ret.access_token;
+            //    access_token = ret.access_token;
+            //    expiretime = DateTime.Now.AddSeconds(long.Parse(ret.expires_in) - 10);
+            //}
+            //   Console.WriteLine(result);
+            return result;
         }
         private bool bcomp(string idfile,string capfile)
         {
@@ -816,8 +840,62 @@ namespace face
             if (_frame != null)
                 _frame.Dispose();
         }
+
+        /**
+ * 根据两个位置的经纬度，来计算两地的距离（单位为KM）
+ * 参数为double类型
+ *  long1 位置1经度
+ *  lat1  位置1纬度
+ *  long2 位置2经度
+ *  lat2  位置2纬度
+ */
+       
+
+            private static  double EARTH_RADIUS = 6378.137;
+
+            private static double rad(double d)
+            {
+                return d * Math.PI / 180.0;
+            }
+
+            public static double GetDistance(double long1, double lat1, double long2, double lat2)
+            {
+                double a, b, d, sa2, sb2;
+                lat1 = rad(lat1);
+                lat2 = rad(lat2);
+                a = lat1 - lat2;
+                b = rad(long1 - long2);
+
+                sa2 = Math.Sin(a / 2.0);
+                sb2 = Math.Sin(b / 2.0);
+                d = 2 * EARTH_RADIUS
+                        * Math.Asin(Math.Sqrt(sa2 * sa2 + Math.Cos(lat1)
+                        * Math.Cos(lat2) * sb2 * sb2));
+                return d;
+            }
+
+            //public static void main(String[] args)
+            //{
+            //    //根据两点间的经纬度计算距离，单位：km
+            //    System.out.println(GetDistance(114.21221, 22.68301, 114.21229, 22.68309) * 1000);
+            //}
+        public class dis
+        {
+            public string rectangle { get; set; }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            //var gret = GaodeAccessToken();
+            //richTextBox1.AppendText(gret);
+            //var a = JsonConvert.DeserializeObject<dis>(gret);
+            //richTextBox1.AppendText(a.rectangle);
+            //var aa = a.rectangle.Split(';');
+            //var a1 = aa[0].Split(',');
+            //var a2 = aa[1].Split(',');
+            //var dd = GetDistance(double.Parse(a1[0]), double.Parse(a1[1]), double.Parse(a2[0]), double.Parse(a2[1])) * 1000;
+            //var ss = string.Format("{0},{1},{2},{3}", double.Parse(a1[0]), double.Parse(a1[1]), double.Parse(a2[0]), double.Parse(a2[1]));
+            //richTextBox1.AppendText(dd.ToString()+ss);
 
             textBoxname.Visible = false;
             textBoxid.Visible = false;

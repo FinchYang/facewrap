@@ -1,0 +1,10 @@
+F:\dev\FaceServer\facewinformclient\msresearch\bin\Release\netcoreapp2.0\msresearch.deps.json
+F:\dev\FaceServer\facewinformclient\msresearch\bin\Release\netcoreapp2.0\msresearch.runtimeconfig.json
+F:\dev\FaceServer\facewinformclient\msresearch\bin\Release\netcoreapp2.0\msresearch.runtimeconfig.dev.json
+F:\dev\FaceServer\facewinformclient\msresearch\bin\Release\netcoreapp2.0\msresearch.dll
+F:\dev\FaceServer\facewinformclient\msresearch\bin\Release\netcoreapp2.0\msresearch.pdb
+F:\dev\FaceServer\facewinformclient\msresearch\obj\Release\netcoreapp2.0\msresearch.csproj.CoreCompileInputs.cache
+F:\dev\FaceServer\facewinformclient\msresearch\obj\Release\netcoreapp2.0\msresearch.AssemblyInfoInputs.cache
+F:\dev\FaceServer\facewinformclient\msresearch\obj\Release\netcoreapp2.0\msresearch.AssemblyInfo.cs
+F:\dev\FaceServer\facewinformclient\msresearch\obj\Release\netcoreapp2.0\msresearch.dll
+F:\dev\FaceServer\facewinformclient\msresearch\obj\Release\netcoreapp2.0\msresearch.pdb

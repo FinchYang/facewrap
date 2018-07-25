@@ -39,9 +39,9 @@ namespace testfaces
         }
         public class SmartCompareFaceInput
         {
-            public string id { get; set; }
-            public string idimage { get; set; }
-            public string capture { get; set; }
+          //  public string id { get; set; }
+            public string faceimage1 { get; set; }
+            public string faceimage2 { get; set; }
         }
         public class ReturnCode
         {
@@ -72,15 +72,17 @@ namespace testfaces
         static void Main(string[] args)
         {
             //  Console.WriteLine(cloudCompare(args[0], args[1]).code);
-            var param = new SmartCompareFaceInput { id = args[2] };
-            param.idimage = Convert.ToBase64String(File.ReadAllBytes(args[0]));
-            param.capture = Convert.ToBase64String(File.ReadAllBytes(args[1]));
+            var param = new SmartCompareFaceInput {
+               // id = args[2]
+            };
+            param.faceimage1 = Convert.ToBase64String(File.ReadAllBytes(args[0]));
+            param.faceimage2 = Convert.ToBase64String(File.ReadAllBytes(args[1]));
 
             // var param = new List<CompareFaceInput>();
             //  var url = string.Format("http://{0}/{1}", "192.168.0.132:5001", "api/values");
            // var url = string.Format("http://{0}/{1}", "192.168.0.161:5001", "smartfacesCompare");
            // var url = string.Format("http://{0}/{1}", "app.ytjj.gov.cn/ZDY_LDKSRLSB", "smartfacesCompare");
-            var url = string.Format("http://{0}/{1}", args[3], "smartfacesCompare");
+            var url = string.Format("http://localhost:{0}/{1}", args[2], "api/face2facev4?appid=ba35e64b0dea032f6ba6a36c134bf3d1");
             //  var url = string.Format("http://{0}/{1}", "localhost:801", "api/faces");
             try
             {
@@ -90,9 +92,12 @@ namespace testfaces
                 using (var http = new HttpClient(handler))
                 {
                     Console.WriteLine("hah 333");
-                    var content = new StringContent(JsonConvert.SerializeObject(param));
+                  // var content = new StringContent(JsonConvert.SerializeObject(param));
+                    var content = new StringContent("faceimage1=" + param.faceimage1 + "&faceimage2=" + param.faceimage2 );
+                  //  var content = new StringContent("faceimage1=" + "111" + "&faceimage2=" + "222");
                     Console.WriteLine("hah 444");
-                    content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                  // content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                    content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
                     Console.WriteLine("hah 555");
                     var response = http.PostAsync(url, content).Result;
                     Console.WriteLine("hah 666");
