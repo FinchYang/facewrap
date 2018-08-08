@@ -169,7 +169,7 @@ namespace Bface.Controllers
         }
         DateTime expiretime = DateTime.Now;
         string access_token = string.Empty;
-        /* 2849978760,15921124834*/
+        /* ,15921124834*/
         // 百度云中开通对应服务应用的 API Key 建议开通应用的时候多选服务
         private static String clientId = "rcCArR8S4zWdbz7fSGqocFeB";
         // 百度云中开通对应服务应用的 Secret Key

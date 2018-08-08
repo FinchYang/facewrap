@@ -24,3 +24,6 @@ i:\13708919431\boxface.pdb
 i:\18521561581\boxface.exe.config
 i:\18521561581\boxface.exe
 i:\18521561581\boxface.pdb
+i:\faceout\boxface.exe.config
+i:\faceout\boxface.exe
+i:\faceout\boxface.pdb

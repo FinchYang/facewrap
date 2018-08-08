@@ -86,7 +86,7 @@ namespace testfaces
             //  var url = string.Format("http://{0}/{1}", "localhost:801", "api/faces");
             try
             {
-                Console.WriteLine("hah 111");
+              //  Console.WriteLine("hah 111");
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                 Console.WriteLine("hah 222");
                 using (var http = new HttpClient(handler))

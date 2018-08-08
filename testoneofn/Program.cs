@@ -24,8 +24,8 @@ namespace testoneofn
             var bbb = new int[11] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             //foreach (var d in new DirectoryInfo(args[0]).GetDirectories())
             //{
-              //  var files = new DirectoryInfo(d.FullName).GetFiles("*_2.jpg");
-            var files = new DirectoryInfo(args[0]).GetFiles("*_2.jpg");
+               // var files = new DirectoryInfo(d.FullName).GetFiles("*_1.jpg");//purify
+                var files = new DirectoryInfo(args[0]).GetFiles("*_2.jpg");
             foreach (var f in files)
                 {
                 if (f.Name.CompareTo(args[2]) < 0)//|| s.Name.CompareTo(end) > 0)
@@ -50,7 +50,7 @@ namespace testoneofn
                             //  Console.WriteLine("hah 444");
                             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                             content.Headers.Add("tempid", f.Name.Replace("_2.jpg", "_1.jpg"));//oneofn
-                          //  content.Headers.Add("tempid", f.Name);//purify
+                        //   content.Headers.Add("tempid", f.Name);//purify
                             //  Console.WriteLine("hah 555");
                             var response = http.PostAsync(url, content).Result;
                             //   Console.WriteLine("hah 666");
@@ -98,7 +98,7 @@ namespace testoneofn
                         Console.WriteLine(new { StatusCode = f.Name, Result = ex.Message });
                     }
                 }
-          //  }
+           // }
             for(int i=0;i<11;i++)
             {
                 Console.Write("{0}--{1}, ", i, aaa[i]);
@@ -108,7 +108,6 @@ namespace testoneofn
             {
                 Console.Write("{0}--{1}, ", i, bbb[i]);
             }
-            // Console.ReadLine();
         }
     }
 }
